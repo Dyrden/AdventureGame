@@ -30,16 +30,16 @@ public class Room {
     public void setWest(Room room) {
         westernRoom = room;
     }
-    public Room getNorth(Room room) {
+    public Room getNorth() {
         return northernRoom;
     }
-    public Room getSouth(Room room) {
+    public Room getSouth() {
         return southernRoom;
     }
-    public Room getEast(Room room) {
+    public Room getEast() {
         return easternRoom;
     }
-    public Room getWest(Room room) {
+    public Room getWest() {
         return westernRoom;
     }
 }

@@ -65,7 +65,7 @@ public class Adventure {
             }
             case "west" -> {
                 if (currentRoom.getWest() != null ) {
-                    currentRoom = currentRoom.getEast();
+                    currentRoom = currentRoom.getWest();
                 } else {
                     displayNoSuchDirection(direction);
                 }
@@ -92,15 +92,15 @@ public class Adventure {
     }
 
     public void createAndConnectRooms() {
-        Room room1 = new Room("Room1", "Room1 desc");
-        Room room2 = new Room("Room2", "Room2 desc");
-        Room room3 = new Room("Room3", "Room3 desc");
-        Room room4 = new Room("Room4", "Room4 desc");
-        Room room5 = new Room("Room5", "Room5 desc");
-        Room room6 = new Room("Room6", "Room6 desc");
-        Room room7 = new Room("Room7", "Room7 desc");
-        Room room8 = new Room("Room8", "Room8 desc");
-        Room room9 = new Room("Room9", "Room9 desc");
+        Room room1 = new Room("Hole", "You fell in this hole and lost all your possessions.");
+        Room room2 = new Room("Cave", "Dank dark cavern, bats are hanging from the ceiling.");
+        Room room3 = new Room("Crawl space", "You are in a tight crawl space. Nothing useful around.");
+        Room room4 = new Room("Sewer", "You entered a sewer. Rats are running around.");
+        Room room5 = new Room("Treasure Chamber", "You've stumbled upon a treasure like no other. You don't ever have to work again.");
+        Room room6 = new Room("Security", "You entered a room with a bunch of displays, showing live CCTV footage. The locations seem familiar. There is a golden key on the desk.");
+        Room room7 = new Room("Sewage filtration", "You've entered a room with a machine filtrating the sewage.");
+        Room room8 = new Room("Golden Door", "You find yourself in a room with a locked giant golden door.");
+        Room room9 = new Room("Back-alley", "You entered a back-alley, seems to connect important areas of this complex.");
         room1.setEast(room2);
         room1.setSouth(room4);
         room2.setWest(room1);
