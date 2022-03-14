@@ -8,12 +8,20 @@ public class Room {
     Room easternRoom;
     Room westernRoom;
 
-    public Room(String name, String description, Room north, Room south, Room east, Room west) {
+    public Room(String name, String description) {
         roomName = name;
         roomDescription = description;
-        northernRoom = north;
-        southernRoom = south;
-        easternRoom = east;
-        westernRoom = west;
+    }
+    public void setNorth(Room room) {
+        northernRoom = room;
+    }
+    public void setSouth(Room room) {
+        southernRoom = room;
+    }
+    public void setEast(Room room) {
+        easternRoom = room;
+    }
+    public void setWest(Room room) {
+        westernRoom = room;
     }
 }

@@ -21,13 +21,13 @@ public class Adventure {
 
 
     public void run() {
-        while(running){
+        while (running) {
 
         }
     }
 
     public void commands(String command) {
-        switch (command){
+        switch (command) {
             case "e" -> System.out.println();
             case "w" -> System.out.println();
             case "n" -> System.out.println();
@@ -40,7 +40,17 @@ public class Adventure {
 
     }
 
-    // public void createAndConnectRooms()
+    public void createAndConnectRooms() {
+        Room room1 = new Room("Room1", "Room1 desc");
+        Room room2 = new Room("Room1", "Room1 desc");
+        Room room3 = new Room("Room1", "Room1 desc");
+        Room room4 = new Room("Room1", "Room1 desc");
+        Room room5 = new Room("Room1", "Room1 desc");
+        Room room6 = new Room("Room1", "Room1 desc");
+        Room room7 = new Room("Room1", "Room1 desc");
+        Room room8 = new Room("Room1", "Room1 desc");
+        Room room9 = new Room("Room1", "Room1 desc");
+    }
 
 
 }
