@@ -37,8 +37,23 @@ public class Adventure {
             case "exit" -> System.out.println("exit");
             default -> System.out.println("invalid command");
         }
+    }
 
+    public void look() {
 
+    }
+
+    public void exit() {
+
+    }
+
+    public void help() {
+
+    }
+
+    public void go() {
+        // 1 'go' method for each of the 4 cardial directions?
+        // or 1 'go' method for all of them.
     }
 
     public void createAndConnectRooms() {
