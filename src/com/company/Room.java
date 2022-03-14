@@ -12,6 +12,12 @@ public class Room {
         roomName = name;
         roomDescription = description;
     }
+    public String getRoomName() {
+        return roomName;
+    }
+    public String getRoomDescription() {
+        return roomDescription;
+    }
     public void setNorth(Room room) {
         northernRoom = room;
     }

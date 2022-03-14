@@ -39,7 +39,7 @@ public class Adventure {
     }
 
     public void look() {
-
+        currentRoom.getRoomDescription();
     }
 
     public void exit() {
@@ -87,6 +87,7 @@ public class Adventure {
         room8.setEast(room9);
         room9.setWest(room8);
         room9.setNorth(room6);
+        currentRoom = room1;
     }
 
 
