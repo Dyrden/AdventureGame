@@ -1,12 +1,12 @@
 package com.company;
 
 public class Room {
-    String roomName;
-    String roomDescription;
-    Room northernRoom;
-    Room southernRoom;
-    Room easternRoom;
-    Room westernRoom;
+    private final String roomName;
+    private final String roomDescription;
+    private Room northernRoom;
+    private Room southernRoom;
+    private Room easternRoom;
+    private Room westernRoom;
 
     public Room(String name, String description) {
         roomName = name;
