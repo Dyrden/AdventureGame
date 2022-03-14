@@ -99,6 +99,7 @@ public class Adventure {
             }
 
         }
+        System.out.println(currentRoom.getRoomDescription());
     }
 
     public void displayNoSuchDirection(String direction) {
