@@ -1,9 +1,12 @@
 package com.company;
 
+import java.util.Scanner;
+
 public class Adventure {
 
     private boolean running = true;
     private Room currentRoom;
+    private final Scanner sc = new Scanner(System.in);
     /*
         e
         w
@@ -22,20 +25,25 @@ public class Adventure {
 
     public void run() {
         while (running) {
-
+            //initializeGame()
+            System.out.println("write command");
+            commands(sc.nextLine());
         }
     }
 
     public void commands(String command) {
         switch (command) {
-            case "e" -> System.out.println("go east");
+            case "e" -> go();
             case "w" -> System.out.println("go west");
             case "n" -> System.out.println("go north");
             case "s" -> System.out.println("go south");
             case "look" -> System.out.println("look");
             case "help" -> System.out.println("help");
             case "exit" -> System.out.println("exit");
-            default -> System.out.println("invalid command");
+            default -> {
+                System.out.println("No such command, write another");
+                commands(sc.nextLine());
+            }
         }
     }
 
@@ -52,6 +60,9 @@ public class Adventure {
     }
 
     public void go() {
+
+
+
         // 1 'go' method for each of the 4 cardial directions?
         // or 1 'go' method for all of them.
     }
