@@ -7,16 +7,7 @@ public class Adventure {
     private boolean running = true;
     private Room currentRoom;
     private final Scanner sc = new Scanner(System.in);
-    /*
-        e
-        w
-        s
-        n
-        exit
-        look
-        help
 
-        * */
 
     public static void main(String[] args) {
         new Adventure().run();
@@ -34,12 +25,12 @@ public class Adventure {
     public void commands(String command) {
         switch (command) {
             case "e" -> go();
-            case "w" -> System.out.println("go west");
-            case "n" -> System.out.println("go north");
-            case "s" -> System.out.println("go south");
-            case "look" -> System.out.println("look");
-            case "help" -> System.out.println("help");
-            case "exit" -> System.out.println("exit");
+            case "w" -> go();
+            case "n" -> go();
+            case "s" -> go();
+            case "look" -> look();
+            case "help" -> help();
+            case "exit" -> exit();
             default -> {
                 System.out.println("No such command, write another");
                 commands(sc.nextLine());
@@ -52,7 +43,8 @@ public class Adventure {
     }
 
     public void exit() {
-
+        System.out.println("Thanks for playing");
+        running = false;
     }
 
     public void help() {
