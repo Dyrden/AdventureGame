@@ -15,19 +15,25 @@ public class Adventure {
 
 
     public void run() {
+        initializeGame();
         while (running) {
-            //initializeGame()
-            System.out.println("write command");
-            commands(sc.nextLine());
+            System.out.println("What would you like to do?");
+            System.out.println("(type 'help' to view commands)");
+            commands(sc.nextLine().toLowerCase());
         }
+    }
+
+    private void initializeGame() {
+        System.out.println("Welcome to the game - add more to the welcome and intro");
+        createAndConnectRooms();
     }
 
     public void commands(String command) {
         switch (command) {
-            case "go east","east" -> go("east");
-            case "go west" -> go("west");
-            case "go north" -> go("north");
-            case "go south" -> go("south");
+            case "go east","east","e" -> go("east");
+            case "go west","west","w" -> go("west");
+            case "go north","north","n" -> go("north");
+            case "go south","south","s" -> go("south");
             case "look" -> look();
             case "help" -> help();
             case "exit" -> exit();
@@ -39,7 +45,7 @@ public class Adventure {
     }
 
     public void look() {
-        currentRoom.getRoomDescription();
+        System.out.println(currentRoom.getRoomDescription());
     }
 
     public void exit() {
@@ -48,7 +54,14 @@ public class Adventure {
     }
 
     public void help() {
-
+        System.out.println("Commands:");
+        System.out.println("'go north' - attempt going north");
+        System.out.println("'go south' - attempt going south");
+        System.out.println("'go east' - attempt going east");
+        System.out.println("'go west' - attempt going west");
+        System.out.println("'look' - look around the current room");
+        System.out.println("'help' - see commands");
+        System.out.println("'exit' - exit game");
     }
 
 
@@ -84,6 +97,7 @@ public class Adventure {
                     displayNoSuchDirection(direction);
                 }
             }
+
         }
     }
 
