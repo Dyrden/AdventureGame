@@ -72,6 +72,7 @@ public class Adventure {
             case "east" -> {
                 if (currentRoom.getEast() != null ) {
                     currentRoom = currentRoom.getEast();
+                    displayCurrentRoomChangeDescription();
                 } else {
                     displayNoSuchDirection(direction);
                 }
@@ -79,6 +80,7 @@ public class Adventure {
             case "west" -> {
                 if (currentRoom.getWest() != null ) {
                     currentRoom = currentRoom.getWest();
+                    displayCurrentRoomChangeDescription();
                 } else {
                     displayNoSuchDirection(direction);
                 }
@@ -86,6 +88,7 @@ public class Adventure {
             case "north" -> {
                 if (currentRoom.getNorth() != null ) {
                     currentRoom = currentRoom.getNorth();
+                    displayCurrentRoomChangeDescription();
                 } else {
                     displayNoSuchDirection(direction);
                 }
@@ -93,12 +96,16 @@ public class Adventure {
             case "south" -> {
                 if (currentRoom.getSouth() != null ) {
                     currentRoom = currentRoom.getSouth();
+                    displayCurrentRoomChangeDescription();
                 } else {
                     displayNoSuchDirection(direction);
                 }
             }
 
         }
+    }
+
+    public void displayCurrentRoomChangeDescription() {
         System.out.println(currentRoom.getRoomDescription());
     }
 
