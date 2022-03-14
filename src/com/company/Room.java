@@ -24,4 +24,16 @@ public class Room {
     public void setWest(Room room) {
         westernRoom = room;
     }
+    public Room getNorth(Room room) {
+        return northernRoom;
+    }
+    public Room getSouth(Room room) {
+        return southernRoom;
+    }
+    public Room getEast(Room room) {
+        return easternRoom;
+    }
+    public Room getWest(Room room) {
+        return westernRoom;
+    }
 }
