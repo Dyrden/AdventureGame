@@ -24,10 +24,10 @@ public class Adventure {
 
     public void commands(String command) {
         switch (command) {
-            case "e" -> go();
-            case "w" -> go();
-            case "n" -> go();
-            case "s" -> go();
+            case "go east","east" -> go("east");
+            case "go west" -> go("west");
+            case "go north" -> go("north");
+            case "go south" -> go("south");
             case "look" -> look();
             case "help" -> help();
             case "exit" -> exit();
@@ -51,12 +51,44 @@ public class Adventure {
 
     }
 
-    public void go() {
 
 
+    public void go(String direction) {
 
-        // 1 'go' method for each of the 4 cardial directions?
-        // or 1 'go' method for all of them.
+        switch (direction) {
+            case "east" -> {
+                if (currentRoom.getEast() != null ) {
+                    currentRoom = currentRoom.getEast();
+                } else {
+                    displayNoSuchDirection(direction);
+                }
+            }
+            case "west" -> {
+                if (currentRoom.getWest() != null ) {
+                    currentRoom = currentRoom.getEast();
+                } else {
+                    displayNoSuchDirection(direction);
+                }
+            }
+            case "north" -> {
+                if (currentRoom.getNorth() != null ) {
+                    currentRoom = currentRoom.getNorth();
+                } else {
+                    displayNoSuchDirection(direction);
+                }
+            }
+            case "south" -> {
+                if (currentRoom.getSouth() != null ) {
+                    currentRoom = currentRoom.getSouth();
+                } else {
+                    displayNoSuchDirection(direction);
+                }
+            }
+        }
+    }
+
+    public void displayNoSuchDirection(String direction) {
+        System.out.println("You tried going " + direction + " but a wall is in the way");
     }
 
     public void createAndConnectRooms() {
