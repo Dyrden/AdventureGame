@@ -24,7 +24,13 @@ public class Adventure {
     }
 
     private void initializeGame() {
-        System.out.println("Welcome to the game - add more to the welcome and intro");
+        System.out.println("\nWelcome to the Adventure of your lifetime.");
+        System.out.println("\nYou are walking around in the forest near your town.");
+        System.out.println("After wandering for hours, you decided to take a break, laying down your backpack.");
+        System.out.println("After a short break, you decide to set up camp.");
+        System.out.println("You decide to go look for firewood.");
+        System.out.println("All of a sudden, the feeling of ground pushing against your feet fails you.");
+        System.out.println("The sensation of falling is the last thing you remember\n");
         createAndConnectRooms();
     }
 
@@ -114,7 +120,7 @@ public class Adventure {
     }
 
     public void createAndConnectRooms() {
-        Room room1 = new Room("Hole", "You fell in this hole and lost all your possessions.");
+        Room room1 = new Room("Hole", "You fell in this hole and your possessions now seperated from you.");
         Room room2 = new Room("Cave", "Dank dark cavern, bats are hanging from the ceiling.");
         Room room3 = new Room("Crawl space", "You are in a tight crawl space. Nothing useful around.");
         Room room4 = new Room("Sewer", "You entered a sewer. Rats are running around.");
