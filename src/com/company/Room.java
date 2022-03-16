@@ -10,8 +10,8 @@ public class Room {
     private Room easternRoom;
     private Room westernRoom;
     private boolean isLocked;
-    private ArrayList<Item> items;
-    private ArrayList<Enemy> enemies;
+    private ArrayList<Item> items = new ArrayList<Item>();
+    private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     private boolean playerVisited;
 
     public Room(String name, String description, boolean locked) {
@@ -59,17 +59,20 @@ public class Room {
         return enemies;
     }
     public void addItem(Item item) {
-        items.add(item);
+        this.items.add(item);
+    }
+    public void removeItem(Item item) {
+        this.items.remove(item);
     }
     public void addEnemy(Enemy enemy) {
-        enemies.add(enemy);
+        this.enemies.add(enemy);
     }
     public void removeEnemy(int index) {
-        enemies.remove(index);
+        this.enemies.remove(index);
     }
 
     public void setIsLocked(boolean locked) {
-        isLocked = locked;
+        this.isLocked = locked;
     }
 
     public boolean isPlayerVisited() {
