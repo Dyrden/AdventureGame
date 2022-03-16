@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class Room {
     private final String roomName;
     private final String roomDescription;
@@ -7,11 +9,15 @@ public class Room {
     private Room southernRoom;
     private Room easternRoom;
     private Room westernRoom;
+    private boolean isLocked;
+    private ArrayList<Item> items;
+    private ArrayList<Enemy> enemies;
     private boolean playerVisited;
 
-    public Room(String name, String description) {
+    public Room(String name, String description, boolean locked) {
         roomName = name;
         roomDescription = description;
+        isLocked = locked;
     }
     public String getRoomName() {
         return roomName;
@@ -42,6 +48,28 @@ public class Room {
     }
     public Room getWest() {
         return westernRoom;
+    }
+    public boolean getIsLocked() {
+        return isLocked;
+    }
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+    public void addItem(Item item) {
+        items.add(item);
+    }
+    public void addEnemy(Enemy enemy) {
+        enemies.add(enemy);
+    }
+    public void removeEnemy(int index) {
+        enemies.remove(index);
+    }
+
+    public void setIsLocked(boolean locked) {
+        isLocked = locked;
     }
 
     public boolean isPlayerVisited() {
