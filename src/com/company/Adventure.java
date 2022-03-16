@@ -15,7 +15,7 @@ public class Adventure {
     private int currentHealth = 100;
     private int currentDamage = 1;
     private boolean isPoisoned = false;
-    private ArrayList<Item> inventory;
+    private ArrayList<Item> inventory = new ArrayList<Item>();
     //private File soundFile = new File("C:\\Users\\Markd\\IdeaProjects\\AdventureGame\\soundClip.wav");
 /*
     private static void playClip(File clipFile) throws IOException,
