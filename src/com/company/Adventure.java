@@ -16,7 +16,7 @@ public class Adventure {
     private int currentDamage = 1;
     private boolean isPoisoned = false;
     private ArrayList<Item> inventory;
-    private File soundFile = new File("C:\\Users\\Markd\\IdeaProjects\\AdventureGame\\soundClip.wav");
+    //private File soundFile = new File("C:\\Users\\Markd\\IdeaProjects\\AdventureGame\\soundClip.wav");
 /*
     private static void playClip(File clipFile) throws IOException,
         UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
