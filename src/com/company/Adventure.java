@@ -1,20 +1,56 @@
 package com.company;
 
 import java.util.Scanner;
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
+import javax.sound.sampled.LineEvent.Type;
 
 public class Adventure {
 
     private boolean running = true;
     private Room currentRoom;
     private final Scanner sc = new Scanner(System.in);
+    private File soundFile = new File("C:\\Users\\Markd\\IdeaProjects\\AdventureGame\\soundClip.wav");
 
+    private static void playClip(File clipFile) throws IOException,
+        UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
+        class AudioListener implements LineListener {
+            private boolean done = false;
+            @Override public synchronized void update(LineEvent event) {
+                Type eventType = event.getType();
+                if (eventType == Type.STOP || eventType == Type.CLOSE) {
+                    done = true;
+                    notifyAll();
+                }
+            }
+            public synchronized void waitUntilDone() throws InterruptedException {
+                while (!done) { wait(); }
+            }
+        }
+        AudioListener listener = new AudioListener();
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(clipFile);
+        try {
+            Clip clip = AudioSystem.getClip();
+            clip.addLineListener(listener);
+            clip.open(audioInputStream);
+            try {
+                clip.start();
+                listener.waitUntilDone();
+            } finally {
+                clip.close();
+            }
+        } finally {
+            audioInputStream.close();
+        }
+    }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
         new Adventure().run();
     }
 
 
-    public void run() {
+    public void run() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
         initializeGame();
         while (running) {
             System.out.println("What would you like to do?");
@@ -23,7 +59,8 @@ public class Adventure {
         }
     }
 
-    private void initializeGame() {
+    private void initializeGame() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
+        playClip(soundFile);
         System.out.println("\nWelcome to the Adventure of your lifetime.");
         System.out.println("\nYou are walking around in the forest near your town.");
         System.out.println("After wandering for hours, you decided to take a break, laying down your backpack.");
