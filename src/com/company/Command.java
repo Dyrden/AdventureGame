@@ -1,44 +1,30 @@
 package com.company;
 
 public enum Command {
-    NORTH       (0),
-    SOUTH       (1),
-    EAST        (2),
-    WEST        (3),
+    NORTH       ("'go north' - attempt going north"),
+    SOUTH       ("'go south' - attempt going south"),
+    EAST        ("'go east' - attempt going east"),
+    WEST        ("'go west' - attempt going west"),
 
-    LOOK        (4),
-    STATUS      (5),
-    INVENTORY   (6),
-    TAKE        (7),
-    USE         (8),
-    ATTACK      (9),
+    LOOK        ("'look' - look around the current room"),
+    STATUS      ("'status' - see character status"),
+    INVENTORY   ("'inventory' - see inventory"),
+    TAKE        ("'take <item>' - take visible item"),
+    USE         ("'use <item>' - use item"),
+    ATTACK      ("'attack' - attack"),
 
-    HELP        (10),
-    EXIT        (11);
+    HELP        ("'help' - see commands"),
+    EXIT        ("'exit' - exit game");
 
 
-    private final int commandCode;
-    private String[] commandDescriptions = {
-        "'go north' - attempt going north",
-        "'go south' - attempt going south",
-        "'go east' - attempt going east",
-        "'go west' - attempt going west",
-        "'look' - look around the current room",
-        "'status' - see character status",
-        "'inventory' - see inventory",
-        "'take <item>' - take visible item",
-        "'use <item>' - use item",
-        "'attack' - attack",
-        "'help' - see commands",
-        "'exit' - exit game"
-    };
+    private final String commandDescription;
 
-    Command(int commandCode) {
-        this.commandCode = commandCode;
+    Command(String commandDescription) {
+        this.commandDescription = commandDescription;
     }
 
     public String getCommandDescription() {
-        return commandDescriptions[commandCode];
+        return commandDescription;
     }
 
 
