@@ -2,8 +2,6 @@ package com.company;
 import com.company.Item.ItemType;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
@@ -26,15 +24,20 @@ public class Adventure {
         UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
         class AudioListener implements LineListener {
             private boolean done = false;
-            @Override public synchronized void update(LineEvent event) {
+
+            @Override
+            public synchronized void update(LineEvent event) {
                 Type eventType = event.getType();
                 if (eventType == Type.STOP || eventType == Type.CLOSE) {
                     done = true;
                     notifyAll();
                 }
             }
+
             public synchronized void waitUntilDone() throws InterruptedException {
-                while (!done) { wait(); }
+                while (!done) {
+                    wait();
+                }
             }
         }
         AudioListener listener = new AudioListener();
@@ -70,7 +73,6 @@ public class Adventure {
 
     private void initializeGame() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
         //playClip(soundFile);
-        player = new Player(sc.nextLine(),100,null);
         System.out.println("\nWelcome to the Adventure of your lifetime.");
         System.out.println("\nYou are walking around in the forest near your town.");
         System.out.println("After wandering for hours, you decided to take a break, laying down your backpack.");
@@ -98,10 +100,10 @@ public class Adventure {
 
     private void commands(String command) {
         switch (command) {
-            case "go east","east","e" -> go("east");
-            case "go west","west","w" -> go("west");
-            case "go north","north","n" -> go("north");
-            case "go south","south","s" -> go("south");
+            case "go east", "east", "e" -> go("east");
+            case "go west", "west", "w" -> go("west");
+            case "go north", "north", "n" -> go("north");
+            case "go south", "south", "s" -> go("south");
             case "look" -> look();
             case "status" -> showStatus();
             case "inventory" -> showInventory();
@@ -297,7 +299,7 @@ public class Adventure {
             case "east" -> {
                 if (currentRoom.getEast() != null) {
                     currentRoom = currentRoom.getEast();
-                    displayCurrentRoomDescription();
+                    displayCurrentRoomChangeDescription();
                     applyPoisonDamage(5);
                 } else {
                     displayNoSuchDirection(direction);
@@ -306,7 +308,7 @@ public class Adventure {
             case "west" -> {
                 if (currentRoom.getWest() != null) {
                     currentRoom = currentRoom.getWest();
-                    displayCurrentRoomDescription();
+                    displayCurrentRoomChangeDescription();
                     applyPoisonDamage(5);
                 } else {
                     displayNoSuchDirection(direction);
@@ -315,7 +317,7 @@ public class Adventure {
             case "north" -> {
                 if (currentRoom.getNorth() != null) {
                     currentRoom = currentRoom.getNorth();
-                    displayCurrentRoomDescription();
+                    displayCurrentRoomChangeDescription();
                     if (currentRoom.getRoomName().equals("Treasure Chamber")) { exit(); }
                     else { applyPoisonDamage(5); }
                 } else {
