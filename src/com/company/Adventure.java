@@ -64,8 +64,7 @@ public class Adventure {
     public void run()  {
         initializeGame();
         while (running) {
-            System.out.println("What would you like to do?");
-            System.out.println("(type 'help' to view commands)");
+            System.out.println("What would you like to do? (type 'help' to view commands)");
             commands(sc.nextLine().toLowerCase());
         }
     }
@@ -175,11 +174,30 @@ public class Adventure {
     }
 
     private void useFood() {
-
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).getItemType() == ItemType.food) {
+                currentHealth += inventory.get(i).getItemModifier();
+                System.out.println("Ate food and recovered " + inventory.get(i).getItemModifier() + " health.");
+                inventory.remove(i);
+                break;
+            }
+        }
     }
 
     private void useAntidote() {
-
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).getItemType() == ItemType.antidote) {
+                if (isPoisoned) {
+                    isPoisoned = false;
+                    System.out.println("Used antidote to cure poison status effect.");
+                }
+                else {
+                    System.out.println("Used antidote.");
+                }
+                inventory.remove(i);
+                break;
+            }
+        }
     }
 
     private void useKnife(int i) {
@@ -215,6 +233,9 @@ public class Adventure {
             for (int i = 0; i < currentRoom.getItems().size(); i++) {
                 if (currentRoom.getItems().get(i).getItemType() == itemType) {
                     System.out.println("Took " + currentRoom.getItems().get(i).getItemType().toString() + ".");
+                    inventory.add(currentRoom.getItems().get(i));
+                    currentRoom.getItems().remove(i);
+                    updateRoomDescription();
                     isAvailable = true;
                 }
             }
@@ -227,11 +248,55 @@ public class Adventure {
         }
     }
 
+    private void updateRoomDescription() {
+        switch (currentRoom.getRoomName()) {
+            case "Cave" -> {
+                if (currentRoom.getEnemies().size() == 1) {
+                    currentRoom.setRoomDescription("Dank dark cavern, a bat is hanging from the ceiling. Another one dead on the ground.");
+                }
+                else if (currentRoom.getEnemies().size() == 0) {
+                    currentRoom.setRoomDescription("Dank dark cavern, two bats are dead on the ground.");
+                }
+            }
+            case "Crawl space" -> {
+                if (currentRoom.getItems().size() == 0) {
+                    currentRoom.setRoomDescription("You are in a tight crawl space.");
+                }
+            }
+            case "Sewer" -> {
+                if (currentRoom.getEnemies().size() == 0) {
+                    currentRoom.setRoomDescription("You entered a sewer. There is a dead rat, its blood is fusing with the sewage.");
+                }
+            }
+            case "Security" -> {
+                if (currentRoom.getItems().size() == 0) {
+                    currentRoom.setRoomDescription("You entered a room with a bunch of displays, showing live CCTV footage. The locations seem familiar.");
+                }
+            }
+            case "Sewage filtration" -> {
+                if (currentRoom.getItems().size() == 0) {
+                    currentRoom.setRoomDescription("You've entered a room with a machine filtrating the sewage.");
+                }
+            }
+            case "Golden Door" -> {
+                if (currentRoom.getEnemies().size() == 0) {
+                    currentRoom.setRoomDescription("You find yourself in a room with a locked giant golden door.");
+                }
+            }
+            case "Back-alley" -> {
+                if (currentRoom.getItems().size() == 0) {
+                    currentRoom.setRoomDescription("You entered a back-alley, seems to connect important areas of this complex.");
+                }
+            }
+        }
+    }
+
     private void attack() {
         if (currentRoom.getEnemies().size() > 0) {
             for (int i = 0; i < currentRoom.getEnemies().size(); i++) {
-                enemyTakeDamage(i);
-                playerTakeDamage(i);
+                if (enemyTakeDamage(i)) {
+                    playerTakeDamage(i);
+                }
                 break;
             }
         }
@@ -240,17 +305,21 @@ public class Adventure {
         }
     }
 
-    private void enemyTakeDamage(int i) {
+    private boolean enemyTakeDamage(int i) {
         System.out.println("Attacking " + currentRoom.getEnemies().get(i).getEnemyType().toString() + " for " + currentDamage + " damage.");
+        boolean retaliate = false;
         if (currentRoom.getEnemies().get(i).getCurrentHealth() - currentDamage > 0) {
             currentRoom.getEnemies().get(i).setCurrentHealth(currentRoom.getEnemies().get(i).getCurrentHealth() - currentDamage);
             System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has " + currentRoom.getEnemies().get(i).getCurrentHealth() + " health remaining.");
+            retaliate = true;
         }
         else {
+            System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has died.");
             currentRoom.getEnemies().get(i).setCurrentHealth(0);
             currentRoom.removeEnemy(i);
-            System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has died.");
+            updateRoomDescription();
         }
+        return retaliate;
     }
 
     private void playerTakeDamage(int i) {

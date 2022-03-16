@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Room {
     private final String roomName;
-    private final String roomDescription;
+    private String roomDescription;
     private Room northernRoom;
     private Room southernRoom;
     private Room easternRoom;
@@ -24,6 +24,9 @@ public class Room {
     }
     public String getRoomDescription() {
         return roomDescription;
+    }
+    public void setRoomDescription(String description) {
+        roomDescription = description;
     }
     public void setNorth(Room room) {
         northernRoom = room;
