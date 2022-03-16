@@ -148,6 +148,9 @@ public class Adventure {
                 }
             }
         }
+        if (!hasItem) {
+            System.out.println("Don't have " + itemType.toString() + ".");
+        }
     }
 
     private void useKey() {
