@@ -7,6 +7,7 @@ public class Room {
     private Room southernRoom;
     private Room easternRoom;
     private Room westernRoom;
+    private boolean playerVisited;
 
     public Room(String name, String description) {
         roomName = name;
@@ -41,5 +42,13 @@ public class Room {
     }
     public Room getWest() {
         return westernRoom;
+    }
+
+    public boolean isPlayerVisited() {
+        return playerVisited;
+    }
+
+    public void setPlayerVisited(boolean playerVisited) {
+        this.playerVisited = playerVisited;
     }
 }

@@ -10,6 +10,7 @@ public class Adventure {
 
     private boolean running = true;
     private Room currentRoom;
+    private Player player;
     private final Scanner sc = new Scanner(System.in);
     private File soundFile = new File("C:\\Users\\Markd\\IdeaProjects\\AdventureGame\\soundClip.wav");
 
@@ -60,7 +61,8 @@ public class Adventure {
     }
 
     private void initializeGame() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
-        playClip(soundFile);
+        //playClip(soundFile);
+        player = new Player(sc.nextLine(),100,null);
         System.out.println("\nWelcome to the Adventure of your lifetime.");
         System.out.println("\nYou are walking around in the forest near your town.");
         System.out.println("After wandering for hours, you decided to take a break, laying down your backpack.");
@@ -184,7 +186,7 @@ public class Adventure {
         room8.setEast(room9);
         room9.setWest(room8);
         room9.setNorth(room6);
-        currentRoom = room1;
+        player.setCurrentRoom(room1);
     }
 
 
