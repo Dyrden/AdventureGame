@@ -3,7 +3,7 @@ package com.company;
 import com.company.Item.ItemType;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.File;
+
 
 public class Adventure {
 
@@ -61,12 +61,20 @@ public class Adventure {
     }
 
 
-    public void run()  {
+    public void run() {
         initializeGame();
         while (running) {
             System.out.println("What would you like to do? (type 'help' to view commands)");
-            commands(sc.nextLine().toLowerCase());
+            commands(input());
         }
+    }
+
+    private String[] input() {
+        String[] split = sc.nextLine().toLowerCase().split(" ",2);
+        if (split.length == 1) {
+            return new String[]{split[0], ""};
+        }
+        return split;
     }
 
     private void initializeGame() {
@@ -81,46 +89,25 @@ public class Adventure {
     }
 
     private void help() {
-        System.out.println("Commands:");
-        System.out.println("'go north' - attempt going north");
-        System.out.println("'go south' - attempt going south");
-        System.out.println("'go east' - attempt going east");
-        System.out.println("'go west' - attempt going west");
-        System.out.println("'look' - look around the current room");
-        System.out.println("'status' - see character status");
-        System.out.println("'inventory' - see inventory");
-        System.out.println("'take <item>' - take visible item");
-        System.out.println("'use <item>' - use item");
-        System.out.println("'attack' - attack");
-        System.out.println("'help' - see commands");
-        System.out.println("'exit' - exit game");
+        for (Command command : Command.values()) {
+            System.out.println(command.getCommandDescription());
+        }
     }
 
-    private void commands(String command) {
-        switch (command) {
-            case "go east", "east", "e" -> go("east");
-            case "go west", "west", "w" -> go("west");
-            case "go north", "north", "n" -> go("north");
-            case "go south", "south", "s" -> go("south");
+    private void commands(String[] command) {
+        switch (command[0]) {
+            case "go" -> go(command[1]);
             case "look" -> look();
             case "status" -> showStatus();
             case "inventory" -> showInventory();
-            case "take" -> take();
-            case "take key" -> take(ItemType.key);
-            case "take food" -> take(ItemType.food);
-            case "take antidote" -> take(ItemType.antidote);
-            case "take knife" -> take(ItemType.knife);
-            case "use" -> use();
-            case "use key" -> use(ItemType.key);
-            case "use food" -> use(ItemType.food);
-            case "use antidote" -> use(ItemType.antidote);
-            case "use knife" -> use(ItemType.knife);
+            case "take" -> take(command[1]);
+            case "use" -> use(command[1]);
             case "attack" -> attack();
             case "help" -> help();
-            case "exit","quit" -> exit();
+            case "exit", "quit" -> exit();
             default -> {
                 System.out.println("No such command, try again.");
-                commands(sc.nextLine());
+                commands(input());
             }
         }
     }
@@ -133,14 +120,19 @@ public class Adventure {
         }
         if (currentDamage == 1) {
             System.out.println("No weapon equipped.");
-        }
-        else {
+        } else {
             System.out.println("Has knife equipped.");
         }
     }
 
-    private void use() {
-        System.out.println("You can only use items you have in your inventory.");
+    private void use(String useParameter) {
+        switch (useParameter) {
+            case "key" -> use(ItemType.key);
+            case "antidote" -> use(ItemType.antidote);
+            case "knife" -> use(ItemType.knife);
+            case "food" -> use(ItemType.food);
+            default -> System.out.println("You can only use items you have in your inventory.");
+        }
     }
 
     private void use(ItemType itemType) {
@@ -163,12 +155,10 @@ public class Adventure {
             if ((currentRoom.getNorth() != null) && (currentRoom.getNorth().getIsLocked())) {
                 currentRoom.getNorth().setIsLocked(false);
                 System.out.println("The door has unlocked.");
-            }
-            else {
+            } else {
                 System.out.println("No lock to use the key in.");
             }
-        }
-        else {
+        } else {
             System.out.println("Can't do that right now. An adversary is in the way.");
         }
     }
@@ -190,8 +180,7 @@ public class Adventure {
                 if (isPoisoned) {
                     isPoisoned = false;
                     System.out.println("Used antidote to cure poison status effect.");
-                }
-                else {
+                } else {
                     System.out.println("Used antidote.");
                 }
                 inventory.remove(i);
@@ -204,8 +193,7 @@ public class Adventure {
         if (currentDamage == 1) {
             System.out.println("Equipping knife in right hand.");
             currentDamage = inventory.get(i).getItemModifier();
-        }
-        else {
+        } else {
             System.out.println("Unequipping knife.");
             currentDamage = 1;
         }
@@ -217,14 +205,19 @@ public class Adventure {
             for (int i = 0; i < inventory.size(); i++) {
                 System.out.println(inventory.get(i).getItemType().toString());
             }
-        }
-        else {
+        } else {
             System.out.println("Is empty.");
         }
     }
 
-    private void take() {
-        System.out.println("You can only take visible items. Try typing 'look' to look around.");
+    private void take(String useParameter) {
+        switch (useParameter) {
+            case "key" -> take(ItemType.key);
+            case "antidote" -> take(ItemType.antidote);
+            case "knife" -> take(ItemType.knife);
+            case "food" -> take(ItemType.food);
+            default -> System.out.println("You can't take " + useParameter);
+        }
     }
 
     private void take(ItemType itemType) {
@@ -242,8 +235,7 @@ public class Adventure {
             if (!isAvailable) {
                 System.out.println("No " + itemType.toString() + " here.");
             }
-        }
-        else {
+        } else {
             System.out.println("Nothing to pick up here.");
         }
     }
@@ -253,8 +245,7 @@ public class Adventure {
             case "Cave" -> {
                 if (currentRoom.getEnemies().size() == 1) {
                     currentRoom.setRoomDescription("Dank dark cavern, a bat is hanging from the ceiling. Another one dead on the ground.");
-                }
-                else if (currentRoom.getEnemies().size() == 0) {
+                } else if (currentRoom.getEnemies().size() == 0) {
                     currentRoom.setRoomDescription("Dank dark cavern, two bats are dead on the ground.");
                 }
             }
@@ -299,8 +290,7 @@ public class Adventure {
                 }
                 break;
             }
-        }
-        else {
+        } else {
             System.out.println("Nothing to attack here.");
         }
     }
@@ -312,8 +302,7 @@ public class Adventure {
             currentRoom.getEnemies().get(i).setCurrentHealth(currentRoom.getEnemies().get(i).getCurrentHealth() - currentDamage);
             System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has " + currentRoom.getEnemies().get(i).getCurrentHealth() + " health remaining.");
             retaliate = true;
-        }
-        else {
+        } else {
             System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has died.");
             currentRoom.getEnemies().get(i).setCurrentHealth(0);
             currentRoom.removeEnemy(i);
@@ -330,8 +319,7 @@ public class Adventure {
                 isPoisoned = true;
                 applyPoisonDamage(5);
             }
-        }
-        else {
+        } else {
             currentHealth = 0;
             System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has retaliated for " + currentRoom.getEnemies().get(i).getDamage() + " damage and killed you.");
             exit();
@@ -343,8 +331,7 @@ public class Adventure {
             if (currentHealth - poisonDmg > 0) {
                 currentHealth -= poisonDmg;
                 System.out.println("You take " + poisonDmg + " poison damage. " + currentHealth + " health remaining.");
-            }
-            else {
+            } else {
                 currentHealth = 0;
                 System.out.println("You took " + poisonDmg + " poison damage and died from it.");
                 exit();
@@ -386,20 +373,24 @@ public class Adventure {
                 if (currentRoom.getNorth() != null) {
                     currentRoom = currentRoom.getNorth();
                     displayCurrentRoomChangeDescription();
-                    if (currentRoom.getRoomName().equals("Treasure Chamber")) { exit(); }
-                    else { applyPoisonDamage(5); }
+                    if (currentRoom.getRoomName().equals("Treasure Chamber")) {
+                        exit();
+                    } else {
+                        applyPoisonDamage(5);
+                    }
                 } else {
                     displayNoSuchDirection(direction);
                 }
             }
             case "south" -> {
-                if (currentRoom.getSouth() != null ) {
+                if (currentRoom.getSouth() != null) {
                     currentRoom = currentRoom.getSouth();
                     displayCurrentRoomChangeDescription();
                 } else {
                     displayNoSuchDirection(direction);
                 }
             }
+            default -> System.out.println(direction + " is not a cardinal direction, rethink your choices");
 
         }
     }
