@@ -352,46 +352,71 @@ public class Adventure {
     private void go(String direction) {
         switch (direction) {
             case "east" -> {
-                if (currentRoom.getEast() != null) {
-                    currentRoom = currentRoom.getEast();
-                    displayCurrentRoomChangeDescription();
-                    applyPoisonDamage(5);
-                } else {
-                    displayNoSuchDirection(direction);
-                }
+                checkEast(direction);
             }
             case "west" -> {
-                if (currentRoom.getWest() != null) {
-                    currentRoom = currentRoom.getWest();
-                    displayCurrentRoomChangeDescription();
-                    applyPoisonDamage(5);
-                } else {
-                    displayNoSuchDirection(direction);
-                }
+                checkWest(direction);
             }
             case "north" -> {
-                if (currentRoom.getNorth() != null) {
-                    currentRoom = currentRoom.getNorth();
-                    displayCurrentRoomChangeDescription();
-                    if (currentRoom.getRoomName().equals("Treasure Chamber")) {
-                        exit();
-                    } else {
-                        applyPoisonDamage(5);
-                    }
-                } else {
-                    displayNoSuchDirection(direction);
-                }
+                checkNorth(direction);
             }
             case "south" -> {
-                if (currentRoom.getSouth() != null) {
-                    currentRoom = currentRoom.getSouth();
-                    displayCurrentRoomChangeDescription();
+                checkSouth(direction);
+            }
+            default -> System.out.println(direction + " is not a cardinal direction, rethink your choices.");
+
+        }
+    }
+
+    private void checkNorth(String direction) {
+        if (currentRoom.getNorth() != null) {
+            if (currentRoom.getNorth().getRoomName().equals("Treasure Chamber") && (currentRoom.getNorth().getIsLocked()) && (currentRoom.getEnemies().size() == 1)) {
+                System.out.println("You try running past the " + currentRoom.getEnemies().get(0).getEnemyType().toString() + " but the door is locked.");
+                playerTakeDamage(0);
+            }
+            else if (currentRoom.getNorth().getRoomName().equals("Treasure Chamber") && (currentRoom.getNorth().getIsLocked()) && (currentRoom.getEnemies().size() == 0)) {
+                System.out.println("You try walking through the locked door, you hit your head.");
+            }
+            else {
+                currentRoom = currentRoom.getNorth();
+                displayCurrentRoomChangeDescription();
+                if (currentRoom.getRoomName().equals("Treasure Chamber")) {
+                    exit();
                 } else {
-                    displayNoSuchDirection(direction);
+                    applyPoisonDamage(5);
                 }
             }
-            default -> System.out.println(direction + " is not a cardinal direction, rethink your choices");
+        } else {
+            displayNoSuchDirection(direction);
+        }
+    }
 
+    private void checkSouth(String direction) {
+        if (currentRoom.getSouth() != null) {
+            currentRoom = currentRoom.getSouth();
+            displayCurrentRoomChangeDescription();
+        } else {
+            displayNoSuchDirection(direction);
+        }
+    }
+
+    private void checkEast(String direction) {
+        if (currentRoom.getEast() != null) {
+            currentRoom = currentRoom.getEast();
+            displayCurrentRoomChangeDescription();
+            applyPoisonDamage(5);
+        } else {
+            displayNoSuchDirection(direction);
+        }
+    }
+
+    private void checkWest(String direction) {
+        if (currentRoom.getWest() != null) {
+            currentRoom = currentRoom.getWest();
+            displayCurrentRoomChangeDescription();
+            applyPoisonDamage(5);
+        } else {
+            displayNoSuchDirection(direction);
         }
     }
 
