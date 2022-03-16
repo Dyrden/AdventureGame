@@ -1,11 +1,9 @@
 package com.company;
+
 import com.company.Item.ItemType;
 import java.util.ArrayList;
 import java.util.Scanner;
-import javax.sound.sampled.*;
 import java.io.File;
-import java.io.IOException;
-import javax.sound.sampled.LineEvent.Type;
 
 public class Adventure {
 
@@ -19,7 +17,7 @@ public class Adventure {
     private boolean isPoisoned = false;
     private ArrayList<Item> inventory;
     private File soundFile = new File("C:\\Users\\Markd\\IdeaProjects\\AdventureGame\\soundClip.wav");
-
+/*
     private static void playClip(File clipFile) throws IOException,
         UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
         class AudioListener implements LineListener {
@@ -56,13 +54,14 @@ public class Adventure {
             audioInputStream.close();
         }
     }
+* */
 
-    public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
+    public static void main(String[] args) {
         new Adventure().run();
     }
 
 
-    public void run() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
+    public void run()  {
         initializeGame();
         while (running) {
             System.out.println("What would you like to do?");
@@ -71,7 +70,7 @@ public class Adventure {
         }
     }
 
-    private void initializeGame() throws UnsupportedAudioFileException, LineUnavailableException, IOException, InterruptedException {
+    private void initializeGame() {
         //playClip(soundFile);
         System.out.println("\nWelcome to the Adventure of your lifetime.");
         System.out.println("\nYou are walking around in the forest near your town.");
