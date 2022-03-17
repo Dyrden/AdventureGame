@@ -13,11 +13,13 @@ public class Room {
     private ArrayList<Item> items = new ArrayList<Item>();
     private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     private boolean playerVisited;
+    private final Player player;
 
-    public Room(String name, String description, boolean locked) {
+    public Room(String name, String description, boolean locked, Player play) {
         roomName = name;
         roomDescription = description;
         isLocked = locked;
+        player = play;
     }
     public String getRoomName() {
         return roomName;
@@ -84,5 +86,47 @@ public class Room {
 
     public void setPlayerVisited(boolean playerVisited) {
         this.playerVisited = playerVisited;
+    }
+
+    public void updateRoomDescription() {
+        switch (player.getCurrentRoom().getRoomName()) {
+            case "Cave" -> {
+                if (player.getCurrentRoom().getEnemies().size() == 1) {
+                    player.getCurrentRoom().setRoomDescription("Dank dark cavern, a bat is hanging from the ceiling. Another one dead on the ground.");
+                } else if (player.getCurrentRoom().getEnemies().size() == 0) {
+                    player.getCurrentRoom().setRoomDescription("Dank dark cavern, two bats are dead on the ground.");
+                }
+            }
+            case "Crawl space" -> {
+                if (player.getCurrentRoom().getItems().size() == 0) {
+                    player.getCurrentRoom().setRoomDescription("You are in a tight crawl space.");
+                }
+            }
+            case "Sewer" -> {
+                if (player.getCurrentRoom().getEnemies().size() == 0) {
+                    player.getCurrentRoom().setRoomDescription("You entered a sewer. There is a dead rat, its blood is fusing with the sewage.");
+                }
+            }
+            case "Security" -> {
+                if (player.getCurrentRoom().getItems().size() == 0) {
+                    player.getCurrentRoom().setRoomDescription("You entered a room with a bunch of displays, showing live CCTV footage. The locations seem familiar.");
+                }
+            }
+            case "Sewage filtration" -> {
+                if (player.getCurrentRoom().getItems().size() == 0) {
+                    player.getCurrentRoom().setRoomDescription("You've entered a room with a machine filtrating the sewage.");
+                }
+            }
+            case "Golden Door" -> {
+                if (player.getCurrentRoom().getEnemies().size() == 0) {
+                    player.getCurrentRoom().setRoomDescription("You find yourself in a room with a locked giant golden door.");
+                }
+            }
+            case "Back-alley" -> {
+                if (player.getCurrentRoom().getItems().size() == 0) {
+                    player.getCurrentRoom().setRoomDescription("You entered a back-alley, seems to connect important areas of this complex.");
+                }
+            }
+        }
     }
 }
