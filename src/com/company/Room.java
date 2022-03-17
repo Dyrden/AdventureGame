@@ -88,6 +88,10 @@ public class Room {
         this.playerVisited = playerVisited;
     }
 
+    public Room[] getDirections(){
+        return new Room[]{northernRoom,southernRoom,easternRoom,westernRoom};
+    }
+
     public void updateRoomDescription() {
         switch (player.getCurrentRoom().getRoomName()) {
             case "Cave" -> {
