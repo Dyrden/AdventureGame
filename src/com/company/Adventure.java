@@ -94,7 +94,7 @@ public class Adventure {
     private void createRooms() {
         rooms[0] = new Room("Hole", "You fell in this hole and your possessions now seperated from you.", false, player);
         rooms[1] = new Room("Cave", "Dank dark cavern, bats are hanging from the ceiling.", false, player);
-        rooms[2] = new Room("Crawl space", "You are in a tight crawl space. There's an abandoned ANTIDOTE on the ground.", false, player);
+        rooms[2] = new Room("Crawl space", "You are in a tight crawl space. There's an abandoned antidote on the ground.", false, player);
         rooms[3] = new Room("Sewer", "You entered a sewer. There is a rat running around.", false, player);
         rooms[4] = new Room("Treasure Chamber", "You've stumbled upon a treasure like no other. You won't ever have to work again.", true, player);
         rooms[5] = new Room("Security", "You entered a room with a bunch of displays, showing live CCTV footage. The locations seem familiar. There is a golden KEY on the desk.", false, player);
