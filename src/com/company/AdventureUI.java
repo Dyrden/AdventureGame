@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class AdventureUI {
 
     public void displayGameIntro() {
@@ -131,12 +133,24 @@ public class AdventureUI {
         System.out.println("Attacking " + currentRoom.getEnemies().get(i).getEnemyType().toString() + " for " + currentDamage + " damage.");
     }
 
-    public void displayInventory() {
-        System.out.println("Inventory:");
+    public void displayInventory(ArrayList<Item> items) {
+        for (Item item : items) {
+            System.out.println(item.toString());
+        }
     }
 
+    public void displayPlayerStatus(String status){
+        System.out.println(status);
+    }
     public void displayIsEmpty() {
         System.out.println("Is empty.");
+    }
+
+    public void displayPlayerMove(boolean moved, String direction){
+        if (moved)
+            System.out.println("You moved to the " + direction);
+        else
+            System.out.println("You couldn't move " + direction);
     }
 
     public void displayWeaponEquipped(String weapon) {

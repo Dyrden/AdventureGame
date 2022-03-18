@@ -42,15 +42,18 @@ public class Adventure {
 
 
     private void help() {
-       UI.displayCommandOptions();
+        UI.displayCommandOptions();
     }
 
     private void commands(String[] command) {
         switch (command[0]) {
-            case "go" -> player.go(command[1]);
+            case "go" -> {
+                boolean playerMoved = player.go(command[1]);
+                UI.displayPlayerMove(playerMoved, command[1]);
+            }
             case "look" -> player.look();
-            case "status" -> player.showStatus();
-            case "inventory" -> player.showInventory();
+            case "status" -> UI.displayPlayerStatus(player.toString());
+            case "inventory" -> UI.displayInventory(player.getInventory());
             case "take" -> player.take(command[1]);
             case "use" -> player.use(command[1]);
             case "drop" -> player.drop(command[1]);
