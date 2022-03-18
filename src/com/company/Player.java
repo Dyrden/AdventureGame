@@ -22,29 +22,23 @@ public class Player {
         this.currentRoom = currentRoom;
     }
 
-
-
-
     public void healHealth(int health) {
         if (this.currentHealth + health > maxHealth)
             this.currentHealth = maxHealth;
         else
             this.currentHealth += health;
     }
-
     public void damageHealth(int health) {
         this.currentHealth -= health;
     }
-
     public Room getCurrentRoom() {
         return currentRoom;
     }
-
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
     }
 
-
+    // toString is showStatus
     @Override
     public String toString() {
         return
@@ -54,7 +48,15 @@ public class Player {
             "Weapon equipped = " + weaponEquip +
             "Poisoned = " + isPoisoned;
     }
-/*
+
+    public ArrayList<Item> getInventory(){
+        return inventory;
+    }
+
+    private void removeItemFromInventory2(Item item){
+        inventory.remove(item);
+    }
+
     public void showStatus() {
         System.out.println("Status:");
         System.out.println("Health: " + currentHealth);
@@ -67,8 +69,6 @@ public class Player {
             System.out.println("Has knife equipped.");
         }
     }
-* */
-
     public void showInventory() {
         System.out.println("Inventory:");
         if (inventory.size() > 0) {
@@ -79,7 +79,6 @@ public class Player {
             System.out.println("Is empty.");
         }
     }
-
     private void removeItemFromInventory(Item item) {
         inventory.remove(item);
     }
