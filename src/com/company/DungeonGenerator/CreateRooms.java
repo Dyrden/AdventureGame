@@ -11,7 +11,7 @@ public class CreateRooms {
     public ArrayList<Room> generateRooms(DungeonSize size){
         int grid = size.getDungeonSize();
         for (int i = 0; i < (grid*grid)/2; i++) {
-            rooms.add(new Room(null,null,false));
+            rooms.add(new Room(null,null,false,null));
         }
         return rooms;
     }

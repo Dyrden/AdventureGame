@@ -59,9 +59,11 @@ public class Adventure {
 
     public void run() {
         initializeGame();
+        createAndConnectRooms();
         while (running) {
             System.out.println("What would you like to do? (type 'help' to view commands)");
             commands(input());
+
         }
     }
 
@@ -81,7 +83,6 @@ public class Adventure {
         System.out.println("After a short break, you decide to set up camp and go to look for firewood.");
         System.out.println("All of a sudden, the feeling of the ground pushing against your feet fails you.");
         System.out.println("The sensation of falling is the last thing you remember\n");
-        createAndConnectRooms();
     }
 
     private void help() {

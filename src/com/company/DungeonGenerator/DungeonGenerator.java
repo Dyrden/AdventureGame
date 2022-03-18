@@ -6,19 +6,16 @@ import java.util.ArrayList;
 
 public class DungeonGenerator {
 
+    private ArrayList<Room> dungeon;
 
-    public ArrayList<Room> generateDungeon(DungeonSize size) {
+    public void generateDungeon(DungeonSize size) {
         ArrayList<Room> dungeon;
-
         dungeon = new CreateRooms().generateRooms(size);
-
-
-        // link dungeon
-        // add name description
-        // go through the dungeon with a recursive loop on for each cardinal direction:
-        // if (null) add name + description; Else (Room) call itself on that Room
-        return dungeon;
+        this.dungeon = dungeon;
     }
 
 
+    public ArrayList<Room> getDungeon() {
+        return dungeon;
+    }
 }
