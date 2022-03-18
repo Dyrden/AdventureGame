@@ -2,7 +2,6 @@ package com.company;
 
 public class AdventureUI {
 
-
     public void displayGameIntro() {
         System.out.println("\nWelcome to the Adventure of your lifetime.");
         System.out.println("\nYou are walking around in the forest near your town.");
@@ -30,7 +29,6 @@ public class AdventureUI {
 
     }
 
-
     public void displayTurnStartText(){
         System.out.println("What would you like to do? (type 'help' to view commands)");
     }
@@ -41,10 +39,137 @@ public class AdventureUI {
         }
     }
 
-    public void displayDropMessage(Item item){
-        System.out.println("Dropped " + item.toString());
+    public void displayDropMessage(Item.ItemType itemType){
+        System.out.println("Dropped " + itemType.toString() + ".");
     }
 
+    public void displayDontHaveItem(Item.ItemType itemType) {
+        System.out.println("Don't have " + itemType.toString() + ".");
+    }
+
+    public void displayDoorHasUnlocked() {
+        System.out.println("The door has unlocked.");
+    }
+
+    public void displayNoLockedDoor() {
+        System.out.println("No lock to use the key in.");
+    }
+    public void displayCantUnlockDoorBecauseOfEnemy() {
+        System.out.println("Can't do that right now. An adversary is in the way.");
+    }
+
+    public void displayAteFood(Player player, int i) {
+        System.out.println("Ate food and recovered " + player.inventory.get(i).getItemModifier() + " health.");
+    }
+    public void displayUseAntidoteToCure(){
+        System.out.println("Used antidote to cure poison status effect.");
+    }
+    public void displayUseAntidote(){
+        System.out.println("Used antidote.");
+    }
+
+    public void displayEquipKnife() {
+        System.out.println("Equipping knife in right hand.");
+    }
+
+    public void displayUnequipKnife() {
+        System.out.println("Unequipping knife.");
+    }
+
+    public void displayTookItem(Player player, int i) {
+        System.out.println("Took " + player.getCurrentRoom().getItems().get(i).getItemType().toString() + ".");
+    }
+    public void displayItemNotHere(Item.ItemType itemType) {
+        System.out.println("No " + itemType.toString() + " here.");
+    }
+
+    public void displayNoItemHere() {
+        System.out.println("Nothing to pick up here.");
+    }
+
+    public void displayNoSuchItemInInventory() {
+        System.out.println("No such item in inventory.");
+    }
+
+    public void displayCanOnlyUseInventoryItems() {
+        System.out.println("You can only use items you have in your inventory.");
+    }
+
+    public void displayCantTake(String useParameter) {
+        System.out.println("You can't take " + useParameter + ".");
+    }
+
+    public void displayCantDrop(String useParameter) {
+        System.out.println("You can't drop " + useParameter + ".");
+    }
+
+    public void displayTakePoisonDamage(int poisonDmg, int currentHealth) {
+        System.out.println("You take " + poisonDmg + " poison damage. " + currentHealth + " health remaining.");
+    }
+
+    public void displayTakePoisonDamageDeath(int poisonDmg) {
+        System.out.println("You took " + poisonDmg + " poison damage and died from it.");
+    }
+
+    public void displayRetaliate(Room currentRoom, int currentHealth, int i) {
+        System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has retaliated for " + currentRoom.getEnemies().get(i).getDamage() + " damage. " + currentHealth + " health remaining.");
+    }
+
+    public void displayRetaliateDeath(Room currentRoom, int i) {
+        System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has retaliated for " + currentRoom.getEnemies().get(i).getDamage() + " damage and killed you.");
+    }
+
+    public void displayEnemyDied(Room currentRoom, int i) {
+        System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has died.");
+    }
+
+    public void displayEnemyTookDamage(Room currentRoom, int i) {
+        System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has " + currentRoom.getEnemies().get(i).getCurrentHealth() + " health remaining.");
+    }
+
+    public void displayPlayerDealDamage(Room currentRoom, int currentDamage, int i) {
+        System.out.println("Attacking " + currentRoom.getEnemies().get(i).getEnemyType().toString() + " for " + currentDamage + " damage.");
+    }
+
+    public void displayInventory() {
+        System.out.println("Inventory:");
+    }
+
+    public void displayIsEmpty() {
+        System.out.println("Is empty.");
+    }
+
+    public void displayWeaponEquipped(String weapon) {
+        System.out.println("Has " + weapon + " equipped.");
+    }
+
+    public void displayNoWeaponEquipped() {
+        System.out.println("No weapon equipped.");
+    }
+
+    public void displayPoisoned() {
+        System.out.println("Poisoned. Use antidote to cure.");
+    }
+
+    public void displayHealth(int currentHealth) {
+        System.out.println("Health: " + currentHealth);
+    }
+
+    public void displayNothingToAttack() {
+        System.out.println("Nothing to attack here.");
+    }
+
+    public void displayNotValidDirection(String direction) {
+        System.out.println(direction + " is not a cardinal direction, rethink your choices.");
+    }
+
+    public void displayEnemyInTheWay(Room currentRoom) {
+        System.out.println("You try running past the " + currentRoom.getEnemies().get(0).getEnemyType().toString() + " but the door is locked.");
+    }
+
+    public void displayWalkIntoLockedDoor() {
+        System.out.println("You try walking through the locked door, you hit your head.");
+    }
 }
 
 

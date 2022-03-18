@@ -53,6 +53,7 @@ public class Adventure {
             case "inventory" -> player.showInventory();
             case "take" -> player.take(command[1]);
             case "use" -> player.use(command[1]);
+            case "drop" -> player.drop(command[1]);
             case "attack" -> player.attack();
             case "help" -> help();
             case "exit", "quit" -> exit();
@@ -89,13 +90,13 @@ public class Adventure {
     private void createRooms() {
         rooms[0] = new Room("Hole", "You fell in this hole and your possessions now seperated from you.", false, player);
         rooms[1] = new Room("Cave", "Dank dark cavern, bats are hanging from the ceiling.", false, player);
-        rooms[2] = new Room("Crawl space", "You are in a tight crawl space. There's an abandoned antidote on the ground.", false, player);
+        rooms[2] = new Room("Crawl space", "You are in a tight crawl space. There's an abandoned ANTIDOTE on the ground.", false, player);
         rooms[3] = new Room("Sewer", "You entered a sewer. There is a rat running around.", false, player);
         rooms[4] = new Room("Treasure Chamber", "You've stumbled upon a treasure like no other. You won't ever have to work again.", true, player);
-        rooms[5] = new Room("Security", "You entered a room with a bunch of displays, showing live CCTV footage. The locations seem familiar. There is a golden key on the desk.", false, player);
-        rooms[6] = new Room("Sewage filtration", "You've entered a room with a machine filtrating the sewage. Someone left a plate of food here, probably lost their appetite.", false, player);
+        rooms[5] = new Room("Security", "You entered a room with a bunch of displays, showing live CCTV footage. The locations seem familiar. There is a golden KEY on the desk.", false, player);
+        rooms[6] = new Room("Sewage filtration", "You've entered a room with a machine filtrating the sewage. Someone left a plate of FOOD here, probably lost their appetite.", false, player);
         rooms[7] = new Room("Golden Door", "You find yourself in a room with a locked giant golden door. A giant snake guards the door.", false, player);
-        rooms[8] = new Room("Back-alley", "You entered a back-alley, seems to connect important areas of this complex. There is a knife on the ground.", false, player);
+        rooms[8] = new Room("Back-alley", "You entered a back-alley, seems to connect important areas of this complex. There is a KNIFE on the ground.", false, player);
     }
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
@@ -139,10 +140,10 @@ public class Adventure {
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createItems() {
-        rooms[2].addItem(new Item(ItemType.antidote, 1, 20, player));
-        rooms[5].addItem(new Item(ItemType.key, 1, 1, player));
-        rooms[6].addItem(new Item(ItemType.food, 30, 40, player));
-        rooms[8].addItem(new Item(ItemType.knife, 10, 1, player));
+        rooms[2].addItem(new Item("an abandoned ANTIDOTE", ItemType.ANTIDOTE, 1, 20, player));
+        rooms[5].addItem(new Item("a golden KEY", ItemType.KEY, 1, 1, player));
+        rooms[6].addItem(new Item("a plate of FOOD", ItemType.FOOD, 30, 40, player));
+        rooms[8].addItem(new Item("a KNIFE", ItemType.KNIFE, 10, 1, player));
     }
 
     /*

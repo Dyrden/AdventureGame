@@ -2,22 +2,30 @@ package com.company;
 
 public class Item {
     public enum ItemType {
-        key,
-        food,
-        antidote,
-        knife
+        KEY,
+        FOOD,
+        ANTIDOTE,
+        KNIFE
     }
+    private final String longName;
     private final ItemType itemType;
     private final int itemModifier;
-    private int rarityModifier;
-    private Player player;
+    private final int rarityModifier;
+    private final Player player;
+    private final AdventureUI ui = new AdventureUI();
 
-    public Item(ItemType type, int modifier, int rarity, Player play) {
+    public Item(String name, ItemType type, int modifier, int rarity, Player play) {
+        longName = name;
         itemType = type;
         itemModifier = modifier;
         rarityModifier = rarity;
         player = play;
     }
+    @Override
+    public String toString() {
+        return itemType.toString().toLowerCase();
+    }
+
     public ItemType getItemType() {
         return itemType;
     }
@@ -25,56 +33,38 @@ public class Item {
         return itemModifier;
     }
 
-    public void use(Item.ItemType itemType) {
-        boolean hasItem = false;
-        for (int i = 0; i < player.inventory.size(); i++) {
-            if (player.inventory.get(i).getItemType() == itemType) {
-                hasItem = true;
-                switch (itemType) {
-                    case key -> useKey();
-                    case food -> useFood();
-                    case antidote -> useAntidote();
-                    case knife -> useKnife(i);
-                }
-            }
-        }
-        if (!hasItem) {
-            System.out.println("Don't have " + itemType.toString() + ".");
-        }
-    }
-
-    private void useKey() {
+    public void useKey() {
         if (player.getCurrentRoom().getEnemies().size() == 0) {
             if ((player.getCurrentRoom().getNorth() != null) && (player.getCurrentRoom().getNorth().getIsLocked())) {
                 player.getCurrentRoom().getNorth().setIsLocked(false);
-                System.out.println("The door has unlocked.");
+                ui.displayDoorHasUnlocked();
             } else {
-                System.out.println("No lock to use the key in.");
+                ui.displayNoLockedDoor();
             }
         } else {
-            System.out.println("Can't do that right now. An adversary is in the way.");
+            ui.displayCantUnlockDoorBecauseOfEnemy();
         }
     }
 
-    private void useFood() {
+    public void useFood() {
         for (int i = 0; i < player.inventory.size(); i++) {
-            if (player.inventory.get(i).getItemType() == Item.ItemType.food) {
+            if (player.inventory.get(i).getItemType() == Item.ItemType.FOOD) {
                 player.setCurrentHealth(player.getCurrentHealth() + player.inventory.get(i).getItemModifier());
-                System.out.println("Ate food and recovered " + player.inventory.get(i).getItemModifier() + " health.");
+                ui.displayAteFood(player, i);
                 player.inventory.remove(i);
                 break;
             }
         }
     }
 
-    private void useAntidote() {
+    public void useAntidote() {
         for (int i = 0; i < player.inventory.size(); i++) {
-            if (player.inventory.get(i).getItemType() == Item.ItemType.antidote) {
+            if (player.inventory.get(i).getItemType() == Item.ItemType.ANTIDOTE) {
                 if (player.getIsPoisoned()) {
                     player.setIsPoisoned(false);
-                    System.out.println("Used antidote to cure poison status effect.");
+                    ui.displayUseAntidoteToCure();
                 } else {
-                    System.out.println("Used antidote.");
+                    ui.displayUseAntidote();
                 }
                 player.inventory.remove(i);
                 break;
@@ -82,34 +72,14 @@ public class Item {
         }
     }
 
-    private void useKnife(int i) {
+    public void useKnife(int i) {
         if (player.getCurrentDamage() == player.getBaseDamage()) {
-            System.out.println("Equipping knife in right hand.");
+            ui.displayEquipKnife();
             player.setCurrentDamage(player.inventory.get(i).getItemModifier());
         } else {
-            System.out.println("Unequipping knife.");
+            ui.displayUnequipKnife();
             player.setCurrentDamage(player.getBaseDamage());
         }
     }
 
-    public void take(Item.ItemType itemType) {
-        if (player.getCurrentRoom().getItems().size() > 0) {
-            boolean isAvailable = false;
-            for (int i = 0; i < player.getCurrentRoom().getItems().size(); i++) {
-                if (player.getCurrentRoom().getItems().get(i).getItemType() == itemType) {
-                    System.out.println("Took " + player.getCurrentRoom().getItems().get(i).getItemType().toString() + ".");
-                    player.inventory.add(player.getCurrentRoom().getItems().get(i));
-                    player.getCurrentRoom().getItems().remove(i);
-                    player.getCurrentRoom().updateRoomDescription();
-                    isAvailable = true;
-                    break;
-                }
-            }
-            if (!isAvailable) {
-                System.out.println("No " + itemType.toString() + " here.");
-            }
-        } else {
-            System.out.println("Nothing to pick up here.");
-        }
-    }
 }

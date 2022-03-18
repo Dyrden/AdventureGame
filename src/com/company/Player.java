@@ -5,6 +5,7 @@ import com.company.Item.ItemType;
 import java.util.ArrayList;
 
 public class Player {
+    private final AdventureUI ui = new AdventureUI();
     private Room currentRoom;
 
     private int currentHealth; // set at start of the game
@@ -62,14 +63,14 @@ public class Player {
     }
 
     public boolean playerDealDamage(int i) {
-        System.out.println("Attacking " + currentRoom.getEnemies().get(i).getEnemyType().toString() + " for " + currentDamage + " damage.");
+        ui.displayPlayerDealDamage(currentRoom, currentDamage, i);
         boolean retaliate = false;
         if (currentRoom.getEnemies().get(i).getCurrentHealth() - currentDamage > 0) {
             currentRoom.getEnemies().get(i).setCurrentHealth(currentRoom.getEnemies().get(i).getCurrentHealth() - currentDamage);
-            System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has " + currentRoom.getEnemies().get(i).getCurrentHealth() + " health remaining.");
+            ui.displayEnemyTookDamage(currentRoom, i);
             retaliate = true;
         } else {
-            System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has died.");
+            ui.displayEnemyDied(currentRoom, i);
             currentRoom.getEnemies().get(i).setCurrentHealth(0);
             currentRoom.removeEnemy(i);
             currentRoom.updateRoomDescription();
@@ -80,14 +81,14 @@ public class Player {
     public void playerTakeDamage(int i) {
         if ((currentRoom.getEnemies().get(i) != null) && (currentHealth - currentRoom.getEnemies().get(i).getDamage() > 0)) {
             currentHealth -= currentRoom.getEnemies().get(i).getDamage();
-            System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has retaliated for " + currentRoom.getEnemies().get(i).getDamage() + " damage. " + currentHealth + " health remaining.");
+            ui.displayRetaliate(currentRoom, currentHealth, i);
             if (currentRoom.getEnemies().get(i).getIsPoisonous()) {
                 isPoisoned = true;
                 applyPoisonDamage(5);
             }
         } else {
             currentHealth = 0;
-            System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has retaliated for " + currentRoom.getEnemies().get(i).getDamage() + " damage and killed you.");
+            ui.displayRetaliateDeath(currentRoom, i);
         }
     }
 
@@ -95,30 +96,100 @@ public class Player {
         if (isPoisoned) {
             if (currentHealth - poisonDmg > 0) {
                 currentHealth -= poisonDmg;
-                System.out.println("You take " + poisonDmg + " poison damage. " + currentHealth + " health remaining.");
+                ui.displayTakePoisonDamage(poisonDmg, currentHealth);
             } else {
                 currentHealth = 0;
-                System.out.println("You took " + poisonDmg + " poison damage and died from it.");
+                ui.displayTakePoisonDamageDeath(poisonDmg);
             }
         }
     }
 
     public void use(String useParameter) {
         switch (useParameter) {
-            case "key" -> inventory.get(0).use(ItemType.key);
-            case "antidote" -> inventory.get(0).use(ItemType.antidote);
-            case "knife" -> inventory.get(0).use(ItemType.knife);
-            case "food" -> inventory.get(0).use(ItemType.food);
-            default -> System.out.println("You can only use items you have in your inventory.");
+            case "key" -> use(ItemType.KEY);
+            case "antidote" -> use(ItemType.ANTIDOTE);
+            case "knife" -> use(ItemType.KNIFE);
+            case "food" -> use(ItemType.FOOD);
+            default -> ui.displayCanOnlyUseInventoryItems();
         }
     }
+
+    public void use(Item.ItemType itemType) {
+        boolean hasItem = false;
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).getItemType() == itemType) {
+                hasItem = true;
+                switch (itemType) {
+                    case KEY -> inventory.get(i).useKey();
+                    case FOOD -> inventory.get(i).useFood();
+                    case ANTIDOTE -> inventory.get(i).useAntidote();
+                    case KNIFE -> inventory.get(i).useKnife(i);
+                }
+            }
+        }
+        if (!hasItem) {
+            ui.displayDontHaveItem(itemType);
+        }
+    }
+
     public void take(String useParameter) {
         switch (useParameter) {
-            case "key" -> inventory.get(0).take(ItemType.key);
-            case "antidote" -> inventory.get(0).take(ItemType.antidote);
-            case "knife" -> inventory.get(0).take(ItemType.knife);
-            case "food" -> inventory.get(0).take(ItemType.food);
-            default -> System.out.println("You can't take " + useParameter);
+            case "key" -> take(ItemType.KEY);
+            case "antidote" -> take(ItemType.ANTIDOTE);
+            case "knife" -> take(ItemType.KNIFE);
+            case "food" -> take(ItemType.FOOD);
+            default -> ui.displayCantTake(useParameter);
+        }
+    }
+
+    public void take(ItemType itemType) {
+        if (getCurrentRoom().getItems().size() > 0) {
+            boolean isAvailable = false;
+            for (int i = 0; i < getCurrentRoom().getItems().size(); i++) {
+                if (getCurrentRoom().getItems().get(i).getItemType() == itemType) {
+                    ui.displayTookItem(this, i);
+                    inventory.add(getCurrentRoom().getItems().get(i));
+                    getCurrentRoom().getItems().remove(i);
+                    getCurrentRoom().updateRoomDescription();
+                    isAvailable = true;
+                    break;
+                }
+            }
+            if (!isAvailable) {
+                ui.displayItemNotHere(itemType);
+            }
+        } else {
+            ui.displayNoItemHere();
+        }
+    }
+
+    public void drop(String useParameter) {
+        switch (useParameter) {
+            case "key" -> drop(ItemType.KEY);
+            case "antidote" -> drop(ItemType.ANTIDOTE);
+            case "knife" -> drop(ItemType.KNIFE);
+            case "food" -> drop(ItemType.FOOD);
+            default -> ui.displayCantDrop(useParameter);
+        }
+    }
+    public void drop(ItemType itemType) {
+        if (inventory.size() > 0) {
+            boolean isAvailable = false;
+            for (int i = 0; i < inventory.size(); i++) {
+                if (inventory.get(i).getItemType() == itemType) {
+                    ui.displayDropMessage(itemType);
+                    getCurrentRoom().getItems().add(inventory.get(i));
+                    inventory.remove(i);
+                    getCurrentRoom().updateRoomDescription();
+                    isAvailable = true;
+                    break;
+                }
+            }
+            if (!isAvailable) {
+                ui.displayDontHaveItem(itemType);
+            }
+        } else {
+            ui.displayNoSuchItemInInventory();
         }
     }
 
