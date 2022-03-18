@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.Item.ItemType;
+
 import java.util.ArrayList;
 
 public class Player {
@@ -28,12 +29,15 @@ public class Player {
         else
             this.currentHealth += health;
     }
+
     public void damageHealth(int health) {
         this.currentHealth -= health;
     }
+
     public Room getCurrentRoom() {
         return currentRoom;
     }
+
     public void setCurrentRoom(Room currentRoom) {
         this.currentRoom = currentRoom;
     }
@@ -43,19 +47,20 @@ public class Player {
     public String toString() {
         return
             "Current room = " + currentRoom +
-            "Health/MaxHealth = " + currentHealth + "/" + maxHealth +
-            "Damage = " + currentDamage +
-            "Weapon equipped = " + weaponEquip +
-            "Poisoned = " + isPoisoned;
+                "Health/MaxHealth = " + currentHealth + "/" + maxHealth +
+                "Damage = " + currentDamage +
+                "Weapon equipped = " + weaponEquip +
+                "Poisoned = " + isPoisoned;
     }
 
-    public ArrayList<Item> getInventory(){
+    public ArrayList<Item> getInventory() {
         return inventory;
     }
 
-    private void removeItemFromInventory2(Item item){
+    private void removeItemFromInventory2(Item item) {
         inventory.remove(item);
     }
+
 
     public void showStatus() {
         System.out.println("Status:");
@@ -69,6 +74,7 @@ public class Player {
             System.out.println("Has knife equipped.");
         }
     }
+
     public void showInventory() {
         System.out.println("Inventory:");
         if (inventory.size() > 0) {
@@ -79,6 +85,7 @@ public class Player {
             System.out.println("Is empty.");
         }
     }
+
     private void removeItemFromInventory(Item item) {
         inventory.remove(item);
     }
@@ -161,74 +168,55 @@ public class Player {
         System.out.println(getCurrentRoom().getRoomDescription());
     }
 
-    public void go(String direction) {
+    public boolean go(String direction) {
         switch (direction) {
-            case "east" -> {
-                checkEast(direction);
-            }
-            case "west" -> {
-                checkWest(direction);
-            }
             case "north" -> {
-                checkNorth(direction);
+                return checkNorth();
             }
             case "south" -> {
-                checkSouth(direction);
+                return checkSouth();
             }
-            default -> System.out.println(direction + " is not a cardinal direction, rethink your choices.");
-
+            case "east" -> {
+                return checkEast();
+            }
+            case "west" -> {
+                return checkWest();
+            }
         }
+        return false;
     }
 
-    private void checkNorth(String direction) {
+    private boolean checkNorth() {
+        boolean canGo = false;
         if (getCurrentRoom().getNorth() != null) {
-            if (getCurrentRoom().getNorth().getRoomName().equals("Treasure Chamber") && (getCurrentRoom().getNorth().getIsLocked()) && (getCurrentRoom().getEnemies().size() == 1)) {
-                System.out.println("You try running past the " + getCurrentRoom().getEnemies().get(0).getEnemyType().toString() + " but the door is locked.");
-                playerTakeDamage(0);
-            }
-            else if (getCurrentRoom().getNorth().getRoomName().equals("Treasure Chamber") && (getCurrentRoom().getNorth().getIsLocked()) && (getCurrentRoom().getEnemies().size() == 0)) {
-                System.out.println("You try walking through the locked door, you hit your head.");
-            }
-            else {
-                setCurrentRoom(getCurrentRoom().getNorth());
-                displayCurrentRoomChangeDescription();
-                if (getCurrentRoom().getRoomName().equals("Treasure Chamber")) {
-                } else {
-                    applyPoisonDamage(5);
-                }
-            }
-        } else {
-            displayNoSuchDirection(direction);
+            setCurrentRoom(getCurrentRoom().getNorth());
+            canGo = true;
         }
+        return canGo;
     }
-
-    private void checkSouth(String direction) {
+    private boolean checkSouth() {
+        boolean canGo = false;
         if (getCurrentRoom().getSouth() != null) {
             setCurrentRoom(getCurrentRoom().getSouth());
-            displayCurrentRoomChangeDescription();
-        } else {
-            displayNoSuchDirection(direction);
+            canGo = true;
         }
+        return canGo;
     }
-
-    private void checkEast(String direction) {
+    private boolean checkEast() {
+        boolean canGo = false;
         if (getCurrentRoom().getEast() != null) {
             setCurrentRoom(getCurrentRoom().getEast());
-            displayCurrentRoomChangeDescription();
-            applyPoisonDamage(5);
-        } else {
-            displayNoSuchDirection(direction);
+            canGo = true;
         }
+        return canGo;
     }
-
-    private void checkWest(String direction) {
+    private boolean checkWest() {
+        boolean canGo = false;
         if (getCurrentRoom().getWest() != null) {
             setCurrentRoom(getCurrentRoom().getWest());
-            displayCurrentRoomChangeDescription();
-            applyPoisonDamage(5);
-        } else {
-            displayNoSuchDirection(direction);
+            canGo = true;
         }
+        return canGo;
     }
 
     public void displayCurrentRoomChangeDescription() {
@@ -238,24 +226,31 @@ public class Player {
     public void displayNoSuchDirection(String direction) {
         System.out.println("You tried going " + direction + " but a wall is in the way");
     }
+
     public void setCurrentHealth(int newHealth) {
         currentHealth = newHealth;
     }
+
     public int getCurrentHealth() {
         return currentHealth;
     }
+
     public void setIsPoisoned(boolean poisoned) {
         isPoisoned = poisoned;
     }
+
     public boolean getIsPoisoned() {
         return isPoisoned;
     }
+
     public int getCurrentDamage() {
         return currentDamage;
     }
+
     public void setCurrentDamage(int newDamage) {
         currentDamage = newDamage;
     }
+
     public int getBaseDamage() {
         return baseDamage;
     }
