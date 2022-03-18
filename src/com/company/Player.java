@@ -90,7 +90,6 @@ public class Player {
         } else {
             currentHealth = 0;
             System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has retaliated for " + currentRoom.getEnemies().get(i).getDamage() + " damage and killed you.");
-            Adventure.exit();
         }
     }
 
@@ -102,7 +101,6 @@ public class Player {
             } else {
                 currentHealth = 0;
                 System.out.println("You took " + poisonDmg + " poison damage and died from it.");
-                Adventure.exit();
             }
         }
     }
@@ -176,7 +174,6 @@ public class Player {
                 setCurrentRoom(getCurrentRoom().getNorth());
                 displayCurrentRoomChangeDescription();
                 if (getCurrentRoom().getRoomName().equals("Treasure Chamber")) {
-                    Adventure.exit();
                 } else {
                     applyPoisonDamage(5);
                 }

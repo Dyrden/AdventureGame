@@ -11,6 +11,7 @@ public class Adventure {
     private final int amountOfRooms = 9;
     private Room[] rooms = new Room[amountOfRooms];
     public Player player = new Player(rooms[0]);
+    private final AdventureUI UI = new AdventureUI();
     /*
     //private File soundFile = new File("C:\\Users\\Markd\\IdeaProjects\\AdventureGame\\soundClip.wav");
 
@@ -56,33 +57,27 @@ public class Adventure {
         new Adventure().run();
     }
 
-
     public void run() {
         initializeGame();
         createAndConnectRooms();
         while (running) {
-            System.out.println("What would you like to do? (type 'help' to view commands)");
+            UI.displayTurnStartText();
             commands(input());
-
         }
     }
 
     private String[] input() {
-        String[] split = sc.nextLine().toLowerCase().split(" ",2);
+        String[] split = sc.nextLine().toLowerCase().split(" ", 2);
         if (split.length == 1) {
             return new String[]{split[0], ""};
         }
         return split;
     }
 
+
     private void initializeGame() {
         //playClip(soundFile);
-        System.out.println("\nWelcome to the Adventure of your lifetime.");
-        System.out.println("\nYou are walking around in the forest near your town.");
-        System.out.println("After wandering for hours, you decided to take a break, laying down your backpack.");
-        System.out.println("After a short break, you decide to set up camp and go to look for firewood.");
-        System.out.println("All of a sudden, the feeling of the ground pushing against your feet fails you.");
-        System.out.println("The sensation of falling is the last thing you remember\n");
+        UI.displayGameIntro();
     }
 
     private void help() {
@@ -102,18 +97,27 @@ public class Adventure {
             case "attack" -> player.attack();
             case "help" -> help();
             case "exit", "quit" -> exit();
-            default -> {
-                System.out.println("No such command, try again.");
-            }
+            default -> UI.displayNoSuchCommand();
         }
     }
 
-    public static void exit() {
-        System.out.println("Game over.");
-        System.out.println("Thanks for playing.");
+    public void gameWin() {
+        // if player room == win room
+        UI.displayWinGame();
+    }
+
+    public void gameLose() {
+        // if player health == 0
+        UI.displayLoseGame();
+    }
+
+    public void exit() {
+        UI.displayExitGame();
         running = false;
     }
 
+
+    //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createAndConnectRooms() {
         createRooms();
         connectRooms();
@@ -122,6 +126,7 @@ public class Adventure {
         player.setCurrentRoom(rooms[0]);
     }
 
+    //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createRooms() {
         rooms[0] = new Room("Hole", "You fell in this hole and your possessions now seperated from you.", false, player);
         rooms[1] = new Room("Cave", "Dank dark cavern, bats are hanging from the ceiling.", false, player);
@@ -134,6 +139,7 @@ public class Adventure {
         rooms[8] = new Room("Back-alley", "You entered a back-alley, seems to connect important areas of this complex. There is a knife on the ground.", false, player);
     }
 
+    //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void connectRooms() {
         rooms[0].setEast(rooms[1]);
         rooms[0].setSouth(rooms[3]);
@@ -163,6 +169,8 @@ public class Adventure {
         rooms[8].setNorth(rooms[5]);
     }
 
+
+    //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createEnemies() {
         rooms[1].addEnemy(new Enemy(Enemy.EnemyType.bat, 10, 9, true));
         rooms[1].addEnemy(new Enemy(Enemy.EnemyType.bat, 10, 9, true));
@@ -170,6 +178,7 @@ public class Adventure {
         rooms[7].addEnemy(new Enemy(Enemy.EnemyType.snake, 50, 10, true));
     }
 
+    //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createItems() {
         rooms[2].addItem(new Item(ItemType.antidote, 1, 20, player));
         rooms[5].addItem(new Item(ItemType.key, 1, 1, player));
