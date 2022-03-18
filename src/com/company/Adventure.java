@@ -17,9 +17,6 @@ public class Adventure {
     private Room[] rooms = new Room[amountOfRooms];
     public Player player = new Player(rooms[0]);
 
-    public static void main(String[] args) {
-        new Adventure().run();
-    }
 
     public void run() {
         UI.displayGameIntro();
