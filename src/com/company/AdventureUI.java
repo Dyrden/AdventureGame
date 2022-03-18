@@ -34,6 +34,17 @@ public class AdventureUI {
     public void displayTurnStartText(){
         System.out.println("What would you like to do? (type 'help' to view commands)");
     }
+
+    public void displayCommandOptions(){
+        for (Command command : Command.values()) {
+            System.out.println(command.getCommandDescription());
+        }
+    }
+
+    public void displayDropMessage(Item item){
+        System.out.println("Dropped " + item.toString());
+    }
+
 }
 
 

@@ -1,73 +1,42 @@
 package com.company;
 
+import com.company.DungeonGenerator.DungeonSize;
 import com.company.Item.ItemType;
 
 import java.util.Scanner;
 
 public class Adventure {
 
-    private static boolean running = true;
-    private final Scanner sc = new Scanner(System.in);
+
+    private final Scanner playerInput = new Scanner(System.in);
+    private final AdventureUI UI = new AdventureUI();
+    private boolean gameRunning = true;
+
+
     private final int amountOfRooms = 9;
     private Room[] rooms = new Room[amountOfRooms];
     public Player player = new Player(rooms[0]);
-    private final AdventureUI UI = new AdventureUI();
-    /*
-    //private File soundFile = new File("C:\\Users\\Markd\\IdeaProjects\\AdventureGame\\soundClip.wav");
-
-    private static void playClip(File clipFile) throws IOException,
-        UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
-        class AudioListener implements LineListener {
-            private boolean done = false;
-
-            @Override
-            public synchronized void update(LineEvent event) {
-                Type eventType = event.getType();
-                if (eventType == Type.STOP || eventType == Type.CLOSE) {
-                    done = true;
-                    notifyAll();
-                }
-            }
-
-            public synchronized void waitUntilDone() throws InterruptedException {
-                while (!done) {
-                    wait();
-                }
-            }
-        }
-        AudioListener listener = new AudioListener();
-        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(clipFile);
-        try {
-            Clip clip = AudioSystem.getClip();
-            clip.addLineListener(listener);
-            clip.open(audioInputStream);
-            try {
-                clip.start();
-                listener.waitUntilDone();
-            } finally {
-                clip.close();
-            }
-        } finally {
-            audioInputStream.close();
-        }
-    }
-   */
 
     public static void main(String[] args) {
         new Adventure().run();
     }
 
     public void run() {
-        initializeGame();
+        UI.displayGameIntro();
+
         createAndConnectRooms();
-        while (running) {
+
+        while (gameRunning) {
             UI.displayTurnStartText();
             commands(input());
         }
+
+        //maybe
+        // if (gameIsOver)
     }
 
     private String[] input() {
-        String[] split = sc.nextLine().toLowerCase().split(" ", 2);
+        String[] split = playerInput.nextLine().toLowerCase().split(" ", 2);
         if (split.length == 1) {
             return new String[]{split[0], ""};
         }
@@ -75,15 +44,8 @@ public class Adventure {
     }
 
 
-    private void initializeGame() {
-        //playClip(soundFile);
-        UI.displayGameIntro();
-    }
-
     private void help() {
-        for (Command command : Command.values()) {
-            System.out.println(command.getCommandDescription());
-        }
+       UI.displayCommandOptions();
     }
 
     private void commands(String[] command) {
@@ -113,7 +75,7 @@ public class Adventure {
 
     public void exit() {
         UI.displayExitGame();
-        running = false;
+        gameRunning = false;
     }
 
 
@@ -185,4 +147,45 @@ public class Adventure {
         rooms[6].addItem(new Item(ItemType.food, 30, 40, player));
         rooms[8].addItem(new Item(ItemType.knife, 10, 1, player));
     }
+
+    /*
+    //private File soundFile = new File("C:\\Users\\Markd\\IdeaProjects\\AdventureGame\\soundClip.wav");
+
+    private static void playClip(File clipFile) throws IOException,
+        UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
+        class AudioListener implements LineListener {
+            private boolean done = false;
+
+            @Override
+            public synchronized void update(LineEvent event) {
+                Type eventType = event.getType();
+                if (eventType == Type.STOP || eventType == Type.CLOSE) {
+                    done = true;
+                    notifyAll();
+                }
+            }
+
+            public synchronized void waitUntilDone() throws InterruptedException {
+                while (!done) {
+                    wait();
+                }
+            }
+        }
+        AudioListener listener = new AudioListener();
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(clipFile);
+        try {
+            Clip clip = AudioSystem.getClip();
+            clip.addLineListener(listener);
+            clip.open(audioInputStream);
+            try {
+                clip.start();
+                listener.waitUntilDone();
+            } finally {
+                clip.close();
+            }
+        } finally {
+            audioInputStream.close();
+        }
+    }
+   */
 }
