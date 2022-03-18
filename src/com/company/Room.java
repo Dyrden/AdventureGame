@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class Room {
     private final String roomName;
     private String roomDescription;
+    private boolean isLocked;
     private Room northernRoom;
     private Room southernRoom;
     private Room easternRoom;
     private Room westernRoom;
-    private boolean isLocked;
-    private ArrayList<Item> items = new ArrayList<Item>();
-    private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Enemy> enemies = new ArrayList<>();
     private boolean playerVisited;
     private final Player player;
 

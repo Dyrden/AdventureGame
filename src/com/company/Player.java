@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.Item.ItemType;
 import java.util.ArrayList;
 
 public class Player {
@@ -8,7 +9,7 @@ public class Player {
     private int currentHealth;
     private int currentDamage = 1;
     private boolean isPoisoned = false;
-    private ArrayList<Item> inventory = new ArrayList<Item>();
+    public ArrayList<Item> inventory = new ArrayList<>();
     private int baseDamage = 1;
 
     public Player(Room currentRoom) {
@@ -44,94 +45,6 @@ public class Player {
             System.out.println("No weapon equipped.");
         } else {
             System.out.println("Has knife equipped.");
-        }
-    }
-
-    public void use(Item.ItemType itemType) {
-        boolean hasItem = false;
-        for (int i = 0; i < inventory.size(); i++) {
-            if (inventory.get(i).getItemType() == itemType) {
-                hasItem = true;
-                switch (itemType) {
-                    case key -> useKey();
-                    case food -> useFood();
-                    case antidote -> useAntidote();
-                    case knife -> useKnife(i);
-                }
-            }
-        }
-        if (!hasItem) {
-            System.out.println("Don't have " + itemType.toString() + ".");
-        }
-    }
-
-    private void useKey() {
-        if (currentRoom.getEnemies().size() == 0) {
-            if ((currentRoom.getNorth() != null) && (currentRoom.getNorth().getIsLocked())) {
-                currentRoom.getNorth().setIsLocked(false);
-                System.out.println("The door has unlocked.");
-            } else {
-                System.out.println("No lock to use the key in.");
-            }
-        } else {
-            System.out.println("Can't do that right now. An adversary is in the way.");
-        }
-    }
-
-    private void useFood() {
-        for (int i = 0; i < inventory.size(); i++) {
-            if (inventory.get(i).getItemType() == Item.ItemType.food) {
-                currentHealth += inventory.get(i).getItemModifier();
-                System.out.println("Ate food and recovered " + inventory.get(i).getItemModifier() + " health.");
-                inventory.remove(i);
-                break;
-            }
-        }
-    }
-
-    private void useAntidote() {
-        for (int i = 0; i < inventory.size(); i++) {
-            if (inventory.get(i).getItemType() == Item.ItemType.antidote) {
-                if (isPoisoned) {
-                    isPoisoned = false;
-                    System.out.println("Used antidote to cure poison status effect.");
-                } else {
-                    System.out.println("Used antidote.");
-                }
-                inventory.remove(i);
-                break;
-            }
-        }
-    }
-
-    private void useKnife(int i) {
-        if (currentDamage == baseDamage) {
-            System.out.println("Equipping knife in right hand.");
-            currentDamage = inventory.get(i).getItemModifier();
-        } else {
-            System.out.println("Unequipping knife.");
-            currentDamage = baseDamage;
-        }
-    }
-
-    public void take(Item.ItemType itemType) {
-        if (currentRoom.getItems().size() > 0) {
-            boolean isAvailable = false;
-            for (int i = 0; i < currentRoom.getItems().size(); i++) {
-                if (currentRoom.getItems().get(i).getItemType() == itemType) {
-                    System.out.println("Took " + currentRoom.getItems().get(i).getItemType().toString() + ".");
-                    inventory.add(currentRoom.getItems().get(i));
-                    currentRoom.getItems().remove(i);
-                    currentRoom.updateRoomDescription();
-                    isAvailable = true;
-                    break;
-                }
-            }
-            if (!isAvailable) {
-                System.out.println("No " + itemType.toString() + " here.");
-            }
-        } else {
-            System.out.println("Nothing to pick up here.");
         }
     }
 
@@ -192,5 +105,142 @@ public class Player {
                 Adventure.exit();
             }
         }
+    }
+
+    public void use(String useParameter) {
+        switch (useParameter) {
+            case "key" -> inventory.get(0).use(ItemType.key);
+            case "antidote" -> inventory.get(0).use(ItemType.antidote);
+            case "knife" -> inventory.get(0).use(ItemType.knife);
+            case "food" -> inventory.get(0).use(ItemType.food);
+            default -> System.out.println("You can only use items you have in your inventory.");
+        }
+    }
+
+    public void take(String useParameter) {
+        switch (useParameter) {
+            case "key" -> inventory.get(0).take(ItemType.key);
+            case "antidote" -> inventory.get(0).take(ItemType.antidote);
+            case "knife" -> inventory.get(0).take(ItemType.knife);
+            case "food" -> inventory.get(0).take(ItemType.food);
+            default -> System.out.println("You can't take " + useParameter);
+        }
+    }
+
+    public void attack() {
+        if (currentRoom.getEnemies().size() > 0) {
+            for (int i = 0; i < currentRoom.getEnemies().size(); i++) {
+                if (playerDealDamage(i)) {
+                    playerTakeDamage(i);
+                }
+                break;
+            }
+        } else {
+            System.out.println("Nothing to attack here.");
+        }
+    }
+
+    public void look() {
+        System.out.println(getCurrentRoom().getRoomDescription());
+    }
+
+    public void go(String direction) {
+        switch (direction) {
+            case "east" -> {
+                checkEast(direction);
+            }
+            case "west" -> {
+                checkWest(direction);
+            }
+            case "north" -> {
+                checkNorth(direction);
+            }
+            case "south" -> {
+                checkSouth(direction);
+            }
+            default -> System.out.println(direction + " is not a cardinal direction, rethink your choices.");
+
+        }
+    }
+
+    private void checkNorth(String direction) {
+        if (getCurrentRoom().getNorth() != null) {
+            if (getCurrentRoom().getNorth().getRoomName().equals("Treasure Chamber") && (getCurrentRoom().getNorth().getIsLocked()) && (getCurrentRoom().getEnemies().size() == 1)) {
+                System.out.println("You try running past the " + getCurrentRoom().getEnemies().get(0).getEnemyType().toString() + " but the door is locked.");
+                playerTakeDamage(0);
+            }
+            else if (getCurrentRoom().getNorth().getRoomName().equals("Treasure Chamber") && (getCurrentRoom().getNorth().getIsLocked()) && (getCurrentRoom().getEnemies().size() == 0)) {
+                System.out.println("You try walking through the locked door, you hit your head.");
+            }
+            else {
+                setCurrentRoom(getCurrentRoom().getNorth());
+                displayCurrentRoomChangeDescription();
+                if (getCurrentRoom().getRoomName().equals("Treasure Chamber")) {
+                    Adventure.exit();
+                } else {
+                    applyPoisonDamage(5);
+                }
+            }
+        } else {
+            displayNoSuchDirection(direction);
+        }
+    }
+
+    private void checkSouth(String direction) {
+        if (getCurrentRoom().getSouth() != null) {
+            setCurrentRoom(getCurrentRoom().getSouth());
+            displayCurrentRoomChangeDescription();
+        } else {
+            displayNoSuchDirection(direction);
+        }
+    }
+
+    private void checkEast(String direction) {
+        if (getCurrentRoom().getEast() != null) {
+            setCurrentRoom(getCurrentRoom().getEast());
+            displayCurrentRoomChangeDescription();
+            applyPoisonDamage(5);
+        } else {
+            displayNoSuchDirection(direction);
+        }
+    }
+
+    private void checkWest(String direction) {
+        if (getCurrentRoom().getWest() != null) {
+            setCurrentRoom(getCurrentRoom().getWest());
+            displayCurrentRoomChangeDescription();
+            applyPoisonDamage(5);
+        } else {
+            displayNoSuchDirection(direction);
+        }
+    }
+
+    public void displayCurrentRoomChangeDescription() {
+        System.out.println(getCurrentRoom().getRoomDescription());
+    }
+
+    public void displayNoSuchDirection(String direction) {
+        System.out.println("You tried going " + direction + " but a wall is in the way");
+    }
+    public void setCurrentHealth(int newHealth) {
+        currentHealth = newHealth;
+    }
+    public int getCurrentHealth() {
+        return currentHealth;
+    }
+    public void setIsPoisoned(boolean poisoned) {
+        isPoisoned = poisoned;
+    }
+    public boolean getIsPoisoned() {
+        return isPoisoned;
+    }
+    public int getCurrentDamage() {
+        return currentDamage;
+    }
+    public void setCurrentDamage(int newDamage) {
+        currentDamage = newDamage;
+    }
+    public int getBaseDamage() {
+        return baseDamage;
     }
 }

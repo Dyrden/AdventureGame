@@ -10,7 +10,7 @@ public class Adventure {
     private final Scanner sc = new Scanner(System.in);
     private final int amountOfRooms = 9;
     private Room[] rooms = new Room[amountOfRooms];
-    private Player player = new Player(rooms[0]);
+    public Player player = new Player(rooms[0]);
     /*
     //private File soundFile = new File("C:\\Users\\Markd\\IdeaProjects\\AdventureGame\\soundClip.wav");
 
@@ -92,142 +92,25 @@ public class Adventure {
 
     private void commands(String[] command) {
         switch (command[0]) {
-            case "go" -> go(command[1]);
-            case "look" -> look();
+            case "go" -> player.go(command[1]);
+            case "look" -> player.look();
             case "status" -> player.showStatus();
             case "inventory" -> player.showInventory();
-            case "take" -> take(command[1]);
-            case "use" -> use(command[1]);
-            case "attack" -> attack();
+            case "take" -> player.take(command[1]);
+            case "use" -> player.use(command[1]);
+            case "attack" -> player.attack();
             case "help" -> help();
             case "exit", "quit" -> exit();
             default -> {
                 System.out.println("No such command, try again.");
-                commands(input());
             }
         }
-    }
-
-    private void use(String useParameter) {
-        switch (useParameter) {
-            case "key" -> player.use(ItemType.key);
-            case "antidote" -> player.use(ItemType.antidote);
-            case "knife" -> player.use(ItemType.knife);
-            case "food" -> player.use(ItemType.food);
-            default -> System.out.println("You can only use items you have in your inventory.");
-        }
-    }
-
-    private void take(String useParameter) {
-        switch (useParameter) {
-            case "key" -> player.take(ItemType.key);
-            case "antidote" -> player.take(ItemType.antidote);
-            case "knife" -> player.take(ItemType.knife);
-            case "food" -> player.take(ItemType.food);
-            default -> System.out.println("You can't take " + useParameter);
-        }
-    }
-
-    private void attack() {
-        if (player.getCurrentRoom().getEnemies().size() > 0) {
-            for (int i = 0; i < player.getCurrentRoom().getEnemies().size(); i++) {
-                if (player.playerDealDamage(i)) {
-                    player.playerTakeDamage(i);
-                }
-                break;
-            }
-        } else {
-            System.out.println("Nothing to attack here.");
-        }
-    }
-
-    private void look() {
-        System.out.println(player.getCurrentRoom().getRoomDescription());
     }
 
     public static void exit() {
         System.out.println("Game over.");
         System.out.println("Thanks for playing.");
         running = false;
-    }
-
-    private void go(String direction) {
-        switch (direction) {
-            case "east" -> {
-                checkEast(direction);
-            }
-            case "west" -> {
-                checkWest(direction);
-            }
-            case "north" -> {
-                checkNorth(direction);
-            }
-            case "south" -> {
-                checkSouth(direction);
-            }
-            default -> System.out.println(direction + " is not a cardinal direction, rethink your choices.");
-
-        }
-    }
-
-    private void checkNorth(String direction) {
-        if (player.getCurrentRoom().getNorth() != null) {
-            if (player.getCurrentRoom().getNorth().getRoomName().equals("Treasure Chamber") && (player.getCurrentRoom().getNorth().getIsLocked()) && (player.getCurrentRoom().getEnemies().size() == 1)) {
-                System.out.println("You try running past the " + player.getCurrentRoom().getEnemies().get(0).getEnemyType().toString() + " but the door is locked.");
-                player.playerTakeDamage(0);
-            }
-            else if (player.getCurrentRoom().getNorth().getRoomName().equals("Treasure Chamber") && (player.getCurrentRoom().getNorth().getIsLocked()) && (player.getCurrentRoom().getEnemies().size() == 0)) {
-                System.out.println("You try walking through the locked door, you hit your head.");
-            }
-            else {
-                player.setCurrentRoom(player.getCurrentRoom().getNorth());
-                displayCurrentRoomChangeDescription();
-                if (player.getCurrentRoom().getRoomName().equals("Treasure Chamber")) {
-                    exit();
-                } else {
-                    player.applyPoisonDamage(5);
-                }
-            }
-        } else {
-            displayNoSuchDirection(direction);
-        }
-    }
-
-    private void checkSouth(String direction) {
-        if (player.getCurrentRoom().getSouth() != null) {
-            player.setCurrentRoom(player.getCurrentRoom().getSouth());
-            displayCurrentRoomChangeDescription();
-        } else {
-            displayNoSuchDirection(direction);
-        }
-    }
-
-    private void checkEast(String direction) {
-        if (player.getCurrentRoom().getEast() != null) {
-            player.setCurrentRoom(player.getCurrentRoom().getEast());
-            displayCurrentRoomChangeDescription();
-            player.applyPoisonDamage(5);
-        } else {
-            displayNoSuchDirection(direction);
-        }
-    }
-
-    private void checkWest(String direction) {
-        if (player.getCurrentRoom().getWest() != null) {
-            player.setCurrentRoom(player.getCurrentRoom().getWest());
-            displayCurrentRoomChangeDescription();
-            player.applyPoisonDamage(5);
-        } else {
-            displayNoSuchDirection(direction);
-        }
-    }
-
-    public void displayCurrentRoomChangeDescription() {
-        System.out.println(player.getCurrentRoom().getRoomDescription());
-    }
-
-    public void displayNoSuchDirection(String direction) {
-        System.out.println("You tried going " + direction + " but a wall is in the way");
     }
 
     private void createAndConnectRooms() {
@@ -287,9 +170,9 @@ public class Adventure {
     }
 
     private void createItems() {
-        rooms[2].addItem(new Item(ItemType.antidote, 1));
-        rooms[5].addItem(new Item(ItemType.key, 1));
-        rooms[6].addItem(new Item(ItemType.food, 30));
-        rooms[8].addItem(new Item(ItemType.knife, 10));
+        rooms[2].addItem(new Item(ItemType.antidote, 1, 20, player));
+        rooms[5].addItem(new Item(ItemType.key, 1, 1, player));
+        rooms[6].addItem(new Item(ItemType.food, 30, 40, player));
+        rooms[8].addItem(new Item(ItemType.knife, 10, 1, player));
     }
 }
