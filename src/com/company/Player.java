@@ -120,10 +120,10 @@ public class Player {
             if (inventory.get(i).getItemType() == itemType) {
                 hasItem = true;
                 switch (itemType) {
-                    case KEY -> inventory.get(i).useKey();
-                    case FOOD -> inventory.get(i).useFood();
-                    case ANTIDOTE -> inventory.get(i).useAntidote();
-                    case KNIFE -> inventory.get(i).useKnife(i);
+                    case KEY -> inventory.get(i).useKey(currentRoom);
+                    case FOOD -> inventory.get(i).useFood(i);
+                    case ANTIDOTE -> inventory.get(i).useAntidote(i);
+                    case KNIFE -> inventory.get(i).useWeapon(inventory.get(i).getItemType().toString(), i);
                 }
             }
         }

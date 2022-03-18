@@ -32,11 +32,10 @@ public class Item {
     public int getItemModifier() {
         return itemModifier;
     }
-
-    public void useKey() {
-        if (player.getCurrentRoom().getEnemies().size() == 0) {
-            if ((player.getCurrentRoom().getNorth() != null) && (player.getCurrentRoom().getNorth().getIsLocked())) {
-                player.getCurrentRoom().getNorth().setIsLocked(false);
+    public void useKey(Room currentRoom) {
+        if (currentRoom.getEnemies().size() == 0) {
+            if ((currentRoom.getNorth() != null) && (currentRoom.getNorth().getIsLocked())) {
+                currentRoom.getNorth().setIsLocked(false);
                 ui.displayDoorHasUnlocked();
             } else {
                 ui.displayNoLockedDoor();
@@ -46,38 +45,32 @@ public class Item {
         }
     }
 
-    public void useFood() {
-        for (int i = 0; i < player.inventory.size(); i++) {
-            if (player.inventory.get(i).getItemType() == Item.ItemType.FOOD) {
-                player.setCurrentHealth(player.getCurrentHealth() + player.inventory.get(i).getItemModifier());
-                ui.displayAteFood(player, i);
-                player.inventory.remove(i);
-                break;
-            }
+    public void useFood(int i) {
+        if (this.itemType == ItemType.FOOD) {
+            ui.displayAteFood(player, i);
+            player.inventory.remove(i);
+            player.healHealth(player.inventory.get(i).getItemModifier());
         }
     }
 
-    public void useAntidote() {
-        for (int i = 0; i < player.inventory.size(); i++) {
-            if (player.inventory.get(i).getItemType() == Item.ItemType.ANTIDOTE) {
-                if (player.getIsPoisoned()) {
-                    player.setIsPoisoned(false);
-                    ui.displayUseAntidoteToCure();
-                } else {
-                    ui.displayUseAntidote();
-                }
-                player.inventory.remove(i);
-                break;
+    public void useAntidote(int i) {
+        if (this.itemType == ItemType.ANTIDOTE) {
+            if (player.getIsPoisoned()) {
+                player.setIsPoisoned(false);
+                ui.displayUseAntidoteToCure();
+            } else {
+                ui.displayUseAntidote();
             }
+            player.inventory.remove(i);
         }
     }
 
-    public void useKnife(int i) {
+    public void useWeapon(String weapon, int i) {
         if (player.getCurrentDamage() == player.getBaseDamage()) {
-            ui.displayEquipKnife();
+            ui.displayEquipWeapon(weapon);
             player.setCurrentDamage(player.inventory.get(i).getItemModifier());
         } else {
-            ui.displayUnequipKnife();
+            ui.displayUnequipWeapon(weapon);
             player.setCurrentDamage(player.getBaseDamage());
         }
     }

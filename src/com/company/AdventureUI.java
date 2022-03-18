@@ -70,12 +70,12 @@ public class AdventureUI {
         System.out.println("Used antidote.");
     }
 
-    public void displayEquipKnife() {
-        System.out.println("Equipping knife in right hand.");
+    public void displayEquipWeapon(String weapon) {
+        System.out.println("Equipping " + weapon + " in right hand.");
     }
 
-    public void displayUnequipKnife() {
-        System.out.println("Unequipping knife.");
+    public void displayUnequipWeapon(String weapon) {
+        System.out.println("Unequipping " + weapon + ".");
     }
 
     public void displayTookItem(Player player, int i) {
