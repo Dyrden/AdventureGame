@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class GameMenu {
 
-    private boolean gameRunning;
+    private boolean gameRunning = true;
     private final GameMenuUI UI = new GameMenuUI();
     private final Scanner keyboard = new Scanner(System.in);
 
@@ -13,12 +13,12 @@ public class GameMenu {
     }
 
     public void run() {
+        UI.displayGameMenuIntro();
+        UI.displayPlayOrExit();
         while (gameRunning) menu(keyboard.nextLine());
     }
 
     public void menu(String input) {
-        UI.displayGameMenuIntro();
-        UI.displayPlayOrExit();
         switch (input) {
             case "play" -> new Adventure().run();
             case "exit" -> gameRunning = false;

@@ -50,6 +50,8 @@ public class Adventure {
             case "go" -> {
                 boolean playerMoved = player.go(command[1]);
                 UI.displayPlayerMove(playerMoved, command[1]);
+                if (playerMoved)
+                    UI.displayCurrentRoomDescription(player.getCurrentRoom());
             }
             case "look" -> player.look();
             case "status" -> UI.displayPlayerStatus(player.toString());

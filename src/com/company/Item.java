@@ -23,7 +23,7 @@ public class Item {
     }
     @Override
     public String toString() {
-        return itemType.toString().toLowerCase();
+        return longName;
     }
 
     public ItemType getItemType() {

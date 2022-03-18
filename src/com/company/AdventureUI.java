@@ -134,8 +134,10 @@ public class AdventureUI {
     }
 
     public void displayInventory(ArrayList<Item> items) {
-        for (Item item : items) {
-            System.out.println(item.toString());
+        System.out.println("Inventory contains:");
+
+        for (int i = 0; i < items.size(); i++) {
+            System.out.println(i + " - " + items.get(i).toString());
         }
     }
 
@@ -149,6 +151,7 @@ public class AdventureUI {
     public void displayPlayerMove(boolean moved, String direction){
         if (moved)
             System.out.println("You moved to the " + direction);
+
         else
             System.out.println("You couldn't move " + direction);
     }
@@ -185,7 +188,7 @@ public class AdventureUI {
         System.out.println("You try walking through the locked door, you hit your head.");
     }
 
-    public void displayCurrentRoomChangeDescription(Room currentRoom) {
+    public void displayCurrentRoomDescription(Room currentRoom) {
         System.out.println(currentRoom.getRoomDescription());
     }
 
