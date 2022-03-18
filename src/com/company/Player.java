@@ -5,17 +5,25 @@ import java.util.ArrayList;
 
 public class Player {
     private Room currentRoom;
-    private final int maxHealth = 100;
-    private int currentHealth;
-    private int currentDamage = 1;
+
+    private int currentHealth; // set at start of the game
+    private int maxHealth = 100; // might wanna add items to boost max health, so this may not be final
+
+    private int currentDamage = 1; // technically its baseDamage
+    private Item weaponEquip = null;
+
     private boolean isPoisoned = false;
+
     public ArrayList<Item> inventory = new ArrayList<>();
-    private int baseDamage = 1;
+    private final int baseDamage = 1;
 
     public Player(Room currentRoom) {
         this.currentHealth = maxHealth;
         this.currentRoom = currentRoom;
     }
+
+
+
 
     public void healHealth(int health) {
         if (this.currentHealth + health > maxHealth)
@@ -23,6 +31,7 @@ public class Player {
         else
             this.currentHealth += health;
     }
+
     public void damageHealth(int health) {
         this.currentHealth -= health;
     }
@@ -35,18 +44,30 @@ public class Player {
         this.currentRoom = currentRoom;
     }
 
+
+    @Override
+    public String toString() {
+        return
+            "Current room = " + currentRoom +
+            "Health/MaxHealth = " + currentHealth + "/" + maxHealth +
+            "Damage = " + currentDamage +
+            "Weapon equipped = " + weaponEquip +
+            "Poisoned = " + isPoisoned;
+    }
+/*
     public void showStatus() {
         System.out.println("Status:");
         System.out.println("Health: " + currentHealth);
         if (isPoisoned) {
             System.out.println("Poisoned. Use antidote to cure.");
         }
-        if (currentDamage == 1) {
+        if (weaponEquip == null) {
             System.out.println("No weapon equipped.");
         } else {
             System.out.println("Has knife equipped.");
         }
     }
+* */
 
     public void showInventory() {
         System.out.println("Inventory:");
@@ -114,7 +135,6 @@ public class Player {
             default -> System.out.println("You can only use items you have in your inventory.");
         }
     }
-
     public void take(String useParameter) {
         switch (useParameter) {
             case "key" -> inventory.get(0).take(ItemType.key);
