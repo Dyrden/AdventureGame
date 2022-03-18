@@ -57,36 +57,7 @@ public class Player {
         return inventory;
     }
 
-    private void removeItemFromInventory2(Item item) {
-        inventory.remove(item);
-    }
-
-
-    public void showStatus() {
-        System.out.println("Status:");
-        System.out.println("Health: " + currentHealth);
-        if (isPoisoned) {
-            System.out.println("Poisoned. Use antidote to cure.");
-        }
-        if (weaponEquip == null) {
-            System.out.println("No weapon equipped.");
-        } else {
-            System.out.println("Has knife equipped.");
-        }
-    }
-
-    public void showInventory() {
-        System.out.println("Inventory:");
-        if (inventory.size() > 0) {
-            for (int i = 0; i < inventory.size(); i++) {
-                System.out.println(inventory.get(i).getItemType().toString());
-            }
-        } else {
-            System.out.println("Is empty.");
-        }
-    }
-
-    private void removeItemFromInventory(Item item) {
+    public void removeItemFromInventory(Item item) {
         inventory.remove(item);
     }
 
