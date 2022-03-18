@@ -191,6 +191,11 @@ public class AdventureUI {
     public void displayCurrentRoomDescription(Room currentRoom) {
         System.out.println(currentRoom.getRoomDescription());
     }
+    public void displayCurrentRoomDescription(boolean moved, Room currentRoom) {
+        if (moved) {
+            System.out.println(currentRoom.getRoomDescription());
+        }
+    }
 
     public void displayNoSuchDirection(String direction) {
         System.out.println("You tried going " + direction + " but a wall is in the way");
