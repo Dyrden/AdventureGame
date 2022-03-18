@@ -261,14 +261,6 @@ public class Player {
         return canGo;
     }
 
-    public void displayCurrentRoomChangeDescription() {
-        System.out.println(getCurrentRoom().getRoomDescription());
-    }
-
-    public void displayNoSuchDirection(String direction) {
-        System.out.println("You tried going " + direction + " but a wall is in the way");
-    }
-
     public void setCurrentHealth(int newHealth) {
         currentHealth = newHealth;
     }

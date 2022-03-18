@@ -170,6 +170,14 @@ public class AdventureUI {
     public void displayWalkIntoLockedDoor() {
         System.out.println("You try walking through the locked door, you hit your head.");
     }
+
+    public void displayCurrentRoomChangeDescription(Room currentRoom) {
+        System.out.println(currentRoom.getRoomDescription());
+    }
+
+    public void displayNoSuchDirection(String direction) {
+        System.out.println("You tried going " + direction + " but a wall is in the way");
+    }
 }
 
 
