@@ -1,26 +1,16 @@
 package com.company;
 
 public class Enemy {
-    public enum EnemyType {
-        rat,
-        bat,
-        snake
-    }
-    private final EnemyType enemyType;
     private final String enemyName;
     private final int damage;
     private final boolean isPoisonous;
     private int currentHealth;
 
-    public Enemy(EnemyType type, String enemyName, int health, int dmg, boolean poisonous) {
-        enemyType = type;
-        this.enemyName = enemyName;
+    public Enemy(String name, int health, int dmg, boolean poisonous) {
+        enemyName = name;
         currentHealth = health;
         damage = dmg;
         isPoisonous = poisonous;
-    }
-    public EnemyType getEnemyType() {
-        return enemyType;
     }
     public int getCurrentHealth() {
         return currentHealth;
@@ -39,6 +29,6 @@ public class Enemy {
 
     @Override
     public String toString() {
-        return enemyType.name() + " Health: "+  getCurrentHealth();
+        return enemyName + " Health: "+  getCurrentHealth();
     }
 }

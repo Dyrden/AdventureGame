@@ -2,12 +2,6 @@ package com.company;
 
 public class Item {
     public void use() {
-        switch (itemType) {
-            case KEY -> {}
-            case WEAPON-> {}
-            case CONSUMABLE -> {}
-
-        }
 
     }
 
@@ -22,28 +16,17 @@ public class Item {
     }
     private final String shortName;
     private final String longName;
-    private final ItemType itemType;
-    private final int itemModifier;
     private final int rarityModifier;
     private final AdventureUI ui = new AdventureUI();
 
-    public Item(String sName, String lName, ItemType type, int modifier, int rarity) {
+    public Item(String sName, String lName, int rarity) {
         shortName = sName;
         longName = lName;
-        itemType = type;
-        itemModifier = modifier;
         rarityModifier = rarity;
     }
     @Override
     public String toString() {
-        return longName;
-    }
-
-    public ItemType getItemType() {
-        return itemType;
-    }
-    public int getItemModifier() {
-        return itemModifier;
+        return shortName;
     }
 
     public void useKey(Room currentRoom) {

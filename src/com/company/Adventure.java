@@ -135,18 +135,18 @@ public class Adventure {
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createEnemies() {
-        rooms[1].addEnemy(new Enemy(Enemy.EnemyType.bat, "bat", 10, 9, true));
-        rooms[1].addEnemy(new Enemy(Enemy.EnemyType.bat, "bat", 10, 9, true));
-        rooms[3].addEnemy(new Enemy(Enemy.EnemyType.rat, "rat", 5, 5, false));
-        rooms[7].addEnemy(new Enemy(Enemy.EnemyType.snake, "snake", 50, 10, true));
+        rooms[1].addEnemy(new Enemy("bat", 10, 9, true));
+        rooms[1].addEnemy(new Enemy("bat", 10, 9, true));
+        rooms[3].addEnemy(new Enemy("rat", 5, 5, false));
+        rooms[7].addEnemy(new Enemy("snake", 50, 10, true));
     }
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createItems() {
-        rooms[2].addItem(new Item("antidote", "an abandoned antidote", ItemType.CONSUMABLE, 1, 20));
-        rooms[5].addItem(new Item("key", "a golden key", ItemType.KEY, 1, 1));
-        rooms[6].addItem(new Item("food", "a plate of food", ItemType.CONSUMABLE, 30, 40));
-        rooms[8].addItem(new Item("knife", "a knife", ItemType.WEAPON, 10, 1));
+        rooms[2].addItem(new Item("antidote", "an abandoned antidote", 20));
+        rooms[5].addItem(new Item("key", "a golden key", 1));
+        rooms[6].addItem(new Item("food", "a plate of food", 40));
+        rooms[8].addItem(new Item("knife", "a knife", 1));
     }
 
     /*
