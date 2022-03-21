@@ -1,6 +1,5 @@
 package com.company;
 
-import com.company.DungeonGenerator.DungeonSize;
 import com.company.Item.ItemType;
 
 import java.util.Scanner;
@@ -55,10 +54,10 @@ public class Adventure {
             case "look" -> UI.displayRoomStatus(player.getCurrentRoom());
             case "status" -> UI.displayPlayerStatus(player.toString());
             case "inventory" -> UI.displayInventory(player.getInventory());
-            case "take" -> player.take(command[1]);
+            //case "take" -> player.take(command[1]);
             case "use" -> player.use(command[1]);
-            case "drop" -> player.drop(command[1]);
-            case "attack" -> player.attack();
+            //case "drop" -> player.drop(command[1]);
+            //case "attack" -> player.attack();
             case "help" -> help();
             case "exit", "quit" -> exit();
             default -> UI.displayNoSuchCommand();
@@ -136,10 +135,10 @@ public class Adventure {
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createEnemies() {
-        rooms[1].addEnemy(new Enemy(Enemy.EnemyType.bat,"", 10, 9, true));
-        rooms[1].addEnemy(new Enemy(Enemy.EnemyType.bat,"", 10, 9, true));
-        rooms[3].addEnemy(new Enemy(Enemy.EnemyType.rat,"", 5, 5, false));
-        rooms[7].addEnemy(new Enemy(Enemy.EnemyType.snake,"", 50, 10, true));
+        rooms[1].addEnemy(new Enemy(Enemy.EnemyType.bat, "bat", 10, 9, true));
+        rooms[1].addEnemy(new Enemy(Enemy.EnemyType.bat, "bat", 10, 9, true));
+        rooms[3].addEnemy(new Enemy(Enemy.EnemyType.rat, "rat", 5, 5, false));
+        rooms[7].addEnemy(new Enemy(Enemy.EnemyType.snake, "snake", 50, 10, true));
     }
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD

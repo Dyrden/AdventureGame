@@ -1,27 +1,38 @@
 package com.company;
 
 public class Item {
+    public void use() {
+        switch (itemType) {
+            case KEY -> {}
+            case WEAPON-> {}
+            case CONSUMABLE -> {}
+
+        }
+
+    }
+
+    public String getShortName() {
+        return null;
+    }
+
     public enum ItemType {
         KEY,
-        FOOD,
-        ANTIDOTE,
-        KNIFE
+        CONSUMABLE,
+        WEAPON
     }
     private final String shortName;
     private final String longName;
     private final ItemType itemType;
     private final int itemModifier;
     private final int rarityModifier;
-    private final Player player;
     private final AdventureUI ui = new AdventureUI();
 
-    public Item(String sName, String lName, ItemType type, int modifier, int rarity, Player play) {
+    public Item(String sName, String lName, ItemType type, int modifier, int rarity) {
         shortName = sName;
         longName = lName;
         itemType = type;
         itemModifier = modifier;
         rarityModifier = rarity;
-        player = play;
     }
     @Override
     public String toString() {
@@ -34,6 +45,7 @@ public class Item {
     public int getItemModifier() {
         return itemModifier;
     }
+
     public void useKey(Room currentRoom) {
         if (currentRoom.getEnemies().size() == 0) {
             if ((currentRoom.getNorth() != null) && (currentRoom.getNorth().getIsLocked())) {
@@ -47,34 +59,10 @@ public class Item {
         }
     }
 
-    public void useFood(int i) {
-        if (this.itemType == ItemType.FOOD) {
-            ui.displayAteFood(player, i);
-            player.inventory.remove(i);
-            player.healHealth(player.inventory.get(i).getItemModifier());
-        }
-    }
 
-    public void useAntidote(int i) {
-        if (this.itemType == ItemType.ANTIDOTE) {
-            if (player.getIsPoisoned()) {
-                player.setIsPoisoned(false);
-                ui.displayUseAntidoteToCure();
-            } else {
-                ui.displayUseAntidote();
-            }
-            player.inventory.remove(i);
-        }
-    }
 
-    public void useWeapon(String weapon, int i) {
-        if (player.getCurrentDamage() == player.getBaseDamage()) {
-            ui.displayEquipWeapon(weapon);
-            player.setCurrentDamage(player.inventory.get(i).getItemModifier());
-        } else {
-            ui.displayUnequipWeapon(weapon);
-            player.setCurrentDamage(player.getBaseDamage());
-        }
+    public String getLongName(){
+        return longName;
     }
 
 }

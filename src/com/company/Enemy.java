@@ -7,12 +7,14 @@ public class Enemy {
         snake
     }
     private final EnemyType enemyType;
+    private final String enemyName;
     private final int damage;
     private final boolean isPoisonous;
     private int currentHealth;
 
-    public Enemy(EnemyType type, int health, int dmg, boolean poisonous) {
+    public Enemy(EnemyType type, String enemyName, int health, int dmg, boolean poisonous) {
         enemyType = type;
+        this.enemyName = enemyName;
         currentHealth = health;
         damage = dmg;
         isPoisonous = poisonous;

@@ -12,7 +12,7 @@ public enum Command {
     DROP        ("'drop <item> - drop item"),
     TAKE        ("'take <item>' - take visible item"),
     USE         ("'use <item>' - use item"),
-    ATTACK      ("'attack' - attack"),
+    //ATTACK      ("'attack' - attack"),
 
     HELP        ("'help' - see commands"),
     EXIT        ("'exit' - exit game");

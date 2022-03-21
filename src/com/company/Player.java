@@ -22,6 +22,11 @@ public class Player {
     public Player(Room currentRoom) {
         this.currentHealth = maxHealth;
         this.currentRoom = currentRoom;
+        this.currentDamage = baseDamage;
+    }
+
+    public int getHealth() {
+        return currentHealth;
     }
 
     public void healHealth(int health) {
@@ -58,154 +63,14 @@ public class Player {
         return inventory;
     }
 
-    public void removeItemFromInventory(Item item) {
-        inventory.remove(item);
-    }
-
-    public boolean playerDealDamage(int i) {
-        ui.displayPlayerDealDamage(currentRoom, currentDamage, i);
-        boolean retaliate = false;
-        if (currentRoom.getEnemies().get(i).getCurrentHealth() - currentDamage > 0) {
-            currentRoom.getEnemies().get(i).setCurrentHealth(currentRoom.getEnemies().get(i).getCurrentHealth() - currentDamage);
-            ui.displayEnemyTookDamage(currentRoom, i);
-            retaliate = true;
-        } else {
-            ui.displayEnemyDied(currentRoom, i);
-            currentRoom.getEnemies().get(i).setCurrentHealth(0);
-            currentRoom.removeEnemy(i);
-        }
-        return retaliate;
-    }
-
-    public void playerTakeDamage(int i) {
-        if ((currentRoom.getEnemies().get(i) != null) && (currentHealth - currentRoom.getEnemies().get(i).getDamage() > 0)) {
-            currentHealth -= currentRoom.getEnemies().get(i).getDamage();
-            ui.displayRetaliate(currentRoom, currentHealth, i);
-            if (currentRoom.getEnemies().get(i).getIsPoisonous()) {
-                isPoisoned = true;
-                applyPoisonDamage(5);
-            }
-        } else {
-            currentHealth = 0;
-            ui.displayRetaliateDeath(currentRoom, i);
+    public void use(String itemName) {
+        for (Item item : inventory) {
+            if (itemName.equalsIgnoreCase(item.getShortName()));
+                item.use();
         }
     }
 
-    public void applyPoisonDamage(int poisonDmg) {
-        if (isPoisoned) {
-            if (currentHealth - poisonDmg > 0) {
-                currentHealth -= poisonDmg;
-                ui.displayTakePoisonDamage(poisonDmg, currentHealth);
-            } else {
-                currentHealth = 0;
-                ui.displayTakePoisonDamageDeath(poisonDmg);
-            }
-        }
-    }
 
-    public void use(String useParameter) {
-        switch (useParameter) {
-            case "key" -> use(ItemType.KEY);
-            case "antidote" -> use(ItemType.ANTIDOTE);
-            case "knife" -> use(ItemType.KNIFE);
-            case "food" -> use(ItemType.FOOD);
-            default -> ui.displayCanOnlyUseInventoryItems();
-        }
-    }
-
-    public void use(Item.ItemType itemType) {
-        boolean hasItem = false;
-        for (int i = 0; i < inventory.size(); i++) {
-            if (inventory.get(i).getItemType() == itemType) {
-                hasItem = true;
-                switch (itemType) {
-                    case KEY -> inventory.get(i).useKey(currentRoom);
-                    case FOOD -> inventory.get(i).useFood(i);
-                    case ANTIDOTE -> inventory.get(i).useAntidote(i);
-                    case KNIFE -> inventory.get(i).useWeapon(inventory.get(i).getItemType().toString(), i);
-                }
-            }
-        }
-        if (!hasItem) {
-            ui.displayDontHaveItem(itemType);
-        }
-    }
-
-    public void take(String useParameter) {
-        switch (useParameter) {
-            case "key" -> take(ItemType.KEY);
-            case "antidote" -> take(ItemType.ANTIDOTE);
-            case "knife" -> take(ItemType.KNIFE);
-            case "food" -> take(ItemType.FOOD);
-            default -> ui.displayCantTake(useParameter);
-        }
-    }
-
-    public void take(ItemType itemType) {
-        if (getCurrentRoom().getItems().size() > 0) {
-            boolean isAvailable = false;
-            for (int i = 0; i < getCurrentRoom().getItems().size(); i++) {
-                if (getCurrentRoom().getItems().get(i).getItemType() == itemType) {
-                    ui.displayTookItem(this, i);
-                    inventory.add(getCurrentRoom().getItems().get(i));
-                    getCurrentRoom().getItems().remove(i);
-                    isAvailable = true;
-                    break;
-                }
-            }
-            if (!isAvailable) {
-                ui.displayItemNotHere(itemType);
-            }
-        } else {
-            ui.displayNoItemHere();
-        }
-    }
-
-    public void drop(String useParameter) {
-        switch (useParameter) {
-            case "key" -> drop(ItemType.KEY);
-            case "antidote" -> drop(ItemType.ANTIDOTE);
-            case "knife" -> drop(ItemType.KNIFE);
-            case "food" -> drop(ItemType.FOOD);
-            default -> ui.displayCantDrop(useParameter);
-        }
-    }
-    public void drop(ItemType itemType) {
-        if (inventory.size() > 0) {
-            boolean isAvailable = false;
-            for (int i = 0; i < inventory.size(); i++) {
-                if (inventory.get(i).getItemType() == itemType) {
-                    ui.displayDropMessage(itemType);
-                    getCurrentRoom().getItems().add(inventory.get(i));
-                    inventory.remove(i);
-                    isAvailable = true;
-                    break;
-                }
-            }
-            if (!isAvailable) {
-                ui.displayDontHaveItem(itemType);
-            }
-        } else {
-            ui.displayNoSuchItemInInventory();
-        }
-    }
-
-    public void attack() {
-        if (currentRoom.getEnemies().size() > 0) {
-            for (int i = 0; i < currentRoom.getEnemies().size(); i++) {
-                if (playerDealDamage(i)) {
-                    playerTakeDamage(i);
-                }
-                break;
-            }
-        } else {
-            System.out.println("Nothing to attack here.");
-        }
-    }
-
-    public void look() {
-        System.out.println(getCurrentRoom().getLongRoomDescription());
-    }
 
     public int go(String direction) {
         switch (direction) {

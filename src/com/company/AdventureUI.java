@@ -215,7 +215,7 @@ public class AdventureUI {
     }
     public void displayCurrentRoomDescription(int moved, Room currentRoom) {
         if (moved == 1) {
-            System.out.println(currentRoom.getLongRoomDescription());
+            System.out.println(currentRoom.getShortRoomDescription());
         }
     }
 
