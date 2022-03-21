@@ -1,6 +1,6 @@
 package com.company;
 
-import com.company.Item.ItemType;
+import com.company.Items.Item;
 
 import java.util.ArrayList;
 

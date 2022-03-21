@@ -1,5 +1,8 @@
 package com.company;
 
+import com.company.Enemies.Enemy;
+import com.company.Items.Item;
+
 import java.util.ArrayList;
 
 public class Room {

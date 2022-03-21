@@ -1,4 +1,4 @@
-package com.company;
+package com.company.Items;
 
 public class Usable extends Item {
 

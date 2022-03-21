@@ -1,4 +1,4 @@
-package com.company;
+package com.company.Enemies;
 
 public class Mob extends Enemy {
 

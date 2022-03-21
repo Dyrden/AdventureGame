@@ -1,4 +1,7 @@
-package com.company;
+package com.company.Items;
+
+import com.company.AdventureUI;
+import com.company.Room;
 
 public class Item {
     public void use() {

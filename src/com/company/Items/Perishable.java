@@ -1,4 +1,6 @@
-package com.company;
+package com.company.Items;
+
+import com.company.Items.Usable;
 
 public class Perishable extends Usable {
 
