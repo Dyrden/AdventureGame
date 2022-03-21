@@ -7,6 +7,7 @@ public class Item {
         ANTIDOTE,
         KNIFE
     }
+    private final String shortName;
     private final String longName;
     private final ItemType itemType;
     private final int itemModifier;
@@ -14,8 +15,9 @@ public class Item {
     private final Player player;
     private final AdventureUI ui = new AdventureUI();
 
-    public Item(String name, ItemType type, int modifier, int rarity, Player play) {
-        longName = name;
+    public Item(String sName, String lName, ItemType type, int modifier, int rarity, Player play) {
+        shortName = sName;
+        longName = lName;
         itemType = type;
         itemModifier = modifier;
         rarityModifier = rarity;

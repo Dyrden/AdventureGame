@@ -207,7 +207,7 @@ public class Player {
         System.out.println(getCurrentRoom().getLongRoomDescription());
     }
 
-    public boolean go(String direction) {
+    public int go(String direction) {
         switch (direction) {
             case "north" -> {
                 return checkNorth();
@@ -222,40 +222,76 @@ public class Player {
                 return checkWest();
             }
         }
-        return false;
+        return 0;
     }
 
-    private boolean checkNorth() {
-        boolean canGo = false;
+    private int checkNorth() {
+        int canGo = 0;
         if (getCurrentRoom().getNorth() != null) {
-            setCurrentRoom(getCurrentRoom().getNorth());
-            canGo = true;
+            if (checkNorthIsLocked()) {
+                canGo = 2;
+            }
+            else {
+                setCurrentRoom(getCurrentRoom().getNorth());
+                canGo = 1;
+            }
         }
         return canGo;
     }
-    private boolean checkSouth() {
-        boolean canGo = false;
+    private int checkSouth() {
+        int canGo = 0;
         if (getCurrentRoom().getSouth() != null) {
-            setCurrentRoom(getCurrentRoom().getSouth());
-            canGo = true;
+            if (checkSouthIsLocked()) {
+                canGo = 2;
+            }
+            else {
+                setCurrentRoom(getCurrentRoom().getSouth());
+                canGo = 1;
+            }
         }
         return canGo;
     }
-    private boolean checkEast() {
-        boolean canGo = false;
+    private int checkEast() {
+        int canGo = 0;
         if (getCurrentRoom().getEast() != null) {
-            setCurrentRoom(getCurrentRoom().getEast());
-            canGo = true;
+            if (checkEastIsLocked()) {
+                canGo = 2;
+            }
+            else {
+                setCurrentRoom(getCurrentRoom().getEast());
+                canGo = 1;
+            }
         }
         return canGo;
     }
-    private boolean checkWest() {
-        boolean canGo = false;
+    private int checkWest() {
+        int canGo = 0;
         if (getCurrentRoom().getWest() != null) {
-            setCurrentRoom(getCurrentRoom().getWest());
-            canGo = true;
+            if (checkWestIsLocked()) {
+                canGo = 2;
+            }
+            else {
+                setCurrentRoom(getCurrentRoom().getWest());
+                canGo = 1;
+            }
         }
         return canGo;
+    }
+
+    private boolean checkNorthIsLocked() {
+        return getCurrentRoom().getNorth().getIsLocked();
+    }
+
+    private boolean checkSouthIsLocked() {
+        return getCurrentRoom().getSouth().getIsLocked();
+    }
+
+    private boolean checkEastIsLocked() {
+        return getCurrentRoom().getEast().getIsLocked();
+    }
+
+    private boolean checkWestIsLocked() {
+        return getCurrentRoom().getWest().getIsLocked();
     }
 
     public void setCurrentHealth(int newHealth) {

@@ -54,12 +54,12 @@ public class AdventureUI {
         }
     }
 
-    public void displayDropMessage(Item.ItemType itemType) {
-        System.out.println("Dropped " + itemType.toString() + ".");
+    public void displayDropMessage(Item.ItemType itemType){
+        System.out.println("Dropped " + itemType.toString().toLowerCase() + ".");
     }
 
     public void displayDontHaveItem(Item.ItemType itemType) {
-        System.out.println("Don't have " + itemType.toString() + ".");
+        System.out.println("Don't have " + itemType.toString().toLowerCase() + ".");
     }
 
     public void displayDoorHasUnlocked() {
@@ -87,19 +87,19 @@ public class AdventureUI {
     }
 
     public void displayEquipWeapon(String weapon) {
-        System.out.println("Equipping " + weapon + " in right hand.");
+        System.out.println("Equipping " + weapon.toLowerCase() + " in right hand.");
     }
 
     public void displayUnequipWeapon(String weapon) {
-        System.out.println("Unequipping " + weapon + ".");
+        System.out.println("Unequipping " + weapon.toLowerCase() + ".");
     }
 
     public void displayTookItem(Player player, int i) {
-        System.out.println("Took " + player.getCurrentRoom().getItems().get(i).getItemType().toString() + ".");
+        System.out.println("Took " + player.getCurrentRoom().getItems().get(i).getItemType().toString().toLowerCase() + ".");
     }
 
     public void displayItemNotHere(Item.ItemType itemType) {
-        System.out.println("No " + itemType.toString() + " here.");
+        System.out.println("No " + itemType.toString().toLowerCase() + " here.");
     }
 
     public void displayNoItemHere() {
@@ -166,12 +166,16 @@ public class AdventureUI {
         System.out.println("Is empty.");
     }
 
-    public void displayPlayerMove(boolean moved, String direction) {
-        if (moved)
-            System.out.println("You moved to the " + direction);
-
-        else
-            System.out.println("You couldn't move " + direction);
+    public void displayPlayerMove(int moved, String direction){
+        if (moved == 1) {
+            System.out.println("You moved to the " + direction + ".");
+        }
+        else if (moved == 2) {
+            System.out.println("You couldn't move " + direction + ". A door stands in your way and it is locked.");
+        }
+        else {
+            System.out.println("You couldn't move " + direction + ".");
+        }
     }
 
     public void displayWeaponEquipped(String weapon) {
@@ -209,9 +213,8 @@ public class AdventureUI {
     public void displayCurrentRoomDescription(Room currentRoom) {
         System.out.println(currentRoom.getLongRoomDescription());
     }
-
-    public void displayCurrentRoomDescription(boolean moved, Room currentRoom) {
-        if (moved) {
+    public void displayCurrentRoomDescription(int moved, Room currentRoom) {
+        if (moved == 1) {
             System.out.println(currentRoom.getLongRoomDescription());
         }
     }

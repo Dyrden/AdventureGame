@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.DungeonGenerator.DungeonSize;
 import com.company.Item.ItemType;
 
 import java.util.Scanner;
@@ -47,7 +48,7 @@ public class Adventure {
     private void commands(String[] command) {
         switch (command[0]) {
             case "go" -> {
-                boolean playerMoved = player.go(command[1]);
+                int playerMoved = player.go(command[1]);
                 UI.displayPlayerMove(playerMoved, command[1]);
                 UI.displayCurrentRoomDescription(playerMoved, player.getCurrentRoom());
             }
@@ -92,14 +93,14 @@ public class Adventure {
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createRooms() {
         rooms[0] = new Room("Hole", "You fell in this hole and your possessions now seperated from you.", false);
-        rooms[1] = new Room("Cave", "Dank dark cavern, bats are hanging from the ceiling.", false);
-        rooms[2] = new Room("Crawl space", "You are in a tight crawl space. There's an abandoned antidote on the ground.", false);
-        rooms[3] = new Room("Sewer", "You entered a sewer. There is a rat running around.", false);
+        rooms[1] = new Room("Cave", "Dank dark cavern.", false); // bats are hanging from the ceiling.
+        rooms[2] = new Room("Crawl space", "You are in a tight crawl space.", false); // There's an abandoned antidote on the ground.
+        rooms[3] = new Room("Sewer", "You entered a sewer.", false); // There is a rat running around.
         rooms[4] = new Room("Treasure Chamber", "You've stumbled upon a treasure like no other. You won't ever have to work again.", true);
-        rooms[5] = new Room("Security", "You entered a room with a bunch of displays, showing live CCTV footage. The locations seem familiar. There is a golden KEY on the desk.", false);
-        rooms[6] = new Room("Sewage filtration", "You've entered a room with a machine filtrating the sewage. Someone left a plate of FOOD here, probably lost their appetite.", false);
-        rooms[7] = new Room("Golden Door", "You find yourself in a room with a locked giant golden door. A giant snake guards the door.", false);
-        rooms[8] = new Room("Back-alley", "You entered a back-alley, seems to connect important areas of this complex. There is a KNIFE on the ground.", false);
+        rooms[5] = new Room("Security", "You entered a room with a bunch of displays, showing live CCTV footage. The locations seem familiar.", false); // There is a golden key on the desk.
+        rooms[6] = new Room("Sewage filtration", "You've entered a room with a machine filtrating the sewage.", false); //  Someone left a plate of food here, probably lost their appetite.
+        rooms[7] = new Room("Golden Door", "You find yourself in a room with a locked giant golden door.", false); // A giant snake guards the door.
+        rooms[8] = new Room("Back-alley", "You entered a back-alley, seems to connect important areas of this complex.", false); // There is a knife on the ground.
     }
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
@@ -135,18 +136,18 @@ public class Adventure {
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createEnemies() {
-        rooms[1].addEnemy(new Enemy(Enemy.EnemyType.bat, 10, 9, true));
-        rooms[1].addEnemy(new Enemy(Enemy.EnemyType.bat, 10, 9, true));
-        rooms[3].addEnemy(new Enemy(Enemy.EnemyType.rat, 5, 5, false));
-        rooms[7].addEnemy(new Enemy(Enemy.EnemyType.snake, 50, 10, true));
+        rooms[1].addEnemy(new Enemy(Enemy.EnemyType.bat,"", 10, 9, true));
+        rooms[1].addEnemy(new Enemy(Enemy.EnemyType.bat,"", 10, 9, true));
+        rooms[3].addEnemy(new Enemy(Enemy.EnemyType.rat,"", 5, 5, false));
+        rooms[7].addEnemy(new Enemy(Enemy.EnemyType.snake,"", 50, 10, true));
     }
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createItems() {
-        rooms[2].addItem(new Item("an abandoned ANTIDOTE", ItemType.ANTIDOTE, 1, 20, player));
-        rooms[5].addItem(new Item("a golden KEY", ItemType.KEY, 1, 1, player));
-        rooms[6].addItem(new Item("a plate of FOOD", ItemType.FOOD, 30, 40, player));
-        rooms[8].addItem(new Item("a KNIFE", ItemType.KNIFE, 10, 1, player));
+        rooms[2].addItem(new Item("antidote", "an abandoned antidote", ItemType.CONSUMABLE, 1, 20));
+        rooms[5].addItem(new Item("key", "a golden key", ItemType.KEY, 1, 1));
+        rooms[6].addItem(new Item("food", "a plate of food", ItemType.CONSUMABLE, 30, 40));
+        rooms[8].addItem(new Item("knife", "a knife", ItemType.WEAPON, 10, 1));
     }
 
     /*
