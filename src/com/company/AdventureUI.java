@@ -3,6 +3,15 @@ package com.company;
 import java.util.ArrayList;
 
 public class AdventureUI {
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
 
     public void displayGameIntro() {
         System.out.println("\nWelcome to the Adventure of your lifetime.");
@@ -18,6 +27,10 @@ public class AdventureUI {
     }
 
 
+    public void displayRoomStatus(Room room){
+        System.out.println(room);
+    }
+
     public void displayExitGame() {
         System.out.println("Game over.");
         System.out.println("Thanks for playing.");
@@ -31,17 +44,17 @@ public class AdventureUI {
 
     }
 
-    public void displayTurnStartText(){
+    public void displayTurnStartText() {
         System.out.println("What would you like to do? (type 'help' to view commands)");
     }
 
-    public void displayCommandOptions(){
+    public void displayCommandOptions() {
         for (Command command : Command.values()) {
             System.out.println(command.getCommandDescription());
         }
     }
 
-    public void displayDropMessage(Item.ItemType itemType){
+    public void displayDropMessage(Item.ItemType itemType) {
         System.out.println("Dropped " + itemType.toString() + ".");
     }
 
@@ -56,6 +69,7 @@ public class AdventureUI {
     public void displayNoLockedDoor() {
         System.out.println("No lock to use the key in.");
     }
+
     public void displayCantUnlockDoorBecauseOfEnemy() {
         System.out.println("Can't do that right now. An adversary is in the way.");
     }
@@ -63,10 +77,12 @@ public class AdventureUI {
     public void displayAteFood(Player player, int i) {
         System.out.println("Ate food and recovered " + player.inventory.get(i).getItemModifier() + " health.");
     }
-    public void displayUseAntidoteToCure(){
+
+    public void displayUseAntidoteToCure() {
         System.out.println("Used antidote to cure poison status effect.");
     }
-    public void displayUseAntidote(){
+
+    public void displayUseAntidote() {
         System.out.println("Used antidote.");
     }
 
@@ -81,6 +97,7 @@ public class AdventureUI {
     public void displayTookItem(Player player, int i) {
         System.out.println("Took " + player.getCurrentRoom().getItems().get(i).getItemType().toString() + ".");
     }
+
     public void displayItemNotHere(Item.ItemType itemType) {
         System.out.println("No " + itemType.toString() + " here.");
     }
@@ -141,14 +158,15 @@ public class AdventureUI {
         }
     }
 
-    public void displayPlayerStatus(String status){
+    public void displayPlayerStatus(String status) {
         System.out.println(status);
     }
+
     public void displayIsEmpty() {
         System.out.println("Is empty.");
     }
 
-    public void displayPlayerMove(boolean moved, String direction){
+    public void displayPlayerMove(boolean moved, String direction) {
         if (moved)
             System.out.println("You moved to the " + direction);
 
@@ -189,11 +207,12 @@ public class AdventureUI {
     }
 
     public void displayCurrentRoomDescription(Room currentRoom) {
-        System.out.println(currentRoom.getRoomDescription());
+        System.out.println(currentRoom.getLongRoomDescription());
     }
+
     public void displayCurrentRoomDescription(boolean moved, Room currentRoom) {
         if (moved) {
-            System.out.println(currentRoom.getRoomDescription());
+            System.out.println(currentRoom.getLongRoomDescription());
         }
     }
 

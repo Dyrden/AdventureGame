@@ -1,6 +1,5 @@
 package com.company;
 
-import com.company.DungeonGenerator.DungeonSize;
 import com.company.Item.ItemType;
 
 import java.util.Scanner;
@@ -52,7 +51,7 @@ public class Adventure {
                 UI.displayPlayerMove(playerMoved, command[1]);
                 UI.displayCurrentRoomDescription(playerMoved, player.getCurrentRoom());
             }
-            case "look" -> player.look();
+            case "look" -> UI.displayRoomStatus(player.getCurrentRoom());
             case "status" -> UI.displayPlayerStatus(player.toString());
             case "inventory" -> UI.displayInventory(player.getInventory());
             case "take" -> player.take(command[1]);
@@ -92,15 +91,15 @@ public class Adventure {
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createRooms() {
-        rooms[0] = new Room("Hole", "You fell in this hole and your possessions now seperated from you.", false, player);
-        rooms[1] = new Room("Cave", "Dank dark cavern, bats are hanging from the ceiling.", false, player);
-        rooms[2] = new Room("Crawl space", "You are in a tight crawl space. There's an abandoned antidote on the ground.", false, player);
-        rooms[3] = new Room("Sewer", "You entered a sewer. There is a rat running around.", false, player);
-        rooms[4] = new Room("Treasure Chamber", "You've stumbled upon a treasure like no other. You won't ever have to work again.", true, player);
-        rooms[5] = new Room("Security", "You entered a room with a bunch of displays, showing live CCTV footage. The locations seem familiar. There is a golden KEY on the desk.", false, player);
-        rooms[6] = new Room("Sewage filtration", "You've entered a room with a machine filtrating the sewage. Someone left a plate of FOOD here, probably lost their appetite.", false, player);
-        rooms[7] = new Room("Golden Door", "You find yourself in a room with a locked giant golden door. A giant snake guards the door.", false, player);
-        rooms[8] = new Room("Back-alley", "You entered a back-alley, seems to connect important areas of this complex. There is a KNIFE on the ground.", false, player);
+        rooms[0] = new Room("Hole", "You fell in this hole and your possessions now seperated from you.", false);
+        rooms[1] = new Room("Cave", "Dank dark cavern, bats are hanging from the ceiling.", false);
+        rooms[2] = new Room("Crawl space", "You are in a tight crawl space. There's an abandoned antidote on the ground.", false);
+        rooms[3] = new Room("Sewer", "You entered a sewer. There is a rat running around.", false);
+        rooms[4] = new Room("Treasure Chamber", "You've stumbled upon a treasure like no other. You won't ever have to work again.", true);
+        rooms[5] = new Room("Security", "You entered a room with a bunch of displays, showing live CCTV footage. The locations seem familiar. There is a golden KEY on the desk.", false);
+        rooms[6] = new Room("Sewage filtration", "You've entered a room with a machine filtrating the sewage. Someone left a plate of FOOD here, probably lost their appetite.", false);
+        rooms[7] = new Room("Golden Door", "You find yourself in a room with a locked giant golden door. A giant snake guards the door.", false);
+        rooms[8] = new Room("Back-alley", "You entered a back-alley, seems to connect important areas of this complex. There is a KNIFE on the ground.", false);
     }
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD

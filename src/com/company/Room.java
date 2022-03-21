@@ -4,31 +4,31 @@ import java.util.ArrayList;
 
 public class Room {
     private final String roomName;
-    private String roomDescription;
+    private String longRoomDescription;
+    private String shortRoomDescription;
     private boolean isLocked;
     private Room northernRoom;
     private Room southernRoom;
     private Room easternRoom;
     private Room westernRoom;
     private ArrayList<Item> items = new ArrayList<>();
-    private ArrayList<Enemy> enemies = new ArrayList<>();
     private boolean playerVisited;
-    private final Player player;
+    private ArrayList<Enemy> enemies = new ArrayList<>();
 
-    public Room(String name, String description, boolean locked, Player play) {
+    public Room(String name, String description, boolean locked) {
         roomName = name;
-        roomDescription = description;
+        longRoomDescription = description;
+        shortRoomDescription = description;
         isLocked = locked;
-        player = play;
     }
     public String getRoomName() {
         return roomName;
     }
-    public String getRoomDescription() {
-        return roomDescription;
+    public String getLongRoomDescription() {
+        return longRoomDescription;
     }
-    public void setRoomDescription(String description) {
-        roomDescription = description;
+    public void setLongRoomDescription(String description) {
+        longRoomDescription = description;
     }
     public void setNorth(Room room) {
         northernRoom = room;
@@ -92,45 +92,29 @@ public class Room {
         return new Room[]{northernRoom,southernRoom,easternRoom,westernRoom};
     }
 
-    public void updateRoomDescription() {
-        switch (player.getCurrentRoom().getRoomName()) {
-            case "Cave" -> {
-                if (player.getCurrentRoom().getEnemies().size() == 1) {
-                    player.getCurrentRoom().setRoomDescription("Dank dark cavern, a bat is hanging from the ceiling. Another one dead on the ground.");
-                } else if (player.getCurrentRoom().getEnemies().size() == 0) {
-                    player.getCurrentRoom().setRoomDescription("Dank dark cavern, two bats are dead on the ground.");
-                }
-            }
-            case "Crawl space" -> {
-                if (player.getCurrentRoom().getItems().size() == 0) {
-                    player.getCurrentRoom().setRoomDescription("You are in a tight crawl space.");
-                }
-            }
-            case "Sewer" -> {
-                if (player.getCurrentRoom().getEnemies().size() == 0) {
-                    player.getCurrentRoom().setRoomDescription("You entered a sewer. There is a dead rat, its blood is fusing with the sewage.");
-                }
-            }
-            case "Security" -> {
-                if (player.getCurrentRoom().getItems().size() == 0) {
-                    player.getCurrentRoom().setRoomDescription("You entered a room with a bunch of displays, showing live CCTV footage. The locations seem familiar.");
-                }
-            }
-            case "Sewage filtration" -> {
-                if (player.getCurrentRoom().getItems().size() == 0) {
-                    player.getCurrentRoom().setRoomDescription("You've entered a room with a machine filtrating the sewage.");
-                }
-            }
-            case "Golden Door" -> {
-                if (player.getCurrentRoom().getEnemies().size() == 0) {
-                    player.getCurrentRoom().setRoomDescription("You find yourself in a room with a locked giant golden door.");
-                }
-            }
-            case "Back-alley" -> {
-                if (player.getCurrentRoom().getItems().size() == 0) {
-                    player.getCurrentRoom().setRoomDescription("You entered a back-alley, seems to connect important areas of this complex.");
-                }
-            }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Enemy enemy : enemies) {
+            sb.append(enemy.toString() + ", ");
         }
+        if (playerVisited) {
+            for (Item item : items) {
+                sb.append(item.toString() + ", ");
+            }
+            return getLongRoomDescription() + sb ;
+        } else {
+            return getShortRoomDescription() + sb;
+        }
+    }
+
+
+
+    public String getShortRoomDescription() {
+        return shortRoomDescription;
+    }
+
+    public void setShortRoomDescription(String shortRoomDescription) {
+        this.shortRoomDescription = shortRoomDescription;
     }
 }

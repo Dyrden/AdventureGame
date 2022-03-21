@@ -73,7 +73,6 @@ public class Player {
             ui.displayEnemyDied(currentRoom, i);
             currentRoom.getEnemies().get(i).setCurrentHealth(0);
             currentRoom.removeEnemy(i);
-            currentRoom.updateRoomDescription();
         }
         return retaliate;
     }
@@ -150,7 +149,6 @@ public class Player {
                     ui.displayTookItem(this, i);
                     inventory.add(getCurrentRoom().getItems().get(i));
                     getCurrentRoom().getItems().remove(i);
-                    getCurrentRoom().updateRoomDescription();
                     isAvailable = true;
                     break;
                 }
@@ -180,7 +178,6 @@ public class Player {
                     ui.displayDropMessage(itemType);
                     getCurrentRoom().getItems().add(inventory.get(i));
                     inventory.remove(i);
-                    getCurrentRoom().updateRoomDescription();
                     isAvailable = true;
                     break;
                 }
@@ -207,7 +204,7 @@ public class Player {
     }
 
     public void look() {
-        System.out.println(getCurrentRoom().getRoomDescription());
+        System.out.println(getCurrentRoom().getLongRoomDescription());
     }
 
     public boolean go(String direction) {

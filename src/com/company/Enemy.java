@@ -34,4 +34,9 @@ public class Enemy {
     public boolean getIsPoisonous() {
         return isPoisonous;
     }
+
+    @Override
+    public String toString() {
+        return enemyType.name() + " Health: "+  getCurrentHealth();
+    }
 }
