@@ -74,10 +74,13 @@ public class AdventureUI {
         System.out.println("Can't do that right now. An adversary is in the way.");
     }
 
+    /*
+
     public void displayAteFood(Player player, int i) {
         System.out.println("Ate food and recovered " + player.inventory.get(i).getItemModifier() + " health.");
     }
 
+    * */
     public void displayUseAntidoteToCure() {
         System.out.println("Used antidote to cure poison status effect.");
     }
@@ -94,9 +97,11 @@ public class AdventureUI {
         System.out.println("Unequipping " + weapon.toLowerCase() + ".");
     }
 
+    /*
     public void displayTookItem(Player player, int i) {
         System.out.println("Took " + player.getCurrentRoom().getItems().get(i).getItemType().toString().toLowerCase() + ".");
     }
+    * */
 
     public void displayItemNotHere(Item.ItemType itemType) {
         System.out.println("No " + itemType.toString().toLowerCase() + " here.");
@@ -129,6 +134,7 @@ public class AdventureUI {
     public void displayTakePoisonDamageDeath(int poisonDmg) {
         System.out.println("You took " + poisonDmg + " poison damage and died from it.");
     }
+    /*
 
     public void displayRetaliate(Room currentRoom, int currentHealth, int i) {
         System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has retaliated for " + currentRoom.getEnemies().get(i).getDamage() + " damage. " + currentHealth + " health remaining.");
@@ -149,6 +155,7 @@ public class AdventureUI {
     public void displayPlayerDealDamage(Room currentRoom, int currentDamage, int i) {
         System.out.println("Attacking " + currentRoom.getEnemies().get(i).getEnemyType().toString() + " for " + currentDamage + " damage.");
     }
+    * */
 
     public void displayInventory(ArrayList<Item> items) {
         System.out.println("Inventory contains:");
@@ -201,10 +208,11 @@ public class AdventureUI {
     public void displayNotValidDirection(String direction) {
         System.out.println(direction + " is not a cardinal direction, rethink your choices.");
     }
-
+/*
     public void displayEnemyInTheWay(Room currentRoom) {
         System.out.println("You try running past the " + currentRoom.getEnemies().get(0).getEnemyType().toString() + " but the door is locked.");
     }
+* */
 
     public void displayWalkIntoLockedDoor() {
         System.out.println("You try walking through the locked door, you hit your head.");
