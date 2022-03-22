@@ -19,10 +19,11 @@ public class Adventure {
         UI.displayGameIntro();
 
         createAndConnectRooms();
-
+        UI.displayTurnShift();
         while (gameRunning) {
             UI.displayTurnStartText();
             commands(input());
+            UI.displayTurnShift();
         }
         //maybe
         // if (gameIsOver)
@@ -54,6 +55,7 @@ public class Adventure {
             case "use" -> player.use(command[1]);
             //case "drop" -> player.drop(command[1]);
             //case "attack" -> player.attack();
+            case "equip" -> UI.displayEquippedItem(player.equip(command[1]));
             case "help" -> help();
             case "exit", "quit" -> exit();
             default -> UI.displayNoSuchCommand();

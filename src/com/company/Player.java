@@ -66,22 +66,28 @@ public class Player {
         this.currentDamage = currentDamage;
     }
 
-    public Item getWeaponEquip() {
-        return weaponEquip;
-    }
 
-    public void equip(Equipment equipment){
+    public Equipment equip(String itemName){
+        Equipment equip;
+        for (Item item: inventory) {
+            if (item.getShortName().equalsIgnoreCase(itemName) && item instanceof Equipment){
+                equip = (Equipment) item;
+                armorOrWeapon(equip);
+                return equip;
+            }
+        }
+        return null;
+    }
+    private void armorOrWeapon(Equipment equipment) {
         if (equipment instanceof Weapon) {
             setWeaponEquip((Weapon) equipment);
         } else if (equipment instanceof Armor) {
             setArmorEquip((Armor) equipment);
         }
     }
-
     private void setArmorEquip(Armor armorEquip){
         this.armorEquip = armorEquip;
     }
-
     private void setWeaponEquip(Weapon weaponEquip) {
         this.weaponEquip = weaponEquip;
         if (weaponEquip != null) {
@@ -91,6 +97,7 @@ public class Player {
         }
     }
 
+
     public boolean isPoisoned() {
         return isPoisoned;
     }
@@ -99,21 +106,14 @@ public class Player {
         isPoisoned = poisoned;
     }
 
-    public Room getCurrentRoom() {
-        return currentRoom;
-    }
-
-    public void setCurrentRoom(Room currentRoom) {
-        this.currentRoom = currentRoom;
-    }
 
     @Override
     public String toString() {
         return
-            "Current room = " + currentRoom +
-                "Health/MaxHealth = " + currentHealth + "/" + maxHealth +
-                "Damage = " + currentDamage +
-                "Weapon equipped = " + weaponEquip +
+            "Current room = " + currentRoom.getShortRoomDescription() + "\n" +
+                "Health/MaxHealth = " + currentHealth + "/" + maxHealth + "\n" +
+                "Damage = " + currentDamage + "\n" +
+                "Weapon equipped = " + weaponEquip + "\n" +
                 "Poisoned = " + isPoisoned;
     }
 
@@ -127,6 +127,13 @@ public class Player {
                 item.use();
             }
         }
+    }
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
     }
 
     public int go(String direction) {

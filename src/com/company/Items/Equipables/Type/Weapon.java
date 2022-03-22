@@ -13,4 +13,9 @@ public class Weapon extends Equipment {
     public int getWeaponValue() {
         return weaponValue;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " Attack Value: " + weaponValue;
+    }
 }

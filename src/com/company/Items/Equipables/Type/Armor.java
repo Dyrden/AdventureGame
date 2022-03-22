@@ -14,4 +14,9 @@ public class Armor extends Equipment {
     public int getArmorModifier() {
         return armorValue;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + " Armor Value: " + armorValue;
+    }
 }

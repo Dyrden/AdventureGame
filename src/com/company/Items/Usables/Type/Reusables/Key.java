@@ -4,8 +4,8 @@ import com.company.Items.Usables.Type.Reusable;
 
 public class Key extends Reusable {
     protected final String keyId;
-    public Key(String sName, String lName, int rarity, String id) {
-        super(sName, lName, rarity);
+    public Key(String sName, String lName, int rarity,double weight, String id) {
+        super(sName, lName, rarity, weight);
         keyId = id;
     }
 

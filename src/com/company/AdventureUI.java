@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.Items.Equipables.Equipment;
 import com.company.Items.Item;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class AdventureUI {
     }
 
 
-    public void displayRoomStatus(Room room){
+    public void displayRoomStatus(Room room) {
         System.out.println(room);
     }
 
@@ -56,7 +57,7 @@ public class AdventureUI {
         }
     }
 
-    public void displayDropMessage(Item item){
+    public void displayDropMessage(Item item) {
         System.out.println("Dropped " + item.toString().toLowerCase() + ".");
     }
 
@@ -108,6 +109,17 @@ public class AdventureUI {
         System.out.println("No " + item.toString().toLowerCase() + " here.");
     }
 
+    public void displayEquippedItem(Equipment equip) {
+        if (equip != null) {
+            System.out.println("You equipped : " + equip);
+        } else {
+            System.out.println("You've got no such equipment");
+        }
+    }
+
+    public void displayTurnShift(){
+        System.out.println( ANSI_YELLOW + "-----------------------------------------------" + ANSI_RESET);
+    }
     public void displayNoItemHere() {
         System.out.println("Nothing to pick up here.");
     }
@@ -174,14 +186,12 @@ public class AdventureUI {
         System.out.println("Is empty.");
     }
 
-    public void displayPlayerMove(int moved, String direction){
+    public void displayPlayerMove(int moved, String direction) {
         if (moved == 1) {
             System.out.println("You moved to the " + direction + ".");
-        }
-        else if (moved == 2) {
+        } else if (moved == 2) {
             System.out.println("You couldn't move " + direction + ". A door stands in your way and it is locked.");
-        }
-        else {
+        } else {
             System.out.println("You couldn't move " + direction + ".");
         }
     }
@@ -222,6 +232,7 @@ public class AdventureUI {
     public void displayCurrentRoomDescription(Room currentRoom) {
         System.out.println(currentRoom.getLongRoomDescription());
     }
+
     public void displayCurrentRoomDescription(int moved, Room currentRoom) {
         if (moved == 1) {
             System.out.println(currentRoom.getShortRoomDescription());
