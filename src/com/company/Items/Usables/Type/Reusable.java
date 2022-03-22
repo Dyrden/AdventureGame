@@ -1,4 +1,6 @@
-package com.company.Items;
+package com.company.Items.Usables.Type;
+
+import com.company.Items.Usables.Usable;
 
 public class Reusable extends Usable {
 

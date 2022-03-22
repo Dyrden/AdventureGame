@@ -7,16 +7,13 @@ import java.util.Scanner;
 
 public class Adventure {
 
-
     private final Scanner playerInput = new Scanner(System.in);
     private final AdventureUI UI = new AdventureUI();
     private boolean gameRunning = true;
 
-
     private final int amountOfRooms = 9;
     private Room[] rooms = new Room[amountOfRooms];
     public Player player = new Player(rooms[0]);
-
 
     public void run() {
         UI.displayGameIntro();
@@ -27,7 +24,6 @@ public class Adventure {
             UI.displayTurnStartText();
             commands(input());
         }
-
         //maybe
         // if (gameIsOver)
     }
@@ -39,7 +35,6 @@ public class Adventure {
         }
         return split;
     }
-
 
     private void help() {
         UI.displayCommandOptions();
@@ -80,7 +75,6 @@ public class Adventure {
         gameRunning = false;
     }
 
-
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createAndConnectRooms() {
         createRooms();
@@ -92,15 +86,15 @@ public class Adventure {
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createRooms() {
-        rooms[0] = new Room("Hole", "You fell in this hole and your possessions now seperated from you.", false);
-        rooms[1] = new Room("Cave", "Dank dark cavern.", false); // bats are hanging from the ceiling.
-        rooms[2] = new Room("Crawl space", "You are in a tight crawl space.", false); // There's an abandoned antidote on the ground.
-        rooms[3] = new Room("Sewer", "You entered a sewer.", false); // There is a rat running around.
-        rooms[4] = new Room("Treasure Chamber", "You've stumbled upon a treasure like no other. You won't ever have to work again.", true);
-        rooms[5] = new Room("Security", "You entered a room with a bunch of displays, showing live CCTV footage. The locations seem familiar.", false); // There is a golden key on the desk.
-        rooms[6] = new Room("Sewage filtration", "You've entered a room with a machine filtrating the sewage.", false); //  Someone left a plate of food here, probably lost their appetite.
-        rooms[7] = new Room("Golden Door", "You find yourself in a room with a locked giant golden door.", false); // A giant snake guards the door.
-        rooms[8] = new Room("Back-alley", "You entered a back-alley, seems to connect important areas of this complex.", false); // There is a knife on the ground.
+        rooms[0] = new Room("Hole", "You fell in this hole and your possessions now seperated from you.", false, "");
+        rooms[1] = new Room("Cave", "Dank dark cavern.", false, ""); // bats are hanging from the ceiling.
+        rooms[2] = new Room("Crawl space", "You are in a tight crawl space.", false, ""); // There's an abandoned antidote on the ground.
+        rooms[3] = new Room("Sewer", "You entered a sewer.", false, ""); // There is a rat running around.
+        rooms[4] = new Room("Treasure Chamber", "You've stumbled upon a treasure like no other. You won't ever have to work again.", true, "gold");
+        rooms[5] = new Room("Security", "You entered a room with a bunch of displays, showing live CCTV footage. The locations seem familiar.", false, ""); // There is a golden key on the desk.
+        rooms[6] = new Room("Sewage filtration", "You've entered a room with a machine filtrating the sewage.", false, ""); //  Someone left a plate of food here, probably lost their appetite.
+        rooms[7] = new Room("Golden Door", "You find yourself in a room with a locked giant golden door.", false, ""); // A giant snake guards the door.
+        rooms[8] = new Room("Back-alley", "You entered a back-alley, seems to connect important areas of this complex.", false, ""); // There is a knife on the ground.
     }
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
@@ -132,7 +126,6 @@ public class Adventure {
         rooms[8].setWest(rooms[7]);
         rooms[8].setNorth(rooms[5]);
     }
-
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createEnemies() {

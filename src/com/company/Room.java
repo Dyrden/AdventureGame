@@ -10,19 +10,21 @@ public class Room {
     private String longRoomDescription;
     private String shortRoomDescription;
     private boolean isLocked;
+    private String lockId;
     private Room northernRoom;
     private Room southernRoom;
     private Room easternRoom;
     private Room westernRoom;
-    private ArrayList<Item> items = new ArrayList<>();
     private boolean playerVisited;
+    private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<Enemy> enemies = new ArrayList<>();
 
-    public Room(String name, String description, boolean locked) {
+    public Room(String name, String description, boolean locked, String id) {
         roomName = name;
         longRoomDescription = description;
         shortRoomDescription = description;
         isLocked = locked;
+        lockId = id;
     }
     public String getRoomName() {
         return roomName;
