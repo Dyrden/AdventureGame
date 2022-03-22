@@ -56,12 +56,12 @@ public class AdventureUI {
         }
     }
 
-    public void displayDropMessage(Item.ItemType itemType){
-        System.out.println("Dropped " + itemType.toString().toLowerCase() + ".");
+    public void displayDropMessage(Item item){
+        System.out.println("Dropped " + item.toString().toLowerCase() + ".");
     }
 
-    public void displayDontHaveItem(Item.ItemType itemType) {
-        System.out.println("Don't have " + itemType.toString().toLowerCase() + ".");
+    public void displayDontHaveItem(Item item) {
+        System.out.println("Don't have " + item.toString().toLowerCase() + ".");
     }
 
     public void displayDoorHasUnlocked() {
@@ -77,12 +77,11 @@ public class AdventureUI {
     }
 
     /*
-
     public void displayAteFood(Player player, int i) {
-        System.out.println("Ate food and recovered " + player.inventory.get(i).getItemModifier() + " health.");
+        System.out.println("Ate " + player.inventory.get(i).toString() + " and recovered " + player.inventory.get(i).getClass(Food) + " health.");
     }
-
     * */
+
     public void displayUseAntidoteToCure() {
         System.out.println("Used antidote to cure poison status effect.");
     }
@@ -105,8 +104,8 @@ public class AdventureUI {
     }
     * */
 
-    public void displayItemNotHere(Item.ItemType itemType) {
-        System.out.println("No " + itemType.toString().toLowerCase() + " here.");
+    public void displayItemNotHere(Item item) {
+        System.out.println("No " + item.toString().toLowerCase() + " here.");
     }
 
     public void displayNoItemHere() {

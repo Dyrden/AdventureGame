@@ -1,4 +1,6 @@
-package com.company.Items;
+package com.company.Items.Equipables;
+
+import com.company.Items.Item;
 
 public class Equipment extends Item {
 

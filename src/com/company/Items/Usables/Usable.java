@@ -1,4 +1,6 @@
-package com.company.Items;
+package com.company.Items.Usables;
+
+import com.company.Items.Item;
 
 public class Usable extends Item {
 

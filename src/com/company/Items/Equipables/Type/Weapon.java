@@ -1,7 +1,9 @@
-package com.company.Items;
+package com.company.Items.Equipables.Type;
+
+import com.company.Items.Equipables.Equipment;
 
 public class Weapon extends Equipment {
-    private int weaponModifier;
+    protected int weaponModifier;
 
     public Weapon(String sName, String lName, int modifier, int rarity) {
         super(sName, lName, rarity);
