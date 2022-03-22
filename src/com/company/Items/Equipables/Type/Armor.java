@@ -3,14 +3,15 @@ package com.company.Items.Equipables.Type;
 import com.company.Items.Equipables.Equipment;
 
 public class Armor extends Equipment {
-    protected int armorModifier;
+    private int armorValue;
 
-    public Armor(String sName, String lName, int modifier, int rarity) {
-        super(sName, lName, rarity);
-        armorModifier = modifier;
+    public Armor(String sName, String lName, int rarity, double weight, int armorValue) {
+        super(sName, lName, rarity, weight);
+        this.armorValue = armorValue;
+
     }
 
     public int getArmorModifier() {
-        return armorModifier;
+        return armorValue;
     }
 }

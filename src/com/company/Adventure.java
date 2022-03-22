@@ -137,10 +137,10 @@ public class Adventure {
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createItems() {
-        rooms[2].addItem(new Item("antidote", "an abandoned antidote", 20));
-        rooms[5].addItem(new Item("key", "a golden key", 1));
-        rooms[6].addItem(new Item("food", "a plate of food", 40));
-        rooms[8].addItem(new Item("knife", "a knife", 1));
+        rooms[2].addItem(new Item("antidote", "an abandoned antidote", 20, 25));
+        rooms[5].addItem(new Item("key", "a golden key", 1, 25));
+        rooms[6].addItem(new Item("food", "a plate of food", 40, 25));
+        rooms[8].addItem(new Item("knife", "a knife", 1, 25));
     }
 
     /*

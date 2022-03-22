@@ -1,11 +1,27 @@
 package com.company;
 
+import com.company.Items.Equipables.Equipment;
+import com.company.Items.Equipables.Type.Armor;
+import com.company.Items.Equipables.Type.Weapon;
 import com.company.Items.Item;
-import com.company.Items.Weapon;
 
 import java.util.ArrayList;
 
 public class Player {
+    /*
+    Lav enum om til klasser?
+    public enum EquipSlots{
+        HELMET,
+        CHEST,
+        BACK,
+        SHOULDER,
+        FEET,
+        LEG,
+        GLOVES,
+        WEAPON_LEFT_HAND,
+        WEAPON_RIGHT_HAND
+    }
+    * */
     private Room currentRoom;
 
     private int currentHealth;
@@ -14,7 +30,8 @@ public class Player {
 
     private int currentDamage;
     private final int baseDamage = 1;
-    private Item weaponEquip = null;
+    private Weapon weaponEquip = null;
+    private Armor armorEquip;
 
     public ArrayList<Item> inventory = new ArrayList<>();
 
@@ -53,10 +70,22 @@ public class Player {
         return weaponEquip;
     }
 
-    public void setWeaponEquip(Weapon weaponEquip) {
+    public void equip(Equipment equipment){
+        if (equipment instanceof Weapon) {
+            setWeaponEquip((Weapon) equipment);
+        } else if (equipment instanceof Armor) {
+            setArmorEquip((Armor) equipment);
+        }
+    }
+
+    private void setArmorEquip(Armor armorEquip){
+        this.armorEquip = armorEquip;
+    }
+
+    private void setWeaponEquip(Weapon weaponEquip) {
         this.weaponEquip = weaponEquip;
         if (weaponEquip != null) {
-            this.currentDamage = weaponEquip.getWeaponModifier();
+            this.currentDamage = weaponEquip.getWeaponValue();
         } else {
             this.currentDamage = baseDamage;
         }

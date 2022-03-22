@@ -12,6 +12,7 @@ public class Enemy {
         damage = dmg;
         isPoisonous = poisonous;
     }
+
     public int getCurrentHealth() {
         return currentHealth;
     }
@@ -23,12 +24,13 @@ public class Enemy {
     public int getDamage() {
         return damage;
     }
+
     public boolean getIsPoisonous() {
         return isPoisonous;
     }
 
     @Override
     public String toString() {
-        return enemyName + " Health: "+  getCurrentHealth();
+        return "Name: " + enemyName + " Health: " + getCurrentHealth();
     }
 }
