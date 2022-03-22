@@ -11,4 +11,8 @@ public class Food extends Perishable {
     public int getHealAmount() {
         return healAmount;
     }
+    public int use() {
+
+        return 0;
+    }
 }

@@ -1,7 +1,11 @@
 package com.company;
 
 import com.company.Enemies.Enemy;
+import com.company.Items.Equipables.Type.Weapon;
 import com.company.Items.Item;
+import com.company.Items.Usables.Type.Perishables.Antidote;
+import com.company.Items.Usables.Type.Perishables.Food;
+import com.company.Items.Usables.Type.Reusables.Key;
 
 import java.util.Scanner;
 
@@ -137,10 +141,10 @@ public class Adventure {
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createItems() {
-        rooms[2].addItem(new Item("antidote", "an abandoned antidote", 20));
-        rooms[5].addItem(new Item("key", "a golden key", 1));
-        rooms[6].addItem(new Item("food", "a plate of food", 40));
-        rooms[8].addItem(new Item("knife", "a knife", 1));
+        rooms[2].addItem(new Antidote("antidote", "an abandoned antidote", 20));
+        rooms[5].addItem(new Key("key", "a golden key", 1, "gold"));
+        rooms[6].addItem(new Food("food", "a plate of food", 40, 20));
+        rooms[8].addItem(new Weapon("knife", "a knife", 10, 1));
     }
 
     /*
