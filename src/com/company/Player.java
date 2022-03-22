@@ -1,23 +1,23 @@
 package com.company;
 
 import com.company.Items.Item;
+import com.company.Items.Weapon;
 
 import java.util.ArrayList;
 
 public class Player {
-    private final AdventureUI ui = new AdventureUI();
     private Room currentRoom;
 
-    private int currentHealth; // set at start of the game
-    private int maxHealth = 100; // might wanna add items to boost max health, so this may not be final
-
-    private int currentDamage = 1; // technically its baseDamage
-    private Item weaponEquip = null;
-
+    private int currentHealth;
+    private int maxHealth = 100;
     private boolean isPoisoned = false;
 
-    public ArrayList<Item> inventory = new ArrayList<>();
+    private int currentDamage;
     private final int baseDamage = 1;
+    private Item weaponEquip = null;
+
+    public ArrayList<Item> inventory = new ArrayList<>();
+
 
     public Player(Room currentRoom) {
         this.currentHealth = maxHealth;
@@ -25,19 +25,49 @@ public class Player {
         this.currentDamage = baseDamage;
     }
 
-    public int getHealth() {
+    public int getCurrentHealth() {
         return currentHealth;
     }
 
-    public void healHealth(int health) {
-        if (this.currentHealth + health > maxHealth)
-            this.currentHealth = maxHealth;
-        else
-            this.currentHealth += health;
+    public void setCurrentHealth(int currentHealth) {
+        this.currentHealth = currentHealth;
     }
 
-    public void damageHealth(int health) {
-        this.currentHealth -= health;
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    public int getCurrentDamage() {
+        return currentDamage;
+    }
+
+    public void setCurrentDamage(int currentDamage) {
+        this.currentDamage = currentDamage;
+    }
+
+    public Item getWeaponEquip() {
+        return weaponEquip;
+    }
+
+    public void setWeaponEquip(Weapon weaponEquip) {
+        this.weaponEquip = weaponEquip;
+        if (weaponEquip != null) {
+            this.currentDamage = weaponEquip.getWeaponModifier();
+        } else {
+            this.currentDamage = baseDamage;
+        }
+    }
+
+    public boolean isPoisoned() {
+        return isPoisoned;
+    }
+
+    public void setPoisoned(boolean poisoned) {
+        isPoisoned = poisoned;
     }
 
     public Room getCurrentRoom() {
@@ -48,7 +78,6 @@ public class Player {
         this.currentRoom = currentRoom;
     }
 
-    // toString is showStatus
     @Override
     public String toString() {
         return
@@ -65,29 +94,22 @@ public class Player {
 
     public void use(String itemName) {
         for (Item item : inventory) {
-            if (itemName.equalsIgnoreCase(item.getShortName()));
+            if (itemName.equalsIgnoreCase(item.getShortName())) {
                 item.use();
+            }
         }
     }
 
-
-
     public int go(String direction) {
+        int canGo;
         switch (direction) {
-            case "north" -> {
-                return checkNorth();
-            }
-            case "south" -> {
-                return checkSouth();
-            }
-            case "east" -> {
-                return checkEast();
-            }
-            case "west" -> {
-                return checkWest();
-            }
+            case "north" -> canGo = checkNorth();
+            case "south" -> canGo = checkSouth();
+            case "east" -> canGo = checkEast();
+            case "west" -> canGo = checkWest();
+            default -> canGo = 0;
         }
-        return 0;
+        return canGo;
     }
 
     private int checkNorth() {
@@ -95,47 +117,46 @@ public class Player {
         if (getCurrentRoom().getNorth() != null) {
             if (checkNorthIsLocked()) {
                 canGo = 2;
-            }
-            else {
+            } else {
                 setCurrentRoom(getCurrentRoom().getNorth());
                 canGo = 1;
             }
         }
         return canGo;
     }
+
     private int checkSouth() {
         int canGo = 0;
         if (getCurrentRoom().getSouth() != null) {
             if (checkSouthIsLocked()) {
                 canGo = 2;
-            }
-            else {
+            } else {
                 setCurrentRoom(getCurrentRoom().getSouth());
                 canGo = 1;
             }
         }
         return canGo;
     }
+
     private int checkEast() {
         int canGo = 0;
         if (getCurrentRoom().getEast() != null) {
             if (checkEastIsLocked()) {
                 canGo = 2;
-            }
-            else {
+            } else {
                 setCurrentRoom(getCurrentRoom().getEast());
                 canGo = 1;
             }
         }
         return canGo;
     }
+
     private int checkWest() {
         int canGo = 0;
         if (getCurrentRoom().getWest() != null) {
             if (checkWestIsLocked()) {
                 canGo = 2;
-            }
-            else {
+            } else {
                 setCurrentRoom(getCurrentRoom().getWest());
                 canGo = 1;
             }
@@ -159,31 +180,5 @@ public class Player {
         return getCurrentRoom().getWest().getIsLocked();
     }
 
-    public void setCurrentHealth(int newHealth) {
-        currentHealth = newHealth;
-    }
 
-    public int getCurrentHealth() {
-        return currentHealth;
-    }
-
-    public void setIsPoisoned(boolean poisoned) {
-        isPoisoned = poisoned;
-    }
-
-    public boolean getIsPoisoned() {
-        return isPoisoned;
-    }
-
-    public int getCurrentDamage() {
-        return currentDamage;
-    }
-
-    public void setCurrentDamage(int newDamage) {
-        currentDamage = newDamage;
-    }
-
-    public int getBaseDamage() {
-        return baseDamage;
-    }
 }
