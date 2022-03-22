@@ -1,6 +1,6 @@
 package com.company.Items;
 
-public class Item {
+public abstract class Item {
     private final String shortName;
     private final String longName;
     private final int rarityModifier;
@@ -21,12 +21,11 @@ public class Item {
         return longName;
     }
 
-    public String getShortName() {
+    public String getShortName(){
         return shortName;
     }
 
-    public void use() {
 
-    }
 
+    public abstract int use();
 }

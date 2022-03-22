@@ -12,4 +12,9 @@ public class Key extends Reusable {
     public String getKeyId() {
         return keyId;
     }
+
+    public int use() {
+
+        return 0;
+    }
 }

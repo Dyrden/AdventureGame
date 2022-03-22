@@ -14,6 +14,11 @@ public class Equipment extends Item {
         return super.toString() ;
     }
 
+    @Override
+    public int use() {
+        return 0;
+    }
+
 
     // equip method? idk
 }
