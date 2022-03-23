@@ -104,8 +104,11 @@ public class Room {
     }
     public void removeItem(Item item) {
         this.items.remove(item);
-        if (items.size() == 0) { itemRoomDescription = ""; }
-        else { itemRoomDescription = " You see the following items: "; }
+        if (items.size() == 0) {
+            itemRoomDescription = "";
+        } else {
+            itemRoomDescription = " You see the following items: ";
+        }
         for (int i = 0; i < items.size(); i++) {
             if (i == 0) {
                 itemRoomDescription += item.getLongName();
@@ -118,6 +121,7 @@ public class Room {
         }
         longRoomDescription = shortRoomDescription + itemRoomDescription + enemyRoomDescription;
     }
+
     public void addEnemy(Enemy enemy) {
         this.enemies.add(enemy);
         enemyRoomDescription = " You see the following enemies: ";
@@ -133,10 +137,14 @@ public class Room {
         }
         longRoomDescription = shortRoomDescription + itemRoomDescription + enemyRoomDescription;
     }
+
     public void removeEnemy(Enemy enemy) {
         this.enemies.remove(enemy);
-        if (enemies.size() == 0) { enemyRoomDescription = ""; }
-        else { enemyRoomDescription = " You see the following enemies: "; }
+        if (enemies.size() == 0) {
+            enemyRoomDescription = "";
+        } else {
+            enemyRoomDescription = " You see the following enemies: ";
+        }
         for (int i = 0; i < enemies.size(); i++) {
             if (i == 0) {
                 enemyRoomDescription += enemy.getEnemyName();
@@ -162,8 +170,8 @@ public class Room {
         this.playerVisited = playerVisited;
     }
 
-    public Room[] getDirections(){
-        return new Room[]{northernRoom,southernRoom,easternRoom,westernRoom};
+    public Room[] getDirections() {
+        return new Room[]{northernRoom, southernRoom, easternRoom, westernRoom};
     }
 
     @Override
@@ -172,14 +180,11 @@ public class Room {
         for (Enemy enemy : enemies) {
             sb.append(enemy.toString() + ", ");
         }
-        if (playerVisited) {
-            for (Item item : items) {
-                sb.append(item.toString() + ", ");
-            }
-            return getLongRoomDescription() + sb ;
-        } else {
-            return getShortRoomDescription() + sb;
+        for (Item item : items) {
+            sb.append(item.toString() + ", ");
         }
+        return getLongRoomDescription() + sb;
+
     }
 
 

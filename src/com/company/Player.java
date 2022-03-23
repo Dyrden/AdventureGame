@@ -18,6 +18,8 @@ public class Player {
     private int currentHealth;
     private int maxHealth;
     private boolean isPoisoned;
+    private boolean poisonCleared;
+
 
     private int currentDamage;
     private final int baseDamage = 1;
@@ -29,12 +31,14 @@ public class Player {
 
     public Player(Room currentRoom) {
         maxHealth = 100;
-        isPoisoned = false;
+        isPoisoned = true;
         weaponEquip = null;
         armorEquip = null;
+        poisonCleared = false;
         this.currentHealth = maxHealth;
         this.currentRoom = currentRoom;
         this.currentDamage = baseDamage;
+
     }
 
     public int getCurrentHealth() {
@@ -103,6 +107,13 @@ public class Player {
         isPoisoned = poisoned;
     }
 
+    public boolean isPoisonCleared() {
+        return poisonCleared;
+    }
+
+    public void setPoisonCleared(boolean poisonCleared) {
+        this.poisonCleared = poisonCleared;
+    }
 
     @Override
     public String toString() {
@@ -124,9 +135,9 @@ public class Player {
             if (itemName.equalsIgnoreCase(item.getShortName())) {
                 usedItem = item;
                 checkItemType(item);
-                removeFromInventory(item);
             }
         }
+        removeFromInventory(usedItem);
         return usedItem;
     }
 
@@ -151,7 +162,14 @@ public class Player {
     }
 
     private void useAntidote() {
-        setPoisoned(false);
+        if (isPoisoned()) {
+            setPoisoned(false);
+            setPoisonCleared(true);
+        } else {
+            setPoisonCleared(false);
+
+        }
+
     }
 
 
@@ -175,6 +193,7 @@ public class Player {
         }
         return currentItem;
     }
+
 
     public Room getCurrentRoom() {
         return currentRoom;
@@ -272,5 +291,18 @@ public class Player {
             currentRoom.addItem(item);
         }
         return item;
+    }
+
+    public Item take(String itemName) {
+        Item itemFound = null;
+        for (Item item : getCurrentRoom().getItems()) {
+            if (itemName.equalsIgnoreCase(item.getShortName())) {
+                itemFound = item;
+                inventory.add(item);
+                break;
+            }
+        }
+        getCurrentRoom().removeItem(itemFound);
+        return itemFound;
     }
 }

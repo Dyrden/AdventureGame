@@ -55,9 +55,9 @@ public class Adventure {
             case "look" -> UI.displayRoomStatus(player.getCurrentRoom());
             case "status" -> UI.displayPlayerStatus(player.toString());
             case "inventory" -> UI.displayInventory(player.getInventory());
-            //case "take" -> player.take(command[1]);
-            case "use" -> player.use(command[1]);
-            //case "drop" -> player.drop(command[1]);
+            case "take" -> UI.displayPlayerTakeItem(player.take(command[1]));
+            case "use" -> UI.displayPlayerUseItem(player.use(command[1]), player);
+            case "drop" -> player.drop(command[1]);
             //case "attack" -> player.attack();
             case "equip" -> UI.displayEquippedItem(player.equip(command[1]));
             case "help" -> help();
@@ -144,6 +144,7 @@ public class Adventure {
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createItems() {
+        rooms[2].addItem(new Antidote("antidote", "an abandoned antidote", 20,25));
         rooms[2].addItem(new Antidote("antidote", "an abandoned antidote", 20,25));
         rooms[5].addItem(new Key("key", "a golden key", 1, 25 ,"gold"));
         rooms[6].addItem(new Food("food", "a plate of food", 40, 20, 50, HealthType.CURRENT));

@@ -14,7 +14,7 @@ public abstract class Item {
     }
     @Override
     public String toString() {
-        return shortName;
+        return longName;
     }
 
     public String getLongName(){

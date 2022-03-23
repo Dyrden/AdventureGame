@@ -2,6 +2,10 @@ package com.company;
 
 import com.company.Items.Equipables.Equipment;
 import com.company.Items.Item;
+import com.company.Items.Usables.Type.Perishables.Antidote;
+import com.company.Items.Usables.Type.Perishables.Food;
+import com.company.Items.Usables.Type.Perishables.HealthType;
+import com.company.Items.Usables.Type.Reusables.Key;
 
 import java.util.ArrayList;
 
@@ -51,10 +55,68 @@ public class AdventureUI {
         System.out.println("What would you like to do? (type 'help' to view commands)");
     }
 
+
+    public void displayPlayerUseItem(Item item, Player player) {
+        StringBuilder sb = new StringBuilder();
+        if (item != null) {
+            sb.append("You used ");
+            sb.append(item.getLongName());
+            if (item instanceof Food food) {
+                if (food.getType() == HealthType.CURRENT) {
+                    sb.append(" and changed your current health by. ");
+                }
+                if (food.getType() == HealthType.MAX) {
+                    sb.append(" and changed your max health by. ");
+                }
+                sb.append(food.getHealAmount());
+            } else if (item instanceof Antidote) {
+                if (player.isPoisonCleared()) {
+                    sb.append(" and cleared your poison.");
+                } else {
+                    sb.append(" but you weren't poisoned to begin with.");
+
+                }
+            } else if (item instanceof Key key) {
+                String action = "";
+                for (Room room : player.getCurrentRoom().getDirections()) {
+                    if (room != null) {
+                        if (room.getIsLocked()) {
+                            if (key.getKeyId().equalsIgnoreCase(room.getLockId())) {
+                                action = " and it fits the locked room, unlocking it.";
+                            } else {
+                                action = " but the key doesnt fit.";
+                            }
+                            action = " but the room it fits is already unlocked";
+                        } else {
+                            if (key.getKeyId().equalsIgnoreCase(room.getLockId())) {
+                                if (!room.getIsLocked()) {
+                                    action = ", it fits but the room is already unlocked";
+                                }
+                            }
+                        }
+                    }
+                }
+                sb.append(action);
+            }
+        } else {
+            sb.append("You have no such item on your person.");
+        }
+        System.out.println(sb);
+    }
+
     public void displayCommandOptions() {
         for (Command command : Command.values()) {
             System.out.println(command.getCommandDescription());
         }
+    }
+
+    public void displayPlayerTakeItem(Item item) {
+        if (item != null) {
+            System.out.println("You took " + item.getLongName() + " from the room.");
+        } else {
+            System.out.println("You dont see any such thing in the room");
+        }
+
     }
 
     public void displayDropMessage(Item item) {
@@ -117,9 +179,10 @@ public class AdventureUI {
         }
     }
 
-    public void displayTurnShift(){
-        System.out.println( ANSI_YELLOW + "-----------------------------------------------" + ANSI_RESET);
+    public void displayTurnShift() {
+        System.out.println(ANSI_YELLOW + "-----------------------------------------------" + ANSI_RESET);
     }
+
     public void displayNoItemHere() {
         System.out.println("Nothing to pick up here.");
     }
