@@ -9,6 +9,8 @@ public class Room {
     private final String roomName;
     private String longRoomDescription;
     private String shortRoomDescription;
+    private String itemRoomDescription = "";
+    private String enemyRoomDescription = "";
     private boolean isLocked;
     private String lockId;
     private Room northernRoom;
@@ -87,15 +89,66 @@ public class Room {
     }
     public void addItem(Item item) {
         this.items.add(item);
+        itemRoomDescription = " You see the following items: ";
+        for (int i = 0; i < items.size(); i++) {
+            if (i == 0) {
+                itemRoomDescription += item.getLongName();
+            } else {
+                itemRoomDescription += ", " + item.getLongName();
+            }
+        }
+        if (!itemRoomDescription.equals("")) {
+            itemRoomDescription += ".";
+        }
+        longRoomDescription = shortRoomDescription + itemRoomDescription + enemyRoomDescription;
     }
     public void removeItem(Item item) {
         this.items.remove(item);
+        if (items.size() == 0) { itemRoomDescription = ""; }
+        else { itemRoomDescription = " You see the following items: "; }
+        for (int i = 0; i < items.size(); i++) {
+            if (i == 0) {
+                itemRoomDescription += item.getLongName();
+            } else {
+                itemRoomDescription += ", " + item.getLongName();
+            }
+        }
+        if (!itemRoomDescription.equals("")) {
+            itemRoomDescription += ".";
+        }
+        longRoomDescription = shortRoomDescription + itemRoomDescription + enemyRoomDescription;
     }
     public void addEnemy(Enemy enemy) {
         this.enemies.add(enemy);
+        enemyRoomDescription = " You see the following enemies: ";
+        for (int i = 0; i < enemies.size(); i++) {
+            if (i == 0) {
+                enemyRoomDescription += enemy.getEnemyName();
+            } else {
+                enemyRoomDescription += ", " + enemy.getEnemyName();
+            }
+        }
+        if (!enemyRoomDescription.equals("")) {
+            enemyRoomDescription += ".";
+        }
+        longRoomDescription = shortRoomDescription + itemRoomDescription + enemyRoomDescription;
     }
     public void removeEnemy(int index) {
+        Enemy enemy = enemies.get(index);
         this.enemies.remove(index);
+        if (enemies.size() == 0) { enemyRoomDescription = ""; }
+        else { enemyRoomDescription = " You see the following enemies: "; }
+        for (int i = 0; i < enemies.size(); i++) {
+            if (i == 0) {
+                enemyRoomDescription += enemy.getEnemyName();
+            } else {
+                enemyRoomDescription += ", " + enemy.getEnemyName();
+            }
+        }
+        if (!enemyRoomDescription.equals("")) {
+            enemyRoomDescription += ".";
+        }
+        longRoomDescription = shortRoomDescription + itemRoomDescription + enemyRoomDescription;
     }
 
     public void setIsLocked(boolean locked) {

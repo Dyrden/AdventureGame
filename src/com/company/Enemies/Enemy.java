@@ -29,6 +29,10 @@ public class Enemy {
         return isPoisonous;
     }
 
+    public String getEnemyName(){
+        return enemyName;
+    }
+
     @Override
     public String toString() {
         return "Name: " + enemyName + " Health: " + getCurrentHealth();
