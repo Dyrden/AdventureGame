@@ -86,7 +86,6 @@ public class AdventureUI {
                             } else {
                                 action = " but the key doesnt fit.";
                             }
-                            action = " but the room it fits is already unlocked";
                         } else {
                             if (key.getKeyId().equalsIgnoreCase(room.getLockId())) {
                                 if (!room.getIsLocked()) {
