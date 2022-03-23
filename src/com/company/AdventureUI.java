@@ -59,6 +59,9 @@ public class AdventureUI {
         System.out.println("You used " + item.getShortName() + ", and changed your current health.");
     }
 
+    public void displayPlayerUseItem(String item) {
+        System.out.println(item);
+    }
     public void displayPlayerUseItemFoodMax(Item item) {
         System.out.println("You used " + item.getShortName() + ", and changed your max health.");
     }

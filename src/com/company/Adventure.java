@@ -56,7 +56,7 @@ public class Adventure {
             case "status" -> UI.displayPlayerStatus(player.toString());
             case "inventory" -> UI.displayInventory(player.getInventory());
             case "take" -> UI.displayPlayerTakeItem(player.take(command[1]));
-            case "use" -> UI.displayPlayerUseItem(player.use(command[1]), player);
+            case "use" -> UI.displayPlayerUseItem(player.use(command[1]));
             case "drop" -> player.drop(command[1]);
             //case "attack" -> player.attack();
             case "equip" -> UI.displayEquippedItem(player.equip(command[1]));

@@ -129,57 +129,75 @@ public class Player {
         return inventory;
     }
 
-    public Item use(String itemName) {
-        Item usedItem = null;
+    public String use(String itemName) {
+        String usedItem = "";
         for (Item item : inventory) {
             if (itemName.equalsIgnoreCase(item.getShortName())) {
-                usedItem = item;
-                checkItemType(item);
+                usedItem = checkItemType(item);
             }
         }
-        removeFromInventory(usedItem);
         return usedItem;
     }
 
-    private void checkItemType(Item item) {
-        if (item instanceof Food) {
-            useFood((Food) item);
-        } else if (item instanceof Antidote) {
-            useAntidote();
-        } else if (item instanceof Key) {
-            useKey((Key) item);
+    private String checkItemType(Item item) {
+        String str = "";
+        if (item instanceof Food food) {
+            str = useFood(food);
+            inventory.remove(item);
+        } else if (item instanceof Antidote antidote) {
+            str = useAntidote(antidote);
+            inventory.remove(item);
+        } else if (item instanceof Key key) {
+            str = useKey(key);
         }
+        return str;
     }
 
-    private void useKey(Key key) {
+    private String useKey(Key key) {
+        String usedKey = "";
         for (Room room : this.currentRoom.getDirections()) {
             if (room != null) {
                 if (room.getIsLocked()) {
                     if (key.getKeyId().equalsIgnoreCase(room.getLockId())) {
+                        usedKey = key + " successfully used on locked room";
                         room.setIsLocked(false);
+                    } else {
+                        usedKey = key + " does not fit the locked room";
                     }
+                    break;
                 }
+                usedKey = key + " cannot be used on anything here";
             }
         }
+        return usedKey;
     }
 
-    private void useAntidote() {
+    private String useAntidote(Antidote antidote) {
+        String usedAntidote;
         if (isPoisoned()) {
             setPoisoned(false);
             setPoisonCleared(true);
+            usedAntidote = "You successfully used " + antidote;
         } else {
             setPoisonCleared(false);
-
+            usedAntidote = "You successfully used " + antidote + " but you weren't poisoned";
         }
-
+        return usedAntidote;
     }
 
 
-    private void useFood(Food food) {
-        if (food.getType() == HealthType.CURRENT)
+    private String useFood(Food food) {
+        String useFood = "";
+        if (food.getType() == HealthType.CURRENT) {
             setCurrentHealth(getCurrentHealth() + food.use());
-        if (food.getType() == HealthType.MAX)
+            useFood = "You used " + food + " and added " + food.getHealAmount() + " to your current health" ;
+        }
+        if (food.getType() == HealthType.MAX) {
             setMaxHealth(getMaxHealth() + food.use());
+            useFood = "You used " + food + " and added " + food.getHealAmount() + " to your max health" ;
+
+        }
+        return useFood;
     }
 
     private void removeFromInventory(Item item) {
