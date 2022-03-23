@@ -16,18 +16,22 @@ public class Player {
     private Room currentRoom;
 
     private int currentHealth;
-    private int maxHealth = 100;
-    private boolean isPoisoned = false;
+    private int maxHealth;
+    private boolean isPoisoned;
 
     private int currentDamage;
     private final int baseDamage = 1;
-    private Weapon weaponEquip = null;
+    private Weapon weaponEquip;
     private Armor armorEquip;
 
     public ArrayList<Item> inventory = new ArrayList<>();
 
 
     public Player(Room currentRoom) {
+        maxHealth = 100;
+        isPoisoned = false;
+        weaponEquip = null;
+        armorEquip = null;
         this.currentHealth = maxHealth;
         this.currentRoom = currentRoom;
         this.currentDamage = baseDamage;
@@ -59,15 +63,14 @@ public class Player {
 
 
     public Equipment equip(String itemName) {
-        Equipment equip;
+        Equipment equip = null;
         for (Item item : inventory) {
             if (item.getShortName().equalsIgnoreCase(itemName) && item instanceof Equipment) {
                 equip = (Equipment) item;
                 armorOrWeapon(equip);
-                return equip;
             }
         }
-        return null;
+        return equip;
     }
 
     private void armorOrWeapon(Equipment equipment) {
@@ -85,9 +88,9 @@ public class Player {
     private void setWeaponEquip(Weapon weaponEquip) {
         this.weaponEquip = weaponEquip;
         if (weaponEquip != null) {
-            this.currentDamage = weaponEquip.getWeaponValue();
+            setCurrentDamage(weaponEquip.getWeaponValue());
         } else {
-            this.currentDamage = baseDamage;
+            setCurrentDamage(baseDamage);
         }
     }
 
@@ -115,22 +118,29 @@ public class Player {
         return inventory;
     }
 
-    public void use(String itemName) {
+    public Item use(String itemName) {
+        Item usedItem = null;
         for (Item item : inventory) {
             if (itemName.equalsIgnoreCase(item.getShortName())) {
-                if (item instanceof Food) {
-                    useFood((Food) item);
-                } else if (item instanceof Antidote) {
-                    useAntidote();
-                } else if (item instanceof Key) {
-                    useKey((Key) item);
-                }
+                usedItem = item;
+                checkItemType(item);
                 removeFromInventory(item);
             }
         }
+        return usedItem;
     }
 
-    private void useKey(Key key){
+    private void checkItemType(Item item) {
+        if (item instanceof Food) {
+            useFood((Food) item);
+        } else if (item instanceof Antidote) {
+            useAntidote();
+        } else if (item instanceof Key) {
+            useKey((Key) item);
+        }
+    }
+
+    private void useKey(Key key) {
         for (Room room : this.currentRoom.getDirections()) {
             if (room.getIsLocked()) {
                 if (key.getKeyId().equalsIgnoreCase(room.getLockId())) {
@@ -139,8 +149,9 @@ public class Player {
             }
         }
     }
+
     private void useAntidote() {
-        isPoisoned = false;
+        setPoisoned(false);
     }
 
 
@@ -153,6 +164,16 @@ public class Player {
 
     private void removeFromInventory(Item item) {
         inventory.remove(item);
+    }
+
+    private Item findItemInInventory(String itemName) {
+        Item currentItem = null;
+        for (Item item : inventory) {
+            if (itemName.equalsIgnoreCase(item.getShortName())) {
+                currentItem = item;
+            }
+        }
+        return currentItem;
     }
 
     public Room getCurrentRoom() {
@@ -244,4 +265,12 @@ public class Player {
     }
 
 
+    public Item drop(String input) {
+        Item item = findItemInInventory(input);
+        if (item != null) {
+            removeFromInventory(item);
+            currentRoom.addItem(item);
+        }
+        return item;
+    }
 }
