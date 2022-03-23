@@ -153,9 +153,11 @@ public class Player {
 
     private void useKey(Key key) {
         for (Room room : this.currentRoom.getDirections()) {
-            if (room.getIsLocked()) {
-                if (key.getKeyId().equalsIgnoreCase(room.getLockId())) {
-                    room.setIsLocked(false);
+            if (room != null) {
+                if (room.getIsLocked()) {
+                    if (key.getKeyId().equalsIgnoreCase(room.getLockId())) {
+                        room.setIsLocked(false);
+                    }
                 }
             }
         }

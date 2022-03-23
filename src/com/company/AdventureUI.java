@@ -99,6 +99,7 @@ public class AdventureUI {
         } else {
             System.out.println("You dont see any such thing in the room");
         }
+
     }
 
     public void displayDropMessage(Item item) {
