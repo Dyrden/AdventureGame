@@ -145,7 +145,6 @@ public class Adventure {
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createItems() {
         rooms[2].addItem(new Antidote("antidote", "an abandoned antidote", 20,25));
-        rooms[2].addItem(new Antidote("antidote", "an abandoned antidote", 20,25));
         rooms[5].addItem(new Key("key", "a golden key", 1, 25 ,"gold"));
         rooms[6].addItem(new Food("food", "a plate of food", 40, 20, 50, HealthType.CURRENT));
         rooms[8].addItem(new Weapon("knife", "a knife", 10, 1,25));

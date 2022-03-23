@@ -34,6 +34,34 @@ public class Room {
     }
 
     public String getLongRoomDescription() {
+        if (items.size() == 0) { itemRoomDescription = ""; }
+        else { itemRoomDescription = " You see the following items: "; }
+        for (int i = 0; i < items.size(); i++) {
+            Item item = items.get(i);
+            if (i == 0) {
+                itemRoomDescription += item.getLongName();
+            } else {
+                itemRoomDescription += ", " + item.getLongName();
+            }
+        }
+        if (!itemRoomDescription.equals("")) {
+            itemRoomDescription += ".";
+        }
+
+        if (enemies.size() == 0) { enemyRoomDescription = ""; }
+        else { enemyRoomDescription = " You see the following enemies: "; }
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy enemy = enemies.get(i);
+            if (i == 0) {
+                enemyRoomDescription += enemy.getEnemyName();
+            } else {
+                enemyRoomDescription += ", " + enemy.getEnemyName();
+            }
+        }
+        if (!enemyRoomDescription.equals("")) {
+            enemyRoomDescription += ".";
+        }
+        longRoomDescription = shortRoomDescription + itemRoomDescription + enemyRoomDescription;
         return longRoomDescription;
     }
 
@@ -89,73 +117,17 @@ public class Room {
     }
     public void addItem(Item item) {
         this.items.add(item);
-        itemRoomDescription = " You see the following items: ";
-        for (int i = 0; i < items.size(); i++) {
-            if (i == 0) {
-                itemRoomDescription += item.getLongName();
-            } else {
-                itemRoomDescription += ", " + item.getLongName();
-            }
-        }
-        if (!itemRoomDescription.equals("")) {
-            itemRoomDescription += ".";
-        }
-        longRoomDescription = shortRoomDescription + itemRoomDescription + enemyRoomDescription;
     }
     public void removeItem(Item item) {
         this.items.remove(item);
-        if (items.size() == 0) {
-            itemRoomDescription = "";
-        } else {
-            itemRoomDescription = " You see the following items: ";
-        }
-        for (int i = 0; i < items.size(); i++) {
-            if (i == 0) {
-                itemRoomDescription += item.getLongName();
-            } else {
-                itemRoomDescription += ", " + item.getLongName();
-            }
-        }
-        if (!itemRoomDescription.equals("")) {
-            itemRoomDescription += ".";
-        }
-        longRoomDescription = shortRoomDescription + itemRoomDescription + enemyRoomDescription;
     }
 
     public void addEnemy(Enemy enemy) {
         this.enemies.add(enemy);
-        enemyRoomDescription = " You see the following enemies: ";
-        for (int i = 0; i < enemies.size(); i++) {
-            if (i == 0) {
-                enemyRoomDescription += enemy.getEnemyName();
-            } else {
-                enemyRoomDescription += ", " + enemy.getEnemyName();
-            }
-        }
-        if (!enemyRoomDescription.equals("")) {
-            enemyRoomDescription += ".";
-        }
-        longRoomDescription = shortRoomDescription + itemRoomDescription + enemyRoomDescription;
     }
 
     public void removeEnemy(Enemy enemy) {
         this.enemies.remove(enemy);
-        if (enemies.size() == 0) {
-            enemyRoomDescription = "";
-        } else {
-            enemyRoomDescription = " You see the following enemies: ";
-        }
-        for (int i = 0; i < enemies.size(); i++) {
-            if (i == 0) {
-                enemyRoomDescription += enemy.getEnemyName();
-            } else {
-                enemyRoomDescription += ", " + enemy.getEnemyName();
-            }
-        }
-        if (!enemyRoomDescription.equals("")) {
-            enemyRoomDescription += ".";
-        }
-        longRoomDescription = shortRoomDescription + itemRoomDescription + enemyRoomDescription;
     }
 
     public void setIsLocked(boolean locked) {
@@ -176,14 +148,7 @@ public class Room {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (Enemy enemy : enemies) {
-            sb.append(enemy.toString() + ", ");
-        }
-        for (Item item : items) {
-            sb.append(item.toString() + ", ");
-        }
-        return getLongRoomDescription() + sb;
+        return getLongRoomDescription();
 
     }
 

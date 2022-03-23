@@ -55,53 +55,36 @@ public class AdventureUI {
         System.out.println("What would you like to do? (type 'help' to view commands)");
     }
 
+    public void displayPlayerUseItemFoodCurrent(Item item) {
+        System.out.println("You used " + item.getShortName() + ", and changed your current health.");
+    }
 
-    public void displayPlayerUseItem(Item item, Player player) {
-        StringBuilder sb = new StringBuilder();
-        if (item != null) {
-            sb.append("You used ");
-            sb.append(item.getLongName());
-            if (item instanceof Food food) {
-                if (food.getType() == HealthType.CURRENT) {
-                    sb.append(" and changed your current health by. ");
-                }
-                if (food.getType() == HealthType.MAX) {
-                    sb.append(" and changed your max health by. ");
-                }
-                sb.append(food.getHealAmount());
-            } else if (item instanceof Antidote) {
-                if (player.isPoisonCleared()) {
-                    sb.append(" and cleared your poison.");
-                } else {
-                    sb.append(" but you weren't poisoned to begin with.");
+    public void displayPlayerUseItemFoodMax(Item item) {
+        System.out.println("You used " + item.getShortName() + ", and changed your max health.");
+    }
 
-                }
-            } else if (item instanceof Key key) {
-                String action = "";
-                for (Room room : player.getCurrentRoom().getDirections()) {
-                    if (room != null) {
-                        if (room.getIsLocked()) {
-                            if (key.getKeyId().equalsIgnoreCase(room.getLockId())) {
-                                action = " and it fits the locked room, unlocking it.";
-                            } else {
-                                action = " but the key doesnt fit.";
-                            }
-                            action = " but the room it fits is already unlocked";
-                        } else {
-                            if (key.getKeyId().equalsIgnoreCase(room.getLockId())) {
-                                if (!room.getIsLocked()) {
-                                    action = ", it fits but the room is already unlocked";
-                                }
-                            }
-                        }
-                    }
-                }
-                sb.append(action);
-            }
-        } else {
-            sb.append("You have no such item on your person.");
-        }
-        System.out.println(sb);
+    public void displayPlayerUseItemAntidoteClear(Item item) {
+        System.out.println("You used " + item.getShortName() + ", and cleansed your poisoned status.");
+    }
+
+    public void displayPlayerUseItemAntidote(Item item) {
+        System.out.println("You used " + item.getShortName() + ", but you weren't poisoned to begin with.");
+    }
+
+    public void displayPlayerUseItemKeyUnlocked(Item item) {
+        System.out.println("You used " + item.getShortName() + ", and it fits the locked room, unlocking it.");
+    }
+
+    public void displayPlayerUseItemKeyAlreadyUnlocked(Item item) {
+        System.out.println("You used " + item.getShortName() + ", but the room it fits is already unlocked.");
+    }
+
+    public void displayPlayerUseItemKeyNoMatch(Item item) {
+        System.out.println("You used " + item.getShortName() + ", but the key doesnt fit.");
+    }
+
+    public void displayPlayerNoSuchItem() {
+        System.out.println("You have no such item on your person.");
     }
 
     public void displayCommandOptions() {
@@ -116,7 +99,6 @@ public class AdventureUI {
         } else {
             System.out.println("You dont see any such thing in the room");
         }
-
     }
 
     public void displayDropMessage(Item item) {
