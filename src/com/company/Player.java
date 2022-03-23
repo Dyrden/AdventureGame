@@ -4,24 +4,15 @@ import com.company.Items.Equipables.Equipment;
 import com.company.Items.Equipables.Type.Armor;
 import com.company.Items.Equipables.Type.Weapon;
 import com.company.Items.Item;
+import com.company.Items.Usables.Type.Perishables.Antidote;
+import com.company.Items.Usables.Type.Perishables.Food;
+import com.company.Items.Usables.Type.Perishables.HealthType;
+import com.company.Items.Usables.Type.Reusables.Key;
 
 import java.util.ArrayList;
 
 public class Player {
-    /*
-    Lav enum om til klasser?
-    public enum EquipSlots{
-        HELMET,
-        CHEST,
-        BACK,
-        SHOULDER,
-        FEET,
-        LEG,
-        GLOVES,
-        WEAPON_LEFT_HAND,
-        WEAPON_RIGHT_HAND
-    }
-    * */
+
     private Room currentRoom;
 
     private int currentHealth;
@@ -67,10 +58,10 @@ public class Player {
     }
 
 
-    public Equipment equip(String itemName){
+    public Equipment equip(String itemName) {
         Equipment equip;
-        for (Item item: inventory) {
-            if (item.getShortName().equalsIgnoreCase(itemName) && item instanceof Equipment){
+        for (Item item : inventory) {
+            if (item.getShortName().equalsIgnoreCase(itemName) && item instanceof Equipment) {
                 equip = (Equipment) item;
                 armorOrWeapon(equip);
                 return equip;
@@ -78,6 +69,7 @@ public class Player {
         }
         return null;
     }
+
     private void armorOrWeapon(Equipment equipment) {
         if (equipment instanceof Weapon) {
             setWeaponEquip((Weapon) equipment);
@@ -85,9 +77,11 @@ public class Player {
             setArmorEquip((Armor) equipment);
         }
     }
-    private void setArmorEquip(Armor armorEquip){
+
+    private void setArmorEquip(Armor armorEquip) {
         this.armorEquip = armorEquip;
     }
+
     private void setWeaponEquip(Weapon weaponEquip) {
         this.weaponEquip = weaponEquip;
         if (weaponEquip != null) {
@@ -123,11 +117,44 @@ public class Player {
 
     public void use(String itemName) {
         for (Item item : inventory) {
-            if (itemName.equalsIgnoreCase(item.getShortName())) {
-                item.use();
+            if (itemName.equalsIgnoreCase(item.getLongName())) {
+                if (item instanceof Food) {
+                    useFood((Food) item);
+                } else if (item instanceof Antidote) {
+                    useAntidote();
+                } else if (item instanceof Key) {
+                    useKey((Key) item);
+                }
+                removeFromInventory(item);
             }
         }
     }
+
+    private void useKey(Key key){
+        for (Room room : this.currentRoom.getDirections()) {
+            if (room.getIsLocked()) {
+                if (key.getKeyId().equalsIgnoreCase(room.getLockId())) {
+                    room.setIsLocked(false);
+                }
+            }
+        }
+    }
+    private void useAntidote() {
+        isPoisoned = false;
+    }
+
+
+    private void useFood(Food food) {
+        if (food.getType() == HealthType.CURRENT)
+            setCurrentHealth(getCurrentHealth() + food.use());
+        if (food.getType() == HealthType.MAX)
+            setMaxHealth(getMaxHealth() + food.use());
+    }
+
+    private void removeFromInventory(Item item) {
+        inventory.remove(item);
+    }
+
     public Room getCurrentRoom() {
         return currentRoom;
     }
