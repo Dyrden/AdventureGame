@@ -138,6 +138,7 @@ public class Adventure {
         rooms[1].addEnemy(new Enemy("bat", 10, 9, true));
         rooms[1].addEnemy(new Enemy("bat", 10, 9, true));
         rooms[3].addEnemy(new Enemy("rat", 5, 5, false));
+        rooms[6].addEnemy(new Enemy("rat", 5, 5, false));
         rooms[7].addEnemy(new Enemy("snake", 50, 10, true));
     }
 
