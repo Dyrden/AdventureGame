@@ -133,9 +133,8 @@ public class Room {
         }
         longRoomDescription = shortRoomDescription + itemRoomDescription + enemyRoomDescription;
     }
-    public void removeEnemy(int index) {
-        Enemy enemy = enemies.get(index);
-        this.enemies.remove(index);
+    public void removeEnemy(Enemy enemy) {
+        this.enemies.remove(enemy);
         if (enemies.size() == 0) { enemyRoomDescription = ""; }
         else { enemyRoomDescription = " You see the following enemies: "; }
         for (int i = 0; i < enemies.size(); i++) {
