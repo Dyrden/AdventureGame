@@ -117,7 +117,7 @@ public class Player {
 
     public void use(String itemName) {
         for (Item item : inventory) {
-            if (itemName.equalsIgnoreCase(item.getLongName())) {
+            if (itemName.equalsIgnoreCase(item.getShortName())) {
                 if (item instanceof Food) {
                     useFood((Food) item);
                 } else if (item instanceof Antidote) {
