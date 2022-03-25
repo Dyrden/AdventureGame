@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.Enemies.Enemy;
 import com.company.Items.Equipables.Type.Weapon;
+import com.company.Items.Item;
 import com.company.Items.Usables.Type.Perishables.Antidote;
 import com.company.Items.Usables.Type.Perishables.Food;
 import com.company.Items.Usables.Type.Perishables.HealthType;
@@ -56,7 +57,23 @@ public class Adventure {
             case "status" -> UI.displayPlayerStatus(player.toString());
             case "inventory" -> UI.displayInventory(player.getInventory());
             case "take" -> UI.displayPlayerTakeItem(player.take(command[1]));
-            case "use" -> UI.displayPlayerUseItem(player.use(command[1]));
+            case "use" -> {
+                Item item = player.findItemInInventory(command[1]);
+
+                if (item instanceof Food food) {
+                    UI.displayPlayerEat(player.eat(food), player.getCurrentHealth() , food.getHealAmount());
+                } else if (item instanceof Antidote antidote) {
+                    //player.drink()
+                    //UI.displayPlayerDrink(enum af outcome)
+                } else if (item instanceof Key key) {
+                    //player.use()
+                    //UI.displayPlayerUse(enum af outcome)
+                }
+
+
+                    UI.displayPlayerUseItem(player.use(command[1]));
+            }
+
             case "drop" -> player.drop(command[1]);
             //case "attack" -> player.attack();
             case "equip" -> UI.displayEquippedItem(player.equip(command[1]));

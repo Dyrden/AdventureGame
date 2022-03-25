@@ -291,6 +291,10 @@ public class AdventureUI {
     public void displayNoSuchDirection(String direction) {
         System.out.println("You tried going " + direction + " but a wall is in the way");
     }
+
+    public void displayPlayerEat(EatFoodOutcome eat, int currentHealth, int healAmount) {
+        System.out.println(eat.getOutcome() + " , changing your health by " + healAmount + " to " + currentHealth);
+    }
 }
 
 

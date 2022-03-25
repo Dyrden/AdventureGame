@@ -139,10 +139,11 @@ public class Player {
         return usedItem;
     }
 
+
     private String checkItemType(Item item) {
         String str = "";
         if (item instanceof Food food) {
-            str = useFood(food);
+            //    str = useFood(food);
             inventory.remove(item);
         } else if (item instanceof Antidote antidote) {
             str = useAntidote(antidote);
@@ -186,16 +187,24 @@ public class Player {
     }
 
 
-    private String useFood(Food food) {
-        String useFood = "";
-        if (food.getType() == HealthType.CURRENT) {
-            setCurrentHealth(getCurrentHealth() + food.use());
-            useFood = "You used " + food + " and added " + food.getHealAmount() + " to your current health" ;
+    public EatFoodOutcome eat(Food food) {
+        EatFoodOutcome useFood = null;
+        int foodValue = food.use();
+        if (food.getFoodType() == HealthType.CURRENT) {
+            setCurrentHealth(getCurrentHealth() + foodValue);
+            if (foodValue < 0) {
+                useFood = EatFoodOutcome.ATE_BAD_CURRENT_FOOD;
+            } else {
+                useFood = EatFoodOutcome.ATE_GOOD_CURRENT_FOOD;
+            }
         }
-        if (food.getType() == HealthType.MAX) {
+        if (food.getFoodType() == HealthType.MAX) {
             setMaxHealth(getMaxHealth() + food.use());
-            useFood = "You used " + food + " and added " + food.getHealAmount() + " to your max health" ;
-
+            if (foodValue < 0) {
+                useFood = EatFoodOutcome.ATE_BAD_MAX_FOOD;
+            } else {
+                useFood = EatFoodOutcome.ATE_GOOD_MAX_FOOD;
+            }
         }
         return useFood;
     }
@@ -204,7 +213,7 @@ public class Player {
         inventory.remove(item);
     }
 
-    private Item findItemInInventory(String itemName) {
+    public Item findItemInInventory(String itemName) {
         Item currentItem = null;
         for (Item item : inventory) {
             if (itemName.equalsIgnoreCase(item.getShortName())) {

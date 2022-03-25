@@ -18,7 +18,7 @@ public class Food extends Perishable {
     }
 
 
-    public HealthType getType() {
+    public HealthType getFoodType() {
         return type;
     }
 }
