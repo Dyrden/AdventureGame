@@ -196,28 +196,31 @@ public class AdventureUI {
     public void displayTakePoisonDamageDeath(int poisonDmg) {
         System.out.println("You took " + poisonDmg + " poison damage and died from it.");
     }
-    /*
+
 
     public void displayRetaliate(Room currentRoom, int currentHealth, int i) {
-        System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has retaliated for " + currentRoom.getEnemies().get(i).getDamage() + " damage. " + currentHealth + " health remaining.");
+        System.out.println(currentRoom.getEnemies().get(i).getEnemyName() + " has retaliated for " + currentRoom.getEnemies().get(i).getDamage() + " damage. " + currentHealth + " health remaining.");
     }
 
     public void displayRetaliateDeath(Room currentRoom, int i) {
-        System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has retaliated for " + currentRoom.getEnemies().get(i).getDamage() + " damage and killed you.");
+        System.out.println(currentRoom.getEnemies().get(i).getEnemyName() + " has retaliated for " + currentRoom.getEnemies().get(i).getDamage() + " damage and killed you.");
     }
 
     public void displayEnemyDied(Room currentRoom, int i) {
-        System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has died.");
-    }
-
-    public void displayEnemyTookDamage(Room currentRoom, int i) {
-        System.out.println(currentRoom.getEnemies().get(i).getEnemyType().toString() + " has " + currentRoom.getEnemies().get(i).getCurrentHealth() + " health remaining.");
+        System.out.println(currentRoom.getEnemies().get(i).getEnemyName() + " has died.");
     }
 
     public void displayPlayerDealDamage(Room currentRoom, int currentDamage, int i) {
-        System.out.println("Attacking " + currentRoom.getEnemies().get(i).getEnemyType().toString() + " for " + currentDamage + " damage.");
+        System.out.println("Attacking " + currentRoom.getEnemies().get(i).getEnemyName() + " for " + currentDamage + " damage. " + currentRoom.getEnemies().get(i).getEnemyName() + " has " + currentRoom.getEnemies().get(i).getCurrentHealth() + " health remaining.");
     }
-    * */
+
+    public void displayNoSuchEnemy(String enemy) {
+        System.out.println("Could not find any " + enemy + ".");
+    }
+
+    public void displaySpecifyAnEnemy() {
+        System.out.println("Please specify an enemy.");
+    }
 
     public void displayInventory(ArrayList<Item> items) {
         System.out.println("Inventory contains:");

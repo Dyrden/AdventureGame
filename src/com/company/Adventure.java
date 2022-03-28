@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.Enemies.Enemy;
 import com.company.Items.Equipables.Type.Weapon;
+import com.company.Items.Equipables.Type.Weapons.MeleeWeapon;
 import com.company.Items.Item;
 import com.company.Items.Usables.Type.Perishables.Antidote;
 import com.company.Items.Usables.Type.Perishables.Food;
@@ -76,7 +77,7 @@ public class Adventure {
             }
 
             case "drop" -> player.drop(command[1]);
-            //case "attack" -> player.attack();
+            case "attack" -> attack(command[1]);
             case "equip" -> UI.displayEquippedItem(player.equip(command[1]));
             case "help" -> help();
             case "exit", "quit" -> exit();
@@ -97,6 +98,31 @@ public class Adventure {
     public void exit() {
         UI.displayExitGame();
         gameRunning = false;
+    }
+
+    public void attack(String enemy) {
+        if (enemy.equals("")) {
+            UI.displaySpecifyAnEnemy();
+        }
+        else {
+            boolean foundEnemy = false;
+            for (int i = 0; i < player.getCurrentRoom().getEnemies().size(); i++) {
+                if (enemy.equals(player.getCurrentRoom().getEnemies().get(i).getEnemyName())) {
+                    foundEnemy = true;
+                    if (player.attack(player.getCurrentRoom().getEnemies().get(i))) {
+                        player.getCurrentRoom().getEnemies().remove(i);
+                        UI.displayEnemyDied(player.getCurrentRoom(), i);
+                    }
+                    else {
+                        UI.displayPlayerDealDamage(player.getCurrentRoom(), player.getCurrentDamage(), i);
+                    }
+                    break;
+                }
+            }
+            if (!foundEnemy) {
+                UI.displayNoSuchEnemy(enemy);
+            }
+        }
     }
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
@@ -165,7 +191,7 @@ public class Adventure {
         rooms[2].addItem(new Antidote("antidote", "an abandoned antidote", 20,25));
         rooms[5].addItem(new Key("key", "a golden key", 1, 25 ,"gold"));
         rooms[6].addItem(new Food("food", "a plate of food", 40, 20, 50, HealthType.CURRENT));
-        rooms[8].addItem(new Weapon("knife", "a knife", 10, 1,25));
+        rooms[8].addItem(new MeleeWeapon("knife", "a knife", 10, 1, 10, 25));
     }
 
     /*

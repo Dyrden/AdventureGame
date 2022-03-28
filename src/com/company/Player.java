@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.Enemies.Enemy;
 import com.company.Items.Equipables.Equipment;
 import com.company.Items.Equipables.Type.Armor;
 import com.company.Items.Equipables.Type.Weapon;
@@ -10,6 +11,7 @@ import com.company.Items.Usables.Type.Perishables.HealthType;
 import com.company.Items.Usables.Type.Reusables.Key;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class Player {
 
@@ -310,7 +312,6 @@ public class Player {
         return getCurrentRoom().getWest().getIsLocked();
     }
 
-
     public Item drop(String input) {
         Item item = findItemInInventory(input);
         if (item != null) {
@@ -319,7 +320,6 @@ public class Player {
         }
         return item;
     }
-
     public Item take(String itemName) {
         Item itemFound = null;
         for (Item item : getCurrentRoom().getItems()) {
@@ -331,5 +331,17 @@ public class Player {
         }
         getCurrentRoom().removeItem(itemFound);
         return itemFound;
+    }
+
+    public boolean attack(Enemy enemy) {
+        boolean isDead = false;
+        if (enemy.getCurrentHealth() - currentDamage > 0) {
+            enemy.setCurrentHealth(enemy.getCurrentHealth() - currentDamage);
+        }
+        else {
+            enemy.setCurrentHealth(0);
+            isDead = true;
+        }
+        return isDead;
     }
 }

@@ -3,9 +3,10 @@ package com.company.Items.Equipables;
 import com.company.Items.Item;
 
 public abstract class Equipment extends Item {
-
-    public Equipment(String sName, String lName, int rarity, double weight) {
+    private final int durability;
+    public Equipment(String sName, String lName, int rarity, double weight, int durability) {
         super(sName, lName, rarity, weight);
+        this.durability = durability;
     }
 
 
@@ -19,6 +20,9 @@ public abstract class Equipment extends Item {
         return 0;
     }
 
+    public int getDurability() {
+        return durability;
+    }
 
     // equip method? idk
 }
