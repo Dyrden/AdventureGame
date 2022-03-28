@@ -102,7 +102,6 @@ public class AdventureUI {
         } else {
             System.out.println("You dont see any such thing in the room");
         }
-
     }
 
     public void displayDropMessage(Item item) {
@@ -196,7 +195,6 @@ public class AdventureUI {
     public void displayTakePoisonDamageDeath(int poisonDmg) {
         System.out.println("You took " + poisonDmg + " poison damage and died from it.");
     }
-
 
     public void displayRetaliate(Room currentRoom, int currentHealth, int i) {
         System.out.println(currentRoom.getEnemies().get(i).getEnemyName() + " has retaliated for " + currentRoom.getEnemies().get(i).getDamage() + " damage. " + currentHealth + " health remaining.");
@@ -297,6 +295,10 @@ public class AdventureUI {
 
     public void displayPlayerEat(EatFoodOutcome eat, int currentHealth, int healAmount) {
         System.out.println(eat.getOutcome() + " , changing your health by " + healAmount + " to " + currentHealth);
+    }
+
+    public void displayNotEnoughAmmo() {
+        System.out.println("Not enough ammunition to attack.");
     }
 }
 

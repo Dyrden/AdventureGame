@@ -344,4 +344,12 @@ public class Player {
         }
         return isDead;
     }
+
+    public Weapon getWeaponEquip() {
+        return weaponEquip;
+    }
+
+    public Armor getArmorEquip() {
+        return armorEquip;
+    }
 }

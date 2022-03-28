@@ -9,10 +9,11 @@ public enum Command {
     LOOK        ("'look' - look around the current room"),
     STATUS      ("'status' - see character status"),
     INVENTORY   ("'inventory' - see inventory"),
-    DROP        ("'drop <item> - drop item"),
+    DROP        ("'drop <item>' - drop item"),
     TAKE        ("'take <item>' - take visible item"),
     USE         ("'use <item>' - use item"),
-    //ATTACK      ("'attack' - attack"),
+    EQUIP       ("'equip <item>' - equip item"),
+    ATTACK      ("'attack' - attack"),
 
     HELP        ("'help' - see commands"),
     EXIT        ("'exit' - exit game");

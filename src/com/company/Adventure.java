@@ -3,6 +3,7 @@ package com.company;
 import com.company.Enemies.Enemy;
 import com.company.Items.Equipables.Type.Weapon;
 import com.company.Items.Equipables.Type.Weapons.MeleeWeapon;
+import com.company.Items.Equipables.Type.Weapons.RangedWeapon;
 import com.company.Items.Item;
 import com.company.Items.Usables.Type.Perishables.Antidote;
 import com.company.Items.Usables.Type.Perishables.Food;
@@ -75,7 +76,6 @@ public class Adventure {
 
                     UI.displayPlayerUseItem(player.use(command[1]));
             }
-
             case "drop" -> player.drop(command[1]);
             case "attack" -> attack(command[1]);
             case "equip" -> UI.displayEquippedItem(player.equip(command[1]));
@@ -105,13 +105,29 @@ public class Adventure {
             UI.displaySpecifyAnEnemy();
         }
         else {
-            boolean foundEnemy = false;
+            if (player.getWeaponEquip() instanceof RangedWeapon) {
+                if (((RangedWeapon) player.getWeaponEquip()).getAmmunition() > 0) {
+                    ((RangedWeapon) player.getWeaponEquip()).setAmmunition(((RangedWeapon) player.getWeaponEquip()).getAmmunition() - 1);
+                    attackEnemy(enemy);
+                }
+                else {
+                    UI.displayNotEnoughAmmo();
+                }
+            }
+            else {
+                attackEnemy(enemy);
+            }
+        }
+    }
+    private void attackEnemy(String enemy) {
+        boolean foundEnemy = false;
+        if (player.getCurrentRoom().getEnemies().size() > 0) {
             for (int i = 0; i < player.getCurrentRoom().getEnemies().size(); i++) {
                 if (enemy.equals(player.getCurrentRoom().getEnemies().get(i).getEnemyName())) {
                     foundEnemy = true;
                     if (player.attack(player.getCurrentRoom().getEnemies().get(i))) {
-                        player.getCurrentRoom().getEnemies().remove(i);
                         UI.displayEnemyDied(player.getCurrentRoom(), i);
+                        player.getCurrentRoom().getEnemies().remove(i);
                     }
                     else {
                         UI.displayPlayerDealDamage(player.getCurrentRoom(), player.getCurrentDamage(), i);
@@ -119,12 +135,11 @@ public class Adventure {
                     break;
                 }
             }
-            if (!foundEnemy) {
-                UI.displayNoSuchEnemy(enemy);
-            }
+        }
+        if (!foundEnemy) {
+            UI.displayNoSuchEnemy(enemy);
         }
     }
-
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createAndConnectRooms() {
         createRooms();
