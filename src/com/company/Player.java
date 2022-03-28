@@ -68,20 +68,18 @@ public class Player {
 
     public Equipment equip(String itemName) {
         Equipment equip = null;
-        for (Item item : inventory) {
-            if (item.getShortName().equalsIgnoreCase(itemName) && item instanceof Equipment) {
-                equip = (Equipment) item;
-                armorOrWeapon(equip);
-            }
+        if (findItemInInventory(itemName) instanceof Equipment equipment) {
+            armorOrWeapon(equipment);
+            equip = equipment;
         }
         return equip;
     }
 
     private void armorOrWeapon(Equipment equipment) {
-        if (equipment instanceof Weapon) {
-            setWeaponEquip((Weapon) equipment);
-        } else if (equipment instanceof Armor) {
-            setArmorEquip((Armor) equipment);
+        if (equipment instanceof Weapon weapon) {
+            setWeaponEquip(weapon);
+        } else if (equipment instanceof Armor armor) {
+            setArmorEquip(armor);
         }
     }
 

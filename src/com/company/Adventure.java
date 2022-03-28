@@ -61,7 +61,8 @@ public class Adventure {
                 Item item = player.findItemInInventory(command[1]);
 
                 if (item instanceof Food food) {
-                    UI.displayPlayerEat(player.eat(food), player.getCurrentHealth() , food.getHealAmount());
+                    EatFoodOutcome outcome = player.eat(food);
+                    UI.displayPlayerEat(outcome, player.getCurrentHealth() , food.getHealAmount());
                 } else if (item instanceof Antidote antidote) {
                     //player.drink()
                     //UI.displayPlayerDrink(enum af outcome)
