@@ -72,9 +72,7 @@ public class Adventure {
                     //player.use()
                     //UI.displayPlayerUse(enum af outcome)
                 }
-
-
-                    UI.displayPlayerUseItem(player.use(command[1]));
+                UI.displayPlayerUseItem(player.use(command[1]));
             }
             case "drop" -> player.drop(command[1]);
             case "attack" -> attack(command[1]);
@@ -105,41 +103,33 @@ public class Adventure {
             UI.displaySpecifyAnEnemy();
         }
         else {
-            if (player.getWeaponEquip() instanceof RangedWeapon) {
-                if (((RangedWeapon) player.getWeaponEquip()).getAmmunition() > 0) {
-                    ((RangedWeapon) player.getWeaponEquip()).setAmmunition(((RangedWeapon) player.getWeaponEquip()).getAmmunition() - 1);
-                    attackEnemy(enemy);
+            if (player.getWeaponEquip().canBeUsed()) {
+                boolean foundEnemy = false;
+                if (player.getCurrentRoom().getEnemies().size() > 0) {
+                    for (int i = 0; i < player.getCurrentRoom().getEnemies().size(); i++) {
+                        if (enemy.equals(player.getCurrentRoom().getEnemies().get(i).getEnemyName())) {
+                            foundEnemy = true;
+                            if (player.attack(player.getCurrentRoom().getEnemies().get(i))) {
+                                UI.displayEnemyDied(player.getCurrentRoom(), i);
+                                player.getCurrentRoom().getEnemies().remove(i);
+                            }
+                            else {
+                                UI.displayPlayerDealDamage(player.getCurrentRoom(), player.getCurrentDamage(), i);
+                            }
+                            break;
+                        }
+                    }
                 }
-                else {
-                    UI.displayNotEnoughAmmo();
+                if (!foundEnemy) {
+                    UI.displayNoSuchEnemy(enemy);
                 }
             }
             else {
-                attackEnemy(enemy);
+                UI.displayCantUseWeapon(player.getWeaponEquip());
             }
         }
     }
-    private void attackEnemy(String enemy) {
-        boolean foundEnemy = false;
-        if (player.getCurrentRoom().getEnemies().size() > 0) {
-            for (int i = 0; i < player.getCurrentRoom().getEnemies().size(); i++) {
-                if (enemy.equals(player.getCurrentRoom().getEnemies().get(i).getEnemyName())) {
-                    foundEnemy = true;
-                    if (player.attack(player.getCurrentRoom().getEnemies().get(i))) {
-                        UI.displayEnemyDied(player.getCurrentRoom(), i);
-                        player.getCurrentRoom().getEnemies().remove(i);
-                    }
-                    else {
-                        UI.displayPlayerDealDamage(player.getCurrentRoom(), player.getCurrentDamage(), i);
-                    }
-                    break;
-                }
-            }
-        }
-        if (!foundEnemy) {
-            UI.displayNoSuchEnemy(enemy);
-        }
-    }
+
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createAndConnectRooms() {
         createRooms();
@@ -207,6 +197,7 @@ public class Adventure {
         rooms[5].addItem(new Key("key", "a golden key", 1, 25 ,"gold"));
         rooms[6].addItem(new Food("food", "a plate of food", 40, 20, 50, HealthType.CURRENT));
         rooms[8].addItem(new MeleeWeapon("knife", "a knife", 10, 1, 10, 25));
+        rooms[1].addItem(new RangedWeapon("gun", "a gun", 2, 5, 50, 20, 1));
     }
 
     /*

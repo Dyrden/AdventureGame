@@ -15,4 +15,15 @@ public class RangedWeapon extends Weapon {
     public void setAmmunition(int ammo) {
         ammunition = ammo;
     }
+    @Override
+    public boolean canBeUsed() {
+        if (getDurability() > 0) {
+            if (ammunition > 0) {
+                ammunition -= 1;
+                return true;
+            }
+            else return false;
+        }
+        else return false;
+    }
 }

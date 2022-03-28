@@ -1,6 +1,8 @@
 package com.company;
 
 import com.company.Items.Equipables.Equipment;
+import com.company.Items.Equipables.Type.Weapon;
+import com.company.Items.Equipables.Type.Weapons.RangedWeapon;
 import com.company.Items.Item;
 import com.company.Items.Usables.Type.Perishables.Antidote;
 import com.company.Items.Usables.Type.Perishables.Food;
@@ -297,8 +299,11 @@ public class AdventureUI {
         System.out.println(eat.getOutcome() + " , changing your health by " + healAmount + " to " + currentHealth);
     }
 
-    public void displayNotEnoughAmmo() {
-        System.out.println("Not enough ammunition to attack.");
+    public void displayCantUseWeapon(Weapon weapon) {
+        System.out.print("Can't use " + weapon.getShortName() + " to attack. ");
+        if (weapon instanceof RangedWeapon) {
+            System.out.println("You have no ammunition.");
+        }
     }
 }
 

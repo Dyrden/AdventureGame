@@ -4,6 +4,7 @@ import com.company.Enemies.Enemy;
 import com.company.Items.Equipables.Equipment;
 import com.company.Items.Equipables.Type.Armor;
 import com.company.Items.Equipables.Type.Weapon;
+import com.company.Items.Equipables.Type.Weapons.RangedWeapon;
 import com.company.Items.Item;
 import com.company.Items.Usables.Type.Perishables.Antidote;
 import com.company.Items.Usables.Type.Perishables.Food;
@@ -33,7 +34,7 @@ public class Player {
 
     public Player(Room currentRoom) {
         maxHealth = 100;
-        isPoisoned = true;
+        isPoisoned = false;
         weaponEquip = null;
         armorEquip = null;
         poisonCleared = false;
@@ -67,7 +68,6 @@ public class Player {
         this.currentDamage = currentDamage;
     }
 
-
     public Equipment equip(String itemName) {
         Equipment equip = null;
         if (findItemInInventory(itemName) instanceof Equipment equipment) {
@@ -98,7 +98,6 @@ public class Player {
         }
     }
 
-
     public boolean isPoisoned() {
         return isPoisoned;
     }
@@ -117,12 +116,22 @@ public class Player {
 
     @Override
     public String toString() {
-        return
-            "Current room = " + currentRoom.getShortRoomDescription() + "\n" +
-                "Health/MaxHealth = " + currentHealth + "/" + maxHealth + "\n" +
-                "Damage = " + currentDamage + "\n" +
-                "Weapon equipped = " + weaponEquip + "\n" +
-                "Poisoned = " + isPoisoned;
+        if (weaponEquip instanceof RangedWeapon) {
+            return
+                    "Current room = " + currentRoom.getShortRoomDescription() + "\n" +
+                            "Health/MaxHealth = " + currentHealth + "/" + maxHealth + "\n" +
+                            "Damage = " + currentDamage + "\n" +
+                            "Weapon equipped = " + weaponEquip + " - Ammunition = " + ((RangedWeapon) weaponEquip).getAmmunition() + "\n" +
+                            "Poisoned = " + isPoisoned;
+        }
+        else {
+            return
+                    "Current room = " + currentRoom.getShortRoomDescription() + "\n" +
+                            "Health/MaxHealth = " + currentHealth + "/" + maxHealth + "\n" +
+                            "Damage = " + currentDamage + "\n" +
+                            "Weapon equipped = " + weaponEquip + "\n" +
+                            "Poisoned = " + isPoisoned;
+        }
     }
 
     public ArrayList<Item> getInventory() {

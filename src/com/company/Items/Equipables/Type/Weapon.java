@@ -18,4 +18,8 @@ public abstract class Weapon extends Equipment {
     public String toString() {
         return super.toString() + " Attack Value: " + weaponValue;
     }
+
+    public boolean canBeUsed() {
+        return true;
+    }
 }
