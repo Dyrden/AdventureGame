@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class GameMenu {
 
     private boolean gameRunning = true;
-    private final GameMenuUI UI = new GameMenuUI();
+    private final AdventureUI UI = new AdventureUI();
     private final Scanner keyboard = new Scanner(System.in);
 
     public static void main(String[] args) {

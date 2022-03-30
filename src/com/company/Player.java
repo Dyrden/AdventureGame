@@ -12,7 +12,6 @@ import com.company.Items.Usables.Type.Perishables.HealthType;
 import com.company.Items.Usables.Type.Reusables.Key;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class Player {
 
@@ -167,16 +166,19 @@ public class Player {
         String usedKey = "";
         for (Room room : this.currentRoom.getDirections()) {
             if (room != null) {
-                if (room.getIsLocked()) {
-                    if (key.getKeyId().equalsIgnoreCase(room.getLockId())) {
-                        usedKey = key + " successfully used on locked room";
-                        room.setIsLocked(false);
-                    } else {
-                        usedKey = key + " does not fit the locked room";
+                if (this.currentRoom.getEnemies().size() == 0) {
+                    if (room.getIsLocked()) {
+                        if (key.getKeyId().equalsIgnoreCase(room.getLockId())) {
+                            usedKey = key + " successfully used on locked room.";
+                            room.setIsLocked(false);
+                        } else {
+                            usedKey = key + " does not fit the locked room.";
+                        }
+                        break;
                     }
-                    break;
+                    usedKey = key + " cannot be used on anything here.";
                 }
-                usedKey = key + " cannot be used on anything here";
+                usedKey = key + " cannot be used while an enemy is in the way.";
             }
         }
         return usedKey;
@@ -241,68 +243,68 @@ public class Player {
         this.currentRoom = currentRoom;
     }
 
-    public int go(String direction) {
-        int canGo;
+    public GoToSuccess go(String direction) {
+        GoToSuccess success;
         switch (direction) {
-            case "north" -> canGo = checkNorth();
-            case "south" -> canGo = checkSouth();
-            case "east" -> canGo = checkEast();
-            case "west" -> canGo = checkWest();
-            default -> canGo = 0;
+            case "north" -> success = checkNorth();
+            case "south" -> success = checkSouth();
+            case "east" -> success = checkEast();
+            case "west" -> success = checkWest();
+            default -> success = GoToSuccess.FAILURE;
         }
-        return canGo;
+        return success;
     }
 
-    private int checkNorth() {
-        int canGo = 0;
+    private GoToSuccess checkNorth() {
+        GoToSuccess success = GoToSuccess.FAILURE;
         if (getCurrentRoom().getNorth() != null) {
             if (checkNorthIsLocked()) {
-                canGo = 2;
+                success = GoToSuccess.LOCKED;
             } else {
                 setCurrentRoom(getCurrentRoom().getNorth());
-                canGo = 1;
+                success = GoToSuccess.SUCCESS;
             }
         }
-        return canGo;
+        return success;
     }
 
-    private int checkSouth() {
-        int canGo = 0;
+    private GoToSuccess checkSouth() {
+        GoToSuccess success = GoToSuccess.FAILURE;
         if (getCurrentRoom().getSouth() != null) {
             if (checkSouthIsLocked()) {
-                canGo = 2;
+                success = GoToSuccess.LOCKED;
             } else {
                 setCurrentRoom(getCurrentRoom().getSouth());
-                canGo = 1;
+                success = GoToSuccess.SUCCESS;
             }
         }
-        return canGo;
+        return success;
     }
 
-    private int checkEast() {
-        int canGo = 0;
+    private GoToSuccess checkEast() {
+        GoToSuccess success = GoToSuccess.FAILURE;
         if (getCurrentRoom().getEast() != null) {
             if (checkEastIsLocked()) {
-                canGo = 2;
+                success = GoToSuccess.LOCKED;
             } else {
                 setCurrentRoom(getCurrentRoom().getEast());
-                canGo = 1;
+                success = GoToSuccess.SUCCESS;
             }
         }
-        return canGo;
+        return success;
     }
 
-    private int checkWest() {
-        int canGo = 0;
+    private GoToSuccess checkWest() {
+        GoToSuccess success = GoToSuccess.FAILURE;
         if (getCurrentRoom().getWest() != null) {
             if (checkWestIsLocked()) {
-                canGo = 2;
+                success = GoToSuccess.LOCKED;
             } else {
                 setCurrentRoom(getCurrentRoom().getWest());
-                canGo = 1;
+                success = GoToSuccess.SUCCESS;
             }
         }
-        return canGo;
+        return success;
     }
 
     private boolean checkNorthIsLocked() {
@@ -329,17 +331,15 @@ public class Player {
         }
         return item;
     }
+
     public Item take(String itemName) {
-        Item itemFound = null;
-        for (Item item : getCurrentRoom().getItems()) {
-            if (itemName.equalsIgnoreCase(item.getShortName())) {
-                itemFound = item;
-                inventory.add(item);
-                break;
-            }
+        Item foundItem = null;
+        foundItem = getCurrentRoom().findItem(itemName);
+        if (foundItem != null) {
+            inventory.add(foundItem);
+            getCurrentRoom().removeItem(foundItem);
         }
-        getCurrentRoom().removeItem(itemFound);
-        return itemFound;
+        return foundItem;
     }
 
     public boolean attack(Enemy enemy) {
@@ -360,5 +360,14 @@ public class Player {
 
     public Armor getArmorEquip() {
         return armorEquip;
+    }
+
+    public int poisonTick() {
+        int poisonDamage = 0;
+        if (isPoisoned) {
+            poisonDamage = 5;
+            currentHealth -= poisonDamage;
+        }
+        return poisonDamage;
     }
 }

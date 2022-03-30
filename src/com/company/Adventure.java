@@ -1,6 +1,7 @@
 package com.company;
 
 import com.company.Enemies.Enemy;
+import com.company.Enemies.Mob;
 import com.company.Items.Equipables.Type.Weapon;
 import com.company.Items.Equipables.Type.Weapons.MeleeWeapon;
 import com.company.Items.Equipables.Type.Weapons.RangedWeapon;
@@ -20,11 +21,11 @@ public class Adventure {
 
     private final int amountOfRooms = 9;
     private Room[] rooms = new Room[amountOfRooms];
+    private Room winRoom = rooms[4];
     public Player player = new Player(rooms[0]);
 
     public void run() {
         UI.displayGameIntro();
-
         createAndConnectRooms();
         UI.displayTurnShift();
         while (gameRunning) {
@@ -50,29 +51,13 @@ public class Adventure {
 
     private void commands(String[] command) {
         switch (command[0]) {
-            case "go" -> {
-                int playerMoved = player.go(command[1]);
-                UI.displayPlayerMove(playerMoved, command[1]);
-                UI.displayCurrentRoomDescription(playerMoved, player.getCurrentRoom());
+            case "go" -> { go(command[1]);
             }
             case "look" -> UI.displayRoomStatus(player.getCurrentRoom());
             case "status" -> UI.displayPlayerStatus(player.toString());
             case "inventory" -> UI.displayInventory(player.getInventory());
             case "take" -> UI.displayPlayerTakeItem(player.take(command[1]));
-            case "use" -> {
-                Item item = player.findItemInInventory(command[1]);
-
-                if (item instanceof Food food) {
-                    EatFoodOutcome outcome = player.eat(food);
-                    UI.displayPlayerEat(outcome, player.getCurrentHealth() , food.getHealAmount());
-                } else if (item instanceof Antidote antidote) {
-                    //player.drink()
-                    //UI.displayPlayerDrink(enum af outcome)
-                } else if (item instanceof Key key) {
-                    //player.use()
-                    //UI.displayPlayerUse(enum af outcome)
-                }
-                UI.displayPlayerUseItem(player.use(command[1]));
+            case "use" -> { use(command[1]);
             }
             case "drop" -> player.drop(command[1]);
             case "attack" -> attack(command[1]);
@@ -80,6 +65,44 @@ public class Adventure {
             case "help" -> help();
             case "exit", "quit" -> exit();
             default -> UI.displayNoSuchCommand();
+        }
+    }
+
+    private void go(String command1) {
+        GoToSuccess success = player.go(command1);
+        UI.displayPlayerMove(success, command1);
+        UI.displayCurrentRoomDescription(success, player.getCurrentRoom());
+        if (success == GoToSuccess.SUCCESS) {
+            poisonTick();
+        }
+    }
+
+    private void poisonTick() {
+        int poisonDmg = player.poisonTick();
+        if (poisonDmg > 0) {
+            if (player.getCurrentHealth() > 0) {
+                UI.displayTakePoisonDamage(poisonDmg, player.getCurrentHealth());
+            } else {
+                UI.displayTakePoisonDamageDeath(poisonDmg);
+                gameLose();
+            }
+        }
+    }
+
+    private void use(String command1) {
+        Item item = player.findItemInInventory(command1);
+
+        if (item instanceof Food food) {
+            EatFoodOutcome outcome = player.eat(food);
+            UI.displayPlayerEat(outcome, player.getCurrentHealth() , food.getHealAmount());
+        } else if (item instanceof Antidote antidote) {
+            //player.drink()
+            //UI.displayPlayerDrink(enum af outcome)
+            UI.displayPlayerUseItem(player.use(command1));
+        } else if (item instanceof Key key) {
+            //player.use()
+            //UI.displayPlayerUse(enum af outcome)
+            UI.displayPlayerUseItem(player.use(command1));
         }
     }
 
@@ -91,11 +114,13 @@ public class Adventure {
     public void gameLose() {
         // if player health == 0
         UI.displayLoseGame();
+        exit();
     }
 
     public void exit() {
         UI.displayExitGame();
         gameRunning = false;
+        UI.displayPlayOrExit();
     }
 
     public void attack(String enemy) {
@@ -103,30 +128,47 @@ public class Adventure {
             UI.displaySpecifyAnEnemy();
         }
         else {
-            if (player.getWeaponEquip().canBeUsed()) {
-                boolean foundEnemy = false;
-                if (player.getCurrentRoom().getEnemies().size() > 0) {
-                    for (int i = 0; i < player.getCurrentRoom().getEnemies().size(); i++) {
-                        if (enemy.equals(player.getCurrentRoom().getEnemies().get(i).getEnemyName())) {
-                            foundEnemy = true;
-                            if (player.attack(player.getCurrentRoom().getEnemies().get(i))) {
-                                UI.displayEnemyDied(player.getCurrentRoom(), i);
-                                player.getCurrentRoom().getEnemies().remove(i);
-                            }
-                            else {
-                                UI.displayPlayerDealDamage(player.getCurrentRoom(), player.getCurrentDamage(), i);
-                            }
-                            break;
-                        }
-                    }
+            if (player.getWeaponEquip() != null) {
+                if (player.getWeaponEquip().canBeUsed()) {
+                    checkForEnemyToAttack(enemy);
                 }
-                if (!foundEnemy) {
-                    UI.displayNoSuchEnemy(enemy);
+                else {
+                    UI.displayCantUseWeapon(player.getWeaponEquip());
                 }
             }
             else {
-                UI.displayCantUseWeapon(player.getWeaponEquip());
+                checkForEnemyToAttack(enemy);
             }
+        }
+    }
+
+    private void checkForEnemyToAttack(String enemy) {
+        boolean foundEnemy = false;
+        if (player.getCurrentRoom().getEnemies().size() > 0) {
+            for (int i = 0; i < player.getCurrentRoom().getEnemies().size(); i++) {
+                if (enemy.equals(player.getCurrentRoom().getEnemies().get(i).getEnemyName())) {
+                    foundEnemy = true;
+                    if (player.attack(player.getCurrentRoom().getEnemies().get(i))) {
+                        UI.displayEnemyDied(player.getCurrentRoom(), i);
+                        player.getCurrentRoom().getEnemies().remove(i);
+                    }
+                    else {
+                        UI.displayPlayerDealDamage(player.getCurrentRoom(), player.getCurrentDamage(), i);
+                        player.getCurrentRoom().getEnemies().get(i).attack(player);
+                        if (player.getCurrentHealth() < 1) {
+                            UI.displayRetaliateDeath(player.getCurrentRoom(), i);
+                            gameLose();
+                        }
+                        else {
+                            UI.displayRetaliate(player.getCurrentRoom(), player.getCurrentHealth(), i);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        if (!foundEnemy) {
+            UI.displayNoSuchEnemy(enemy);
         }
     }
 
@@ -184,11 +226,11 @@ public class Adventure {
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createEnemies() {
-        rooms[1].addEnemy(new Enemy("bat", 10, 9, true));
-        rooms[1].addEnemy(new Enemy("bat", 10, 9, true));
-        rooms[3].addEnemy(new Enemy("rat", 5, 5, false));
-        rooms[6].addEnemy(new Enemy("rat", 5, 5, false));
-        rooms[7].addEnemy(new Enemy("snake", 50, 10, true));
+        rooms[1].addEnemy(new Mob("bat", 10, 9, true));
+        rooms[1].addEnemy(new Mob("bat", 10, 9, true));
+        rooms[3].addEnemy(new Mob("rat", 5, 5, false));
+        rooms[6].addEnemy(new Mob("rat", 5, 5, false));
+        rooms[7].addEnemy(new Mob("snake", 50, 10, true));
     }
 
     //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD

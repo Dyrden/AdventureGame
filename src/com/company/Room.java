@@ -122,6 +122,17 @@ public class Room {
         this.items.remove(item);
     }
 
+    public Item findItem(String itemName) {
+        Item itemFound = null;
+        for (Item item : getItems()) {
+            if (itemName.equalsIgnoreCase(item.getShortName())) {
+                itemFound = item;
+                break;
+            }
+        }
+        return itemFound;
+    }
+
     public void addEnemy(Enemy enemy) {
         this.enemies.add(enemy);
     }

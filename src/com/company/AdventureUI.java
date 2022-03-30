@@ -238,10 +238,10 @@ public class AdventureUI {
         System.out.println("Is empty.");
     }
 
-    public void displayPlayerMove(int moved, String direction) {
-        if (moved == 1) {
+    public void displayPlayerMove(GoToSuccess success, String direction) {
+        if (success == GoToSuccess.SUCCESS) {
             System.out.println("You moved to the " + direction + ".");
-        } else if (moved == 2) {
+        } else if (success == GoToSuccess.LOCKED) {
             System.out.println("You couldn't move " + direction + ". A door stands in your way and it is locked.");
         } else {
             System.out.println("You couldn't move " + direction + ".");
@@ -285,8 +285,8 @@ public class AdventureUI {
         System.out.println(currentRoom.getLongRoomDescription());
     }
 
-    public void displayCurrentRoomDescription(int moved, Room currentRoom) {
-        if (moved == 1) {
+    public void displayCurrentRoomDescription(GoToSuccess success, Room currentRoom) {
+        if (success == GoToSuccess.SUCCESS) {
             System.out.println(currentRoom.getLongRoomDescription());
         }
     }
@@ -304,6 +304,21 @@ public class AdventureUI {
         if (weapon instanceof RangedWeapon) {
             System.out.println("You have no ammunition.");
         }
+    }
+
+    public void displayGameMenuIntro(){
+        System.out.println("""
+            Welcome to Adventure!
+                Glory awaits
+            """);
+    }
+
+    public void displayPlayOrExit(){
+        System.out.println("Type 'play' to start a game or 'exit' to quit the program");
+    }
+
+    public void displayNotAnOption(){
+        System.out.println("Not an option - type 'play' or 'exit'");
     }
 }
 

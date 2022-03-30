@@ -1,6 +1,8 @@
 package com.company.Enemies;
 
-public class Enemy {
+import com.company.Player;
+
+public abstract class Enemy {
     private final String enemyName;
     private final int damage;
     private final boolean isPoisonous;
@@ -36,5 +38,17 @@ public class Enemy {
     @Override
     public String toString() {
         return "Name: " + enemyName + " Health: " + getCurrentHealth();
+    }
+
+    public void attack(Player player) {
+        if (player.getCurrentHealth() - damage > 0) {
+            player.setCurrentHealth(player.getCurrentHealth() - damage);
+            if (isPoisonous) {
+                player.setPoisoned(true);
+            }
+        }
+        else {
+            player.setCurrentHealth(0);
+        }
     }
 }
