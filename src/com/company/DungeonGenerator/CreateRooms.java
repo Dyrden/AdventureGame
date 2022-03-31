@@ -10,7 +10,7 @@ public class CreateRooms {
     
     public ArrayList<Room> generateRooms(DungeonSize size){
         int grid = size.getDungeonSize();
-        for (int i = 0; i < (grid*grid)/2; i++) {
+        for (int i = 0; i < grid*grid; i++) {
             rooms.add(new Room(null,null,false,null));
         }
         return rooms;
