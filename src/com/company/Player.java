@@ -151,11 +151,9 @@ public class Player {
     private String checkItemType(Item item) {
         String str = "";
         if (item instanceof Food food) {
-            //    str = useFood(food);
-            inventory.remove(item);
+            //str = useFood(food);
         } else if (item instanceof Antidote antidote) {
             str = useAntidote(antidote);
-            inventory.remove(item);
         } else if (item instanceof Key key) {
             str = useKey(key);
         }

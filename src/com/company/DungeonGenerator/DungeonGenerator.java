@@ -27,9 +27,10 @@ public class DungeonGenerator {
 
     public static void main(String[] args) {
         DungeonGenerator dg = new DungeonGenerator(DungeonSize.MEDIUM);
-        for (int i = 0; i < 25; i++) {
-            HashMap<int[], Room> map = dg.createAndGetDungeon();
-            dg.printMapOfDungeon(map);
+        HashMap<int[], Room> map = dg.createAndGetDungeon();
+        dg.printMapOfDungeon(map);
+        for (Room room : map.values()) {
+            System.out.println(room);
         }
     }
 

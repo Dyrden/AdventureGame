@@ -2,10 +2,7 @@ package com.company.DungeonGenerator;
 
 import com.company.Room;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public class LinkRooms {
 
@@ -20,7 +17,6 @@ public class LinkRooms {
         int[] startPosition = {0, 0};
 
         map.put(startPosition, starterRoom);
-
         int amountOfRooms;
         do {
             ArrayList<Room> listOfMappedRooms = new ArrayList<>(map.values());
@@ -30,7 +26,6 @@ public class LinkRooms {
             CardinalDirections[] cd = CardinalDirections.values();
 
             ArrayList<Integer> possibleDirectionsToMap = possibleDirectionsToMap(randomRoomInMap);
-
             for (int direction : possibleDirectionsToMap) {
                 Room room = getRoom(rooms);
                 attachRoom(randomRoomInMap, direction, room);
@@ -38,10 +33,7 @@ public class LinkRooms {
                 map.put(newCoordinate, room);
             }
             amountOfRooms = rooms.size();
-        }
-        while (amountOfRooms > 3); //kind of a magic number, but we dont want to run the loop again
-        // with, lets say 1 room left and then try to add 3 rooms to the random room we found
-
+        } while (amountOfRooms > 3);
         return map;
     }
 

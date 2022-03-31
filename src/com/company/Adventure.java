@@ -1,8 +1,8 @@
 package com.company;
 
-import com.company.Enemies.Enemy;
+import com.company.DungeonGenerator.DungeonGenerator;
+import com.company.DungeonGenerator.DungeonSize;
 import com.company.Enemies.Mob;
-import com.company.Items.Equipables.Type.Weapon;
 import com.company.Items.Equipables.Type.Weapons.MeleeWeapon;
 import com.company.Items.Equipables.Type.Weapons.RangedWeapon;
 import com.company.Items.Item;
@@ -11,6 +11,7 @@ import com.company.Items.Usables.Type.Perishables.Food;
 import com.company.Items.Usables.Type.Perishables.HealthType;
 import com.company.Items.Usables.Type.Reusables.Key;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Adventure {
@@ -23,6 +24,7 @@ public class Adventure {
     private Room[] rooms = new Room[amountOfRooms];
     private Room winRoom = rooms[4];
     public Player player = new Player(rooms[0]);
+    HashMap<int[], Room> dungeon = new DungeonGenerator(DungeonSize.SMALL).createAndGetDungeon();
 
     public void run() {
         UI.displayGameIntro();
@@ -33,8 +35,6 @@ public class Adventure {
             commands(input());
             UI.displayTurnShift();
         }
-        //maybe
-        // if (gameIsOver)
     }
 
     private String[] input() {
@@ -92,14 +92,12 @@ public class Adventure {
 
         if (item instanceof Food food) {
             EatFoodOutcome outcome = player.eat(food);
-            UI.displayPlayerEat(outcome, player.getCurrentHealth() , food.getHealAmount());
+            UI.displayPlayerEat(outcome, player.getCurrentHealth(), food.getHealAmount());
+            player.inventory.remove(food);
         } else if (item instanceof Antidote antidote) {
-            //player.drink()
-            //UI.displayPlayerDrink(enum af outcome)
             UI.displayPlayerUseItem(player.use(command1));
+            player.inventory.remove(antidote);
         } else if (item instanceof Key key) {
-            //player.use()
-            //UI.displayPlayerUse(enum af outcome)
             UI.displayPlayerUseItem(player.use(command1));
         }
     }
@@ -110,7 +108,6 @@ public class Adventure {
     }
 
     public void gameLose() {
-        // if player health == 0
         UI.displayLoseGame();
         exit();
     }
@@ -149,15 +146,13 @@ public class Adventure {
                     if (player.attack(player.getCurrentRoom().getEnemies().get(i))) {
                         UI.displayEnemyDied(player.getCurrentRoom(), i);
                         player.getCurrentRoom().getEnemies().remove(i);
-                    }
-                    else {
+                    } else {
                         UI.displayPlayerDealDamage(player.getCurrentRoom(), player.getCurrentDamage(), i);
                         player.getCurrentRoom().getEnemies().get(i).attack(player);
                         if (player.getCurrentHealth() < 1) {
                             UI.displayRetaliateDeath(player.getCurrentRoom(), i);
                             gameLose();
-                        }
-                        else {
+                        } else {
                             UI.displayRetaliate(player.getCurrentRoom(), player.getCurrentHealth(), i);
                         }
                     }
@@ -170,16 +165,15 @@ public class Adventure {
         }
     }
 
-    //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createAndConnectRooms() {
         createRooms();
         connectRooms();
         createItems();
         createEnemies();
         player.setCurrentRoom(rooms[0]);
+        //player.setCurrentRoom(dungeon.values().iterator().next());
     }
 
-    //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createRooms() {
         rooms[0] = new Room("Hole", "You fell in this hole and your possessions now seperated from you.", false, "");
         rooms[1] = new Room("Cave", "Dank dark cavern.", false, ""); // bats are hanging from the ceiling.
@@ -192,7 +186,6 @@ public class Adventure {
         rooms[8] = new Room("Back-alley", "You entered a back-alley, seems to connect important areas of this complex.", false, ""); // There is a knife on the ground.
     }
 
-    //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void connectRooms() {
         rooms[0].setEast(rooms[1]);
         rooms[0].setSouth(rooms[3]);
@@ -222,7 +215,6 @@ public class Adventure {
         rooms[8].setNorth(rooms[5]);
     }
 
-    //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createEnemies() {
         rooms[1].addEnemy(new Mob("bat", 10, 9, true));
         rooms[1].addEnemy(new Mob("bat", 10, 9, true));
@@ -231,53 +223,11 @@ public class Adventure {
         rooms[7].addEnemy(new Mob("snake", 50, 10, true));
     }
 
-    //THIS METHOD WILL EVENTUALLY BE REPLACED BY A DungeonGenerator METHOD
     private void createItems() {
-        rooms[2].addItem(new Antidote("antidote", "an abandoned antidote", 20,25));
-        rooms[5].addItem(new Key("key", "a golden key", 1, 25 ,"gold"));
+        rooms[2].addItem(new Antidote("antidote", "an abandoned antidote", 20, 25));
+        rooms[5].addItem(new Key("key", "a golden key", 1, 25, "gold"));
         rooms[6].addItem(new Food("food", "a plate of food", 40, 20, 50, HealthType.CURRENT));
         rooms[8].addItem(new MeleeWeapon("knife", "a knife", 10, 1, 10, 25));
         rooms[1].addItem(new RangedWeapon("gun", "a gun", 2, 5, 50, 20, 1));
     }
-
-    /*
-    //private File soundFile = new File("C:\\Users\\Markd\\IdeaProjects\\AdventureGame\\soundClip.wav");
-
-    private static void playClip(File clipFile) throws IOException,
-        UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
-        class AudioListener implements LineListener {
-            private boolean done = false;
-
-            @Override
-            public synchronized void update(LineEvent event) {
-                Type eventType = event.getType();
-                if (eventType == Type.STOP || eventType == Type.CLOSE) {
-                    done = true;
-                    notifyAll();
-                }
-            }
-
-            public synchronized void waitUntilDone() throws InterruptedException {
-                while (!done) {
-                    wait();
-                }
-            }
-        }
-        AudioListener listener = new AudioListener();
-        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(clipFile);
-        try {
-            Clip clip = AudioSystem.getClip();
-            clip.addLineListener(listener);
-            clip.open(audioInputStream);
-            try {
-                clip.start();
-                listener.waitUntilDone();
-            } finally {
-                clip.close();
-            }
-        } finally {
-            audioInputStream.close();
-        }
-    }
-   */
 }
