@@ -75,14 +75,54 @@ public class DungeonGenerator {
 
         for (int i = -50; i < 50; i++) {
             for (int j = -50; j < 50; j++) {
+                boolean foundCoordinate = false;
                 for (int[] coordinate : coordinates) {
-                    if (Arrays.equals(coordinate, new int[]{i, j})) {
+                    if (Arrays.equals(coordinate, new int[]{j, i})) {
                         System.out.print("o");
+                        foundCoordinate = true;
                     }
                 }
+                if (!foundCoordinate) {
                     System.out.print("-");
+                }
             }
             System.out.println();
+        }
+    }
+
+    private void newnewPrint(HashMap<int[], String> map, DungeonSize dungeonSize) {
+        ArrayList<int[]> coordinates = new ArrayList<>();
+        for (int[] coordinate : map.keySet()) {
+            if (map.get(coordinate) != null) {
+                coordinates.add(coordinate);
+            }
+        }
+
+        int size = map.size();
+        for (int i = 0; i < size/dungeonSize.getDungeonSize(); i++) {
+            for (int j = 0; j < size/dungeonSize.getDungeonSize(); j++) {
+
+
+            }
+        }
+
+
+
+
+    }
+
+    private void newPrint(Room room, DungeonSize size ) {
+        HashMap<int[],String> dungeonMap = new HashMap<>();
+        for (int i = 0 ; i < size.getDungeonSize()*2; i++) {
+            for (int j = 0; j < size.getDungeonSize()*2; j++) {
+                dungeonMap.put(new int[]{i,j},"-");
+            }
+        }
+
+        for (int[] coordinate : map.keySet()) {
+            if (map.get(coordinate) != null) {
+                dungeonMap.put(coordinate,"o");
+            }
         }
     }
 
