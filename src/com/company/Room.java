@@ -34,8 +34,11 @@ public class Room {
     }
 
     public String getLongRoomDescription() {
-        if (items.size() == 0) { itemRoomDescription = ""; }
-        else { itemRoomDescription = " You see the following items: "; }
+        if (items.size() == 0) {
+            itemRoomDescription = "";
+        } else {
+            itemRoomDescription = " You see the following items: ";
+        }
         for (int i = 0; i < items.size(); i++) {
             Item item = items.get(i);
             if (i == 0) {
@@ -48,8 +51,11 @@ public class Room {
             itemRoomDescription += ".";
         }
 
-        if (enemies.size() == 0) { enemyRoomDescription = ""; }
-        else { enemyRoomDescription = " You see the following enemies: "; }
+        if (enemies.size() == 0) {
+            enemyRoomDescription = "";
+        } else {
+            enemyRoomDescription = " You see the following enemies: ";
+        }
         for (int i = 0; i < enemies.size(); i++) {
             Enemy enemy = enemies.get(i);
             if (i == 0) {
@@ -71,18 +77,26 @@ public class Room {
 
     public void setNorth(Room room) {
         northernRoom = room;
+        if (room.getSouth() != this)
+            room.setSouth(this);
     }
 
     public void setSouth(Room room) {
         southernRoom = room;
+        if (room.getNorth() != this)
+            room.setNorth(this);
     }
 
     public void setEast(Room room) {
         easternRoom = room;
+        if (room.getWest() != this)
+            room.setWest(this);
     }
 
     public void setWest(Room room) {
         westernRoom = room;
+        if (room.getEast() != this)
+            room.setEast(this);
     }
 
     public Room getNorth() {
@@ -112,12 +126,15 @@ public class Room {
     public ArrayList<Item> getItems() {
         return items;
     }
+
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
+
     public void addItem(Item item) {
         this.items.add(item);
     }
+
     public void removeItem(Item item) {
         this.items.remove(item);
     }
@@ -159,10 +176,9 @@ public class Room {
 
     @Override
     public String toString() {
-        return getLongRoomDescription();
+        return "room " + getRoomName() + " " + getLongRoomDescription();
 
     }
-
 
 
     public String getShortRoomDescription() {
