@@ -141,6 +141,17 @@ public class Room {
         this.enemies.remove(enemy);
     }
 
+    public Enemy findEnemy(String enemyName) {
+        Enemy enemyFound = null;
+        for (Enemy enemy : getEnemies()) {
+            if (enemyName.equalsIgnoreCase(enemy.getEnemyName())) {
+                enemyFound = enemy;
+                break;
+            }
+        }
+        return enemyFound;
+    }
+
     public void setIsLocked(boolean locked) {
         this.isLocked = locked;
     }
