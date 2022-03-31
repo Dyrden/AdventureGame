@@ -102,23 +102,23 @@ public class Adventure {
         }
     }
 
-    public void gameWin() {
+    private void gameWin() {
         // if player room == win room
         UI.displayWinGame();
     }
 
-    public void gameLose() {
+    private void gameLose() {
         UI.displayLoseGame();
         exit();
     }
 
-    public void exit() {
+    private void exit() {
         UI.displayExitGame();
         gameRunning = false;
         UI.displayPlayOrExit();
     }
 
-    public void attack(String enemy) {
+    private void attack(String enemy) {
         if (enemy.equals("")) {
             UI.displaySpecifyAnEnemy();
         }

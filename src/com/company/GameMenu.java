@@ -12,13 +12,13 @@ public class GameMenu {
         new GameMenu().run();
     }
 
-    public void run() {
+    private void run() {
         UI.displayGameMenuIntro();
         UI.displayPlayOrExit();
         while (gameRunning) menu(keyboard.nextLine());
     }
 
-    public void menu(String input) {
+    private void menu(String input) {
         switch (input) {
             case "play" -> new Adventure().run();
             case "exit" -> gameRunning = false;

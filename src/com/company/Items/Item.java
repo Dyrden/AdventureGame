@@ -25,7 +25,5 @@ public abstract class Item {
         return shortName;
     }
 
-
-
     public abstract int use();
 }

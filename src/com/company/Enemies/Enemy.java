@@ -44,7 +44,7 @@ public abstract class Enemy {
         if (player.getCurrentHealth() - damage > 0) {
             player.setCurrentHealth(player.getCurrentHealth() - damage);
             if (isPoisonous) {
-                player.setPoisoned(true);
+                player.setIsPoisoned(true);
             }
         }
         else {

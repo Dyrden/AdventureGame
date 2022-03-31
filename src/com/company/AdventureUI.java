@@ -132,14 +132,6 @@ public class AdventureUI {
     }
     * */
 
-    public void displayUseAntidoteToCure() {
-        System.out.println("Used antidote to cure poison status effect.");
-    }
-
-    public void displayUseAntidote() {
-        System.out.println("Used antidote.");
-    }
-
     public void displayEquipWeapon(String weapon) {
         System.out.println("Equipping " + weapon.toLowerCase() + " in right hand.");
     }

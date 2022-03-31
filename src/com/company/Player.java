@@ -97,11 +97,11 @@ public class Player {
         }
     }
 
-    public boolean isPoisoned() {
+    public boolean getIsPoisoned() {
         return isPoisoned;
     }
 
-    public void setPoisoned(boolean poisoned) {
+    public void setIsPoisoned(boolean poisoned) {
         isPoisoned = poisoned;
     }
 
@@ -184,8 +184,8 @@ public class Player {
 
     private String useAntidote(Antidote antidote) {
         String usedAntidote;
-        if (isPoisoned()) {
-            setPoisoned(false);
+        if (getIsPoisoned()) {
+            setIsPoisoned(false);
             setPoisonCleared(true);
             usedAntidote = "You successfully used " + antidote;
         } else {

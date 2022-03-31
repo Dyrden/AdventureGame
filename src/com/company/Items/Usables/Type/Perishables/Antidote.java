@@ -7,7 +7,6 @@ public class Antidote extends Perishable {
         super(sName, lName, rarity, weight);
     }
     public int use() {
-
         return 0;
     }
 }
