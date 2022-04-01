@@ -1,7 +1,5 @@
 package com.company;
 
-import com.company.DungeonGenerator.DungeonGenerator;
-import com.company.DungeonGenerator.DungeonSize;
 import com.company.Enemies.Mob;
 import com.company.Items.Equipables.Type.Weapons.MeleeWeapon;
 import com.company.Items.Equipables.Type.Weapons.RangedWeapon;
@@ -23,7 +21,6 @@ public class Adventure {
     private Room[] rooms = new Room[amountOfRooms];
     private Room winRoom;
     public Player player = new Player(rooms[0]);
-    HashMap<int[], Room> dungeon = new DungeonGenerator(DungeonSize.SMALL).createAndGetDungeon();
 
     public void run() {
         UI.displayGameIntro();
