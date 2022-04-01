@@ -4,8 +4,8 @@ import com.company.Items.Equipables.Type.Weapon;
 
 public class RangedWeapon extends Weapon {
     private int ammunition;
-    public RangedWeapon(String sName, String lName, int rarity, double weight, int durability, int weaponModifier, int ammo) {
-        super(sName, lName, rarity, weight, durability, weaponModifier);
+    public RangedWeapon(String sName, String lName,int durability, int weaponModifier, int ammo) {
+        super(sName, lName, durability, weaponModifier);
         ammunition = ammo;
     }
 

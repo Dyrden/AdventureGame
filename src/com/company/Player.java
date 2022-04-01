@@ -8,7 +8,6 @@ import com.company.Items.Equipables.Type.Weapons.RangedWeapon;
 import com.company.Items.Item;
 import com.company.Items.Usables.Type.Perishables.Antidote;
 import com.company.Items.Usables.Type.Perishables.Food;
-import com.company.Items.Usables.Type.Perishables.HealthType;
 import com.company.Items.Usables.Type.Reusables.Key;
 
 import java.util.ArrayList;
@@ -196,26 +195,8 @@ public class Player {
     }
 
 
-    public EatFoodOutcome eat(Food food) {
-        EatFoodOutcome useFood = null;
-        int foodValue = food.use();
-        if (food.getFoodType() == HealthType.CURRENT) {
-            setCurrentHealth(getCurrentHealth() + foodValue);
-            if (foodValue < 0) {
-                useFood = EatFoodOutcome.ATE_BAD_CURRENT_FOOD;
-            } else {
-                useFood = EatFoodOutcome.ATE_GOOD_CURRENT_FOOD;
-            }
-        }
-        if (food.getFoodType() == HealthType.MAX) {
-            setMaxHealth(getMaxHealth() + food.use());
-            if (foodValue < 0) {
-                useFood = EatFoodOutcome.ATE_BAD_MAX_FOOD;
-            } else {
-                useFood = EatFoodOutcome.ATE_GOOD_MAX_FOOD;
-            }
-        }
-        return useFood;
+    public int eat(Food food) {
+        return food.getHealAmount();
     }
 
     private void removeFromInventory(Item item) {

@@ -4,7 +4,7 @@ import com.company.Items.Item;
 
 public abstract class Usable extends Item {
 
-    public Usable(String sName, String lName, int rarity, double weight) {
-        super(sName, lName, rarity, weight);
+    public Usable(String sName, String lName) {
+        super(sName, lName);
     }
 }

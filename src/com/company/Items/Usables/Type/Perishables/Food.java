@@ -5,19 +5,13 @@ import com.company.Items.Usables.Type.Perishable;
 
 public class Food extends Perishable {
     private int healAmount;
-    private HealthType type;
 
-    public Food(String sName, String lName, int rarity, double weight, int healXAmount, HealthType type) {
-        super(sName, lName, rarity, weight);
+    public Food(String sName, String lName, int healXAmount) {
+        super(sName, lName);
         healAmount = healXAmount;
-        this.type = type;
     }
 
     public int getHealAmount() {
         return healAmount;
-    }
-
-    public HealthType getFoodType() {
-        return type;
     }
 }

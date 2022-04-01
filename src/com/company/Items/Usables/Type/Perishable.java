@@ -4,12 +4,7 @@ import com.company.Items.Usables.Usable;
 
 public abstract class Perishable extends Usable {
 
-    public Perishable(String sName, String lName, int rarity, double weight) {
-        super(sName, lName, rarity, weight);
-    }
-
-    @Override
-    public int use() {
-        return 0;
+    public Perishable(String sName, String lName) {
+        super(sName, lName);
     }
 }

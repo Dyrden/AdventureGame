@@ -5,8 +5,8 @@ import com.company.Items.Equipables.Equipment;
 public abstract class Weapon extends Equipment {
     protected int weaponValue;
 
-    public Weapon(String sName, String lName, int rarity, double weight, int durability, int attackValue) {
-        super(sName, lName, rarity, weight, durability);
+    public Weapon(String sName, String lName, int durability, int attackValue) {
+        super(sName, lName, durability);
         this.weaponValue = attackValue;
     }
 
@@ -19,7 +19,5 @@ public abstract class Weapon extends Equipment {
         return super.toString() + " - Attack Value: " + weaponValue;
     }
 
-    public boolean canBeUsed() {
-        return true;
-    }
+    public abstract boolean canBeUsed();
 }

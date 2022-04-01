@@ -8,7 +8,6 @@ import com.company.Items.Equipables.Type.Weapons.RangedWeapon;
 import com.company.Items.Item;
 import com.company.Items.Usables.Type.Perishables.Antidote;
 import com.company.Items.Usables.Type.Perishables.Food;
-import com.company.Items.Usables.Type.Perishables.HealthType;
 import com.company.Items.Usables.Type.Reusables.Key;
 
 import java.util.HashMap;
@@ -89,10 +88,8 @@ public class Adventure {
 
     private void use(String command1) {
         Item item = player.findItemInInventory(command1);
-
         if (item instanceof Food food) {
-            EatFoodOutcome outcome = player.eat(food);
-            UI.displayPlayerEat(outcome, player.getCurrentHealth(), food.getHealAmount());
+            UI.displayPlayerEat(food.getShortName(), player.getCurrentHealth(), food.getHealAmount());
             player.inventory.remove(food);
         } else if (item instanceof Antidote antidote) {
             UI.displayPlayerUseItem(player.use(command1));
@@ -171,19 +168,18 @@ public class Adventure {
         createItems();
         createEnemies();
         player.setCurrentRoom(rooms[0]);
-        //player.setCurrentRoom(dungeon.values().iterator().next());
     }
 
     private void createRooms() {
         rooms[0] = new Room("Hole", "You fell in this hole and your possessions now seperated from you.", false, "");
-        rooms[1] = new Room("Cave", "Dank dark cavern.", false, ""); // bats are hanging from the ceiling.
-        rooms[2] = new Room("Crawl space", "You are in a tight crawl space.", false, ""); // There's an abandoned antidote on the ground.
-        rooms[3] = new Room("Sewer", "You entered a sewer.", false, ""); // There is a rat running around.
+        rooms[1] = new Room("Cave", "Dank dark cavern.", false, "");
+        rooms[2] = new Room("Crawl space", "You are in a tight crawl space.", false, "");
+        rooms[3] = new Room("Sewer", "You entered a sewer.", false, "");
         rooms[4] = new Room("Treasure Chamber", "You've stumbled upon a treasure like no other. You won't ever have to work again.", true, "gold");
-        rooms[5] = new Room("Security", "You entered a room with a bunch of displays, showing live CCTV footage. The locations seem familiar.", false, ""); // There is a golden key on the desk.
-        rooms[6] = new Room("Sewage filtration", "You've entered a room with a machine filtrating the sewage.", false, ""); //  Someone left a plate of food here, probably lost their appetite.
-        rooms[7] = new Room("Golden Door", "You find yourself in a room with a locked giant golden door.", false, ""); // A giant snake guards the door.
-        rooms[8] = new Room("Back-alley", "You entered a back-alley, seems to connect important areas of this complex.", false, ""); // There is a knife on the ground.
+        rooms[5] = new Room("Security", "You entered a room with a bunch of displays, showing live CCTV footage. The locations seem familiar.", false, "");
+        rooms[6] = new Room("Sewage filtration", "You've entered a room with a machine filtrating the sewage.", false, "");
+        rooms[7] = new Room("Golden Door", "You find yourself in a room with a locked giant golden door.", false, "");
+        rooms[8] = new Room("Back-alley", "You entered a back-alley, seems to connect important areas of this complex.", false, "");
     }
 
     private void connectRooms() {
@@ -224,10 +220,10 @@ public class Adventure {
     }
 
     private void createItems() {
-        rooms[2].addItem(new Antidote("antidote", "an abandoned antidote", 20, 25));
-        rooms[5].addItem(new Key("key", "a golden key", 1, 25, "gold"));
-        rooms[6].addItem(new Food("food", "a plate of food", 40, 20, 50, HealthType.CURRENT));
-        rooms[8].addItem(new MeleeWeapon("knife", "a knife", 10, 1, 10, 25));
-        rooms[1].addItem(new RangedWeapon("gun", "a gun", 2, 5, 50, 20, 1));
+        rooms[2].addItem(new Antidote("antidote", "an abandoned antidote"));
+        rooms[5].addItem(new Key("key", "a golden key", "gold"));
+        rooms[6].addItem(new Food("food", "a plate of food", 20));
+        rooms[8].addItem(new MeleeWeapon("knife", "a knife", 10, 25));
+        rooms[1].addItem(new RangedWeapon("gun", "a gun", 20, 20, 1));
     }
 }

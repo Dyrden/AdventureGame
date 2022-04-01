@@ -4,10 +4,6 @@ import com.company.Items.Equipables.Equipment;
 import com.company.Items.Equipables.Type.Weapon;
 import com.company.Items.Equipables.Type.Weapons.RangedWeapon;
 import com.company.Items.Item;
-import com.company.Items.Usables.Type.Perishables.Antidote;
-import com.company.Items.Usables.Type.Perishables.Food;
-import com.company.Items.Usables.Type.Perishables.HealthType;
-import com.company.Items.Usables.Type.Reusables.Key;
 
 import java.util.ArrayList;
 
@@ -287,8 +283,8 @@ public class AdventureUI {
         System.out.println("You tried going " + direction + " but a wall is in the way");
     }
 
-    public void displayPlayerEat(EatFoodOutcome eat, int currentHealth, int healAmount) {
-        System.out.println(eat.getOutcome() + " , changing your health by " + healAmount + " to " + currentHealth);
+    public void displayPlayerEat(String eating, int currentHealth, int healAmount) {
+        System.out.println(eating.toString() + " , changing your health by " + healAmount + " to " + currentHealth);
     }
 
     public void displayCantUseWeapon(Weapon weapon) {
