@@ -191,29 +191,21 @@ public class Adventure {
         rooms[0].setEast(rooms[1]);
         rooms[0].setSouth(rooms[3]);
 
-        rooms[1].setWest(rooms[0]);
         rooms[1].setEast(rooms[2]);
 
-        rooms[2].setWest(rooms[1]);
         rooms[2].setSouth(rooms[5]);
 
-        rooms[3].setNorth(rooms[0]);
         rooms[3].setSouth(rooms[6]);
 
         rooms[4].setSouth(rooms[7]);
 
-        rooms[5].setNorth(rooms[2]);
         rooms[5].setSouth(rooms[8]);
 
-        rooms[6].setNorth(rooms[3]);
         rooms[6].setEast(rooms[7]);
 
         rooms[7].setWest(rooms[6]);
-        rooms[7].setNorth(rooms[4]);
-        rooms[7].setEast(rooms[8]);
 
-        rooms[8].setWest(rooms[7]);
-        rooms[8].setNorth(rooms[5]);
+        rooms[7].setEast(rooms[8]);
     }
 
     private void createEnemies() {
