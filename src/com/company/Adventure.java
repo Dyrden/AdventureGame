@@ -70,7 +70,12 @@ public class Adventure {
         UI.displayPlayerMove(success, command1);
         UI.displayCurrentRoomDescription(success, player.getCurrentRoom());
         if (success == GoToSuccess.SUCCESS) {
-            poisonTick();
+            if (player.getCurrentRoom() == winRoom) {
+                gameWin();
+            }
+            else {
+                poisonTick();
+            }
         }
     }
 
@@ -89,7 +94,7 @@ public class Adventure {
     private void use(String command1) {
         Item item = player.findItemInInventory(command1);
         if (item instanceof Food food) {
-            UI.displayPlayerEat(food.getShortName(), player.getCurrentHealth(), food.getHealAmount());
+            UI.displayPlayerEat(food.getLongName(), player.getCurrentHealth());
             player.inventory.remove(food);
         } else if (item instanceof Antidote antidote) {
             UI.displayPlayerUseItem(player.use(command1));
@@ -100,8 +105,8 @@ public class Adventure {
     }
 
     private void gameWin() {
-        // if player room == win room
         UI.displayWinGame();
+        exit();
     }
 
     private void gameLose() {

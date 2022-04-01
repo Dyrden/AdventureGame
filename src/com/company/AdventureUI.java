@@ -42,11 +42,11 @@ public class AdventureUI {
     }
 
     public void displayWinGame() {
-
+        System.out.println("You have won the game!");
     }
 
     public void displayLoseGame() {
-
+        System.out.println("You have lost the game!");
     }
 
     public void displayTurnStartText() {
@@ -283,8 +283,8 @@ public class AdventureUI {
         System.out.println("You tried going " + direction + " but a wall is in the way");
     }
 
-    public void displayPlayerEat(String eating, int currentHealth, int healAmount) {
-        System.out.println(eating.toString() + " , changing your health by " + healAmount + " to " + currentHealth);
+    public void displayPlayerEat(String eating, int currentHealth) {
+        System.out.println("You ate " + eating + ", changing your health to " + currentHealth);
     }
 
     public void displayCantUseWeapon(Weapon weapon) {

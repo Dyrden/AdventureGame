@@ -194,7 +194,6 @@ public class Player {
         return usedAntidote;
     }
 
-
     public int eat(Food food) {
         return food.getHealAmount();
     }
