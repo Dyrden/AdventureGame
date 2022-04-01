@@ -19,7 +19,7 @@ public class GameMenu {
     }
 
     private void menu(String input) {
-        switch (input) {
+        switch (input.toLowerCase()) {
             case "play" -> new Adventure().run();
             case "exit" -> gameRunning = false;
             default -> UI.displayNotAnOption();
