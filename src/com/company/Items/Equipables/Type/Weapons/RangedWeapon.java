@@ -4,8 +4,8 @@ import com.company.Items.Equipables.Type.Weapon;
 
 public class RangedWeapon extends Weapon {
     private int ammunition;
-    public RangedWeapon(String sName, String lName,int durability, int weaponModifier, int ammo) {
-        super(sName, lName, durability, weaponModifier);
+    public RangedWeapon(String sName, String lName, int weaponModifier, int ammo) {
+        super(sName, lName, weaponModifier);
         ammunition = ammo;
     }
 
@@ -17,12 +17,9 @@ public class RangedWeapon extends Weapon {
     }
     @Override
     public boolean canBeUsed() {
-        if (getDurability() > 0) {
-            if (ammunition > 0) {
-                ammunition -= 1;
-                return true;
-            }
-            else return false;
+        if (ammunition > 0) {
+            ammunition -= 1;
+            return true;
         }
         else return false;
     }

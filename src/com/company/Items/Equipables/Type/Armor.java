@@ -2,11 +2,11 @@ package com.company.Items.Equipables.Type;
 
 import com.company.Items.Equipables.Equipment;
 
-public class Armor extends Equipment {
+public abstract class Armor extends Equipment {
     private int armorValue;
 
-    public Armor(String sName, String lName, int durability, int armorValue) {
-        super(sName, lName, durability);
+    public Armor(String sName, String lName, int armorValue) {
+        super(sName, lName);
         this.armorValue = armorValue;
 
     }

@@ -42,6 +42,26 @@ public class Player {
 
     }
 
+    @Override
+    public String toString() {
+        if (weaponEquip instanceof RangedWeapon) {
+            return
+                    "Current room = " + currentRoom.getShortRoomDescription() + "\n" +
+                            "Health/MaxHealth = " + currentHealth + "/" + maxHealth + "\n" +
+                            "Damage = " + currentDamage + "\n" +
+                            "Weapon equipped = " + weaponEquip + " - Ammunition = " + ((RangedWeapon) weaponEquip).getAmmunition() + "\n" +
+                            "Poisoned = " + isPoisoned;
+        }
+        else {
+            return
+                    "Current room = " + currentRoom.getShortRoomDescription() + "\n" +
+                            "Health/MaxHealth = " + currentHealth + "/" + maxHealth + "\n" +
+                            "Damage = " + currentDamage + "\n" +
+                            "Weapon equipped = " + weaponEquip + "\n" +
+                            "Poisoned = " + isPoisoned;
+        }
+    }
+
     public int getCurrentHealth() {
         return currentHealth;
     }
@@ -64,6 +84,42 @@ public class Player {
 
     public void setCurrentDamage(int currentDamage) {
         this.currentDamage = currentDamage;
+    }
+
+    public boolean getIsPoisoned() {
+        return isPoisoned;
+    }
+
+    public void setIsPoisoned(boolean poisoned) {
+        isPoisoned = poisoned;
+    }
+
+    public boolean isPoisonCleared() {
+        return poisonCleared;
+    }
+
+    public void setPoisonCleared(boolean poisonCleared) {
+        this.poisonCleared = poisonCleared;
+    }
+
+    public ArrayList<Item> getInventory() {
+        return inventory;
+    }
+
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
+    }
+
+    public Weapon getWeaponEquip() {
+        return weaponEquip;
+    }
+
+    public Armor getArmorEquip() {
+        return armorEquip;
     }
 
     public Equipment equip(String itemName) {
@@ -94,46 +150,6 @@ public class Player {
         } else {
             setCurrentDamage(baseDamage);
         }
-    }
-
-    public boolean getIsPoisoned() {
-        return isPoisoned;
-    }
-
-    public void setIsPoisoned(boolean poisoned) {
-        isPoisoned = poisoned;
-    }
-
-    public boolean isPoisonCleared() {
-        return poisonCleared;
-    }
-
-    public void setPoisonCleared(boolean poisonCleared) {
-        this.poisonCleared = poisonCleared;
-    }
-
-    @Override
-    public String toString() {
-        if (weaponEquip instanceof RangedWeapon) {
-            return
-                    "Current room = " + currentRoom.getShortRoomDescription() + "\n" +
-                            "Health/MaxHealth = " + currentHealth + "/" + maxHealth + "\n" +
-                            "Damage = " + currentDamage + "\n" +
-                            "Weapon equipped = " + weaponEquip + " - Ammunition = " + ((RangedWeapon) weaponEquip).getAmmunition() + "\n" +
-                            "Poisoned = " + isPoisoned;
-        }
-        else {
-            return
-                    "Current room = " + currentRoom.getShortRoomDescription() + "\n" +
-                            "Health/MaxHealth = " + currentHealth + "/" + maxHealth + "\n" +
-                            "Damage = " + currentDamage + "\n" +
-                            "Weapon equipped = " + weaponEquip + "\n" +
-                            "Poisoned = " + isPoisoned;
-        }
-    }
-
-    public ArrayList<Item> getInventory() {
-        return inventory;
     }
 
     public String use(String itemName) {
@@ -198,7 +214,7 @@ public class Player {
         return food.getHealAmount();
     }
 
-    private void removeFromInventory(Item item) {
+    public void removeFromInventory(Item item) {
         inventory.remove(item);
     }
 
@@ -210,15 +226,6 @@ public class Player {
             }
         }
         return currentItem;
-    }
-
-
-    public Room getCurrentRoom() {
-        return currentRoom;
-    }
-
-    public void setCurrentRoom(Room currentRoom) {
-        this.currentRoom = currentRoom;
     }
 
     public GoToSuccess go(String direction) {
@@ -330,14 +337,6 @@ public class Player {
             isDead = true;
         }
         return isDead;
-    }
-
-    public Weapon getWeaponEquip() {
-        return weaponEquip;
-    }
-
-    public Armor getArmorEquip() {
-        return armorEquip;
     }
 
     public int poisonTick() {

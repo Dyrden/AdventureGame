@@ -221,7 +221,7 @@ public class Adventure {
         rooms[2].addItem(new Antidote("antidote", "an abandoned antidote"));
         rooms[5].addItem(new Key("key", "a golden key", "gold"));
         rooms[6].addItem(new Food("food", "a plate of food", 20));
-        rooms[8].addItem(new MeleeWeapon("knife", "a knife", 10, 25));
-        rooms[1].addItem(new RangedWeapon("gun", "a gun", 20, 20, 1));
+        rooms[8].addItem(new MeleeWeapon("knife", "a knife", 25));
+        rooms[1].addItem(new RangedWeapon("gun", "a gun", 20, 1));
     }
 }

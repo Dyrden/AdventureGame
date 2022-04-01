@@ -3,10 +3,10 @@ package com.company.Items.Equipables.Type;
 import com.company.Items.Equipables.Equipment;
 
 public abstract class Weapon extends Equipment {
-    protected int weaponValue;
+    private int weaponValue;
 
-    public Weapon(String sName, String lName, int durability, int attackValue) {
-        super(sName, lName, durability);
+    public Weapon(String sName, String lName, int attackValue) {
+        super(sName, lName);
         this.weaponValue = attackValue;
     }
 

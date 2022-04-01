@@ -31,7 +31,6 @@ public class AdventureUI {
         System.out.println("No such command is available, try again.");
     }
 
-
     public void displayRoomStatus(Room room) {
         System.out.println(room);
     }
@@ -121,12 +120,6 @@ public class AdventureUI {
         System.out.println("Can't do that right now. An adversary is in the way.");
     }
 
-    /*
-    public void displayAteFood(Player player, int i) {
-        System.out.println("Ate " + player.inventory.get(i).toString() + " and recovered " + player.inventory.get(i).getClass(Food) + " health.");
-    }
-    * */
-
     public void displayEquipWeapon(String weapon) {
         System.out.println("Equipping " + weapon.toLowerCase() + " in right hand.");
     }
@@ -134,12 +127,6 @@ public class AdventureUI {
     public void displayUnequipWeapon(String weapon) {
         System.out.println("Unequipping " + weapon.toLowerCase() + ".");
     }
-
-    /*
-    public void displayTookItem(Player player, int i) {
-        System.out.println("Took " + player.getCurrentRoom().getItems().get(i).getItemType().toString().toLowerCase() + ".");
-    }
-    * */
 
     public void displayItemNotHere(Item item) {
         System.out.println("No " + item.toString().toLowerCase() + " here.");
@@ -258,11 +245,6 @@ public class AdventureUI {
     public void displayNotValidDirection(String direction) {
         System.out.println(direction + " is not a cardinal direction, rethink your choices.");
     }
-/*
-    public void displayEnemyInTheWay(Room currentRoom) {
-        System.out.println("You try running past the " + currentRoom.getEnemies().get(0).getEnemyType().toString() + " but the door is locked.");
-    }
-* */
 
     public void displayWalkIntoLockedDoor() {
         System.out.println("You try walking through the locked door, you hit your head.");

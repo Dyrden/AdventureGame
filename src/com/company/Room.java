@@ -6,6 +6,7 @@ import com.company.Items.Item;
 import java.util.ArrayList;
 
 public class Room {
+
     private final String roomName;
     private String longRoomDescription;
     private String shortRoomDescription;
@@ -29,8 +30,22 @@ public class Room {
         lockId = id;
     }
 
+    @Override
+    public String toString() {
+        return "room " + getRoomName() + " " + getLongRoomDescription();
+
+    }
+
     public String getRoomName() {
         return roomName;
+    }
+
+    public String getShortRoomDescription() {
+        return shortRoomDescription;
+    }
+
+    public void setShortRoomDescription(String shortRoomDescription) {
+        this.shortRoomDescription = shortRoomDescription;
     }
 
     public String getLongRoomDescription() {
@@ -119,16 +134,28 @@ public class Room {
         return isLocked;
     }
 
+    public void setIsLocked(boolean locked) {
+        this.isLocked = locked;
+    }
+
     public String getLockId() {
         return lockId;
     }
 
-    public ArrayList<Item> getItems() {
-        return items;
+    public boolean isPlayerVisited() {
+        return playerVisited;
     }
 
-    public ArrayList<Enemy> getEnemies() {
-        return enemies;
+    public void setPlayerVisited(boolean playerVisited) {
+        this.playerVisited = playerVisited;
+    }
+
+    public Room[] getDirections() {
+        return new Room[]{northernRoom, southernRoom, easternRoom, westernRoom};
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
     }
 
     public void addItem(Item item) {
@@ -150,6 +177,10 @@ public class Room {
         return itemFound;
     }
 
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+
     public void addEnemy(Enemy enemy) {
         this.enemies.add(enemy);
     }
@@ -167,36 +198,5 @@ public class Room {
             }
         }
         return enemyFound;
-    }
-
-    public void setIsLocked(boolean locked) {
-        this.isLocked = locked;
-    }
-
-    public boolean isPlayerVisited() {
-        return playerVisited;
-    }
-
-    public void setPlayerVisited(boolean playerVisited) {
-        this.playerVisited = playerVisited;
-    }
-
-    public Room[] getDirections() {
-        return new Room[]{northernRoom, southernRoom, easternRoom, westernRoom};
-    }
-
-    @Override
-    public String toString() {
-        return "room " + getRoomName() + " " + getLongRoomDescription();
-
-    }
-
-
-    public String getShortRoomDescription() {
-        return shortRoomDescription;
-    }
-
-    public void setShortRoomDescription(String shortRoomDescription) {
-        this.shortRoomDescription = shortRoomDescription;
     }
 }
