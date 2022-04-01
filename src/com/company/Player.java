@@ -150,7 +150,7 @@ public class Player {
     private String checkItemType(Item item) {
         String str = "";
         if (item instanceof Food food) {
-            //str = useFood(food);
+            str = String.valueOf(eat(food));
         } else if (item instanceof Antidote antidote) {
             str = useAntidote(antidote);
         } else if (item instanceof Key key) {

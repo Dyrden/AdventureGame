@@ -94,7 +94,7 @@ public class Adventure {
         } else if (item instanceof Antidote antidote) {
             UI.displayPlayerUseItem(player.use(command1));
             player.inventory.remove(antidote);
-        } else if (item instanceof Key key) {
+        } else if (item instanceof Key) {
             UI.displayPlayerUseItem(player.use(command1));
         }
     }
