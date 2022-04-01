@@ -21,7 +21,7 @@ public class Adventure {
 
     private final int amountOfRooms = 9;
     private Room[] rooms = new Room[amountOfRooms];
-    private Room winRoom = rooms[4];
+    private Room winRoom;
     public Player player = new Player(rooms[0]);
     HashMap<int[], Room> dungeon = new DungeonGenerator(DungeonSize.SMALL).createAndGetDungeon();
 
@@ -181,6 +181,7 @@ public class Adventure {
         rooms[2] = new Room("Crawl space", "You are in a tight crawl space.", false, "");
         rooms[3] = new Room("Sewer", "You entered a sewer.", false, "");
         rooms[4] = new Room("Treasure Chamber", "You've stumbled upon a treasure like no other. You won't ever have to work again.", true, "gold");
+        winRoom = rooms[4];
         rooms[5] = new Room("Security", "You entered a room with a bunch of displays, showing live CCTV footage. The locations seem familiar.", false, "");
         rooms[6] = new Room("Sewage filtration", "You've entered a room with a machine filtrating the sewage.", false, "");
         rooms[7] = new Room("Golden Door", "You find yourself in a room with a locked giant golden door.", false, "");

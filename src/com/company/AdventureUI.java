@@ -37,7 +37,6 @@ public class AdventureUI {
     }
 
     public void displayExitGame() {
-        System.out.println("Game over.");
         System.out.println("Thanks for playing.");
     }
 
